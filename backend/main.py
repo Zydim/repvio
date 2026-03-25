@@ -12,7 +12,7 @@ from routers.payment import router as payment_router
 
 load_dotenv(override=True)
 
-app = FastAPI(title="Z-Coach API", version="1.0.0")
+app = FastAPI(title="Repvio API", version="1.0.0")
 
 # CORS
 cors_origin = os.getenv("CORS_ORIGIN", "http://localhost:3000")
@@ -38,4 +38,4 @@ def on_startup():
 
 @app.get("/")
 def health_check():
-    return {"status": "ok", "app": "Z-Coach API"}
+    return {"status": "ok", "app": "Repvio API"}

@@ -1,4 +1,4 @@
-# Z-Coach
+# Repvio
 
 KI-Fitness-App mit Video-Analyse für Kniebeuge, Bankdrücken & Kreuzheben.
 
@@ -27,7 +27,7 @@ source venv/bin/activate
 uvicorn main:app --reload --port 8000
 ```
 
-Prüfen: http://localhost:8000/ → `{"status":"ok","app":"Z-Coach API"}`
+Prüfen: http://localhost:8000/ → `{"status":"ok","app":"Repvio API"}`
 
 ### 3. Frontend starten
 
@@ -41,7 +41,7 @@ npm run dev
 ## Tipps
 
 - ffmpeg installieren für beste Video-Analyse: `brew install ffmpeg`
-- SQLite-DB zurücksetzen: `rm backend/zcoach.db`
+- SQLite-DB zurücksetzen: `rm backend/repvio.db`
 - Port-Konflikt: `lsof -i :8000` und `kill -9 <PID>`
 
 ## Tech-Stack

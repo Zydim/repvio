@@ -12,7 +12,7 @@ router = APIRouter()
 
 ALLOWED_EXTENSIONS = {".mp4", ".mov"}
 MAX_FILE_SIZE = 100 * 1024 * 1024  # 100 MB
-TMP_DIR = Path("/tmp/zcoach")
+TMP_DIR = Path("/tmp/repvio")
 
 
 def _check_and_increment_limit(user: User, db: Session):

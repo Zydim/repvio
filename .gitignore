@@ -7,7 +7,7 @@ backend/**/__pycache__/
 *.pyo
 
 # Datenbank
-backend/zcoach.db
+backend/repvio.db
 
 # Secrets
 backend/.env
@@ -18,7 +18,7 @@ frontend/node_modules/
 frontend/.next/
 
 # Temp
-/tmp/zcoach/
+/tmp/repvio/
 
 # macOS
 .DS_Store
