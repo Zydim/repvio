@@ -1,0 +1,143 @@
+"use client";
+
+import { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { Upload, FileVideo, X, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { analyzeVideo, AnalysisResponse } from "@/lib/api";
+
+interface VideoUploaderProps {
+  exerciseType: string;
+  userEmail: string;
+  onResult: (result: AnalysisResponse) => void;
+}
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+export default function VideoUploader({
+  exerciseType,
+  userEmail,
+  onResult,
+}: VideoUploaderProps) {
+  const [file, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [limitReached, setLimitReached] = useState(false);
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    if (acceptedFiles[0]) {
+      setFile(acceptedFiles[0]);
+      setError(null);
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: { "video/mp4": [".mp4"], "video/quicktime": [".mov"] },
+    maxSize: 100 * 1024 * 1024,
+    multiple: false,
+    onDropRejected: (rejections) => {
+      const msg = rejections[0]?.errors[0]?.message || "Ungültige Datei";
+      setError(msg);
+    },
+  });
+
+  async function handleAnalyze() {
+    if (!file || !exerciseType) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await analyzeVideo(file, exerciseType, userEmail);
+      onResult(result);
+    } catch (err: unknown) {
+      const errObj = err as { response?: { status?: number; data?: { detail?: string } } };
+      const message =
+        errObj?.response?.data?.detail ||
+        "Fehler bei der Analyse. Bitte versuche es erneut.";
+      setError(message);
+      if (errObj?.response?.status === 403) {
+        setLimitReached(true);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="space-y-4">
+      {/* Dropzone */}
+      <div
+        {...getRootProps()}
+        className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-colors ${
+          isDragActive
+            ? "border-zinc-400 bg-zinc-800"
+            : "border-zinc-700 hover:border-zinc-500 bg-zinc-900"
+        }`}
+      >
+        <input {...getInputProps()} />
+        <Upload className="w-8 h-8 mx-auto mb-3 text-zinc-500" />
+        {isDragActive ? (
+          <p className="text-zinc-300">Video hier ablegen...</p>
+        ) : (
+          <div>
+            <p className="text-zinc-300 mb-1">Video hierher ziehen</p>
+            <p className="text-xs text-zinc-500">oder klicken zum Auswählen</p>
+            <p className="text-xs text-zinc-600 mt-2">.mp4 oder .mov, max. 100 MB</p>
+          </div>
+        )}
+      </div>
+
+      {/* Selected file */}
+      {file && (
+        <div className="flex items-center justify-between bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3">
+          <div className="flex items-center gap-3">
+            <FileVideo className="w-5 h-5 text-zinc-400 shrink-0" />
+            <div>
+              <p className="text-sm text-zinc-200 font-medium truncate max-w-xs">
+                {file.name}
+              </p>
+              <p className="text-xs text-zinc-500">{formatBytes(file.size)}</p>
+            </div>
+          </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setFile(null);
+            }}
+            className="text-zinc-500 hover:text-zinc-300 transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Error */}
+      {error && (
+        <div className="text-sm text-red-400 bg-red-950/40 border border-red-800/50 rounded-lg px-4 py-3">
+          <p>{error}</p>
+          {limitReached && (
+            <Link
+              href="/pricing"
+              className="inline-flex items-center gap-1 mt-2 text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            >
+              Jetzt upgraden
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          )}
+        </div>
+      )}
+
+      {/* Analyze button */}
+      <button
+        onClick={handleAnalyze}
+        disabled={!file || loading || !exerciseType}
+        className="w-full py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed bg-white text-zinc-950 hover:bg-zinc-200"
+      >
+        {loading ? "KI analysiert deine Technik..." : "Analysieren"}
+      </button>
+    </div>
+  );
+}

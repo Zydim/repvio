@@ -1,0 +1,24 @@
+# Python
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Datenbank
+backend/zcoach.db
+
+# Secrets
+backend/.env
+frontend/.env.local
+
+# Node
+frontend/node_modules/
+frontend/.next/
+
+# Temp
+/tmp/zcoach/
+
+# macOS
+.DS_Store

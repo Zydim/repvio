@@ -1,0 +1,108 @@
+import axios from "axios";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+export const api = axios.create({
+  baseURL: API_URL,
+});
+
+export interface Correction {
+  fehler: string;
+  korrektur: string;
+}
+
+export interface FeedbackResult {
+  score: number;
+  overall: string;
+  positives: string[];
+  corrections: Correction[];
+  verletzungsrisiko: string;
+  cue: string;
+  naechste_schritte: string[];
+}
+
+export interface AnalysisResponse {
+  session_id: number;
+  feedback: FeedbackResult;
+  score: number;
+  exercise_type: string;
+  created_at: string;
+}
+
+export interface HistorySession {
+  session_id: number;
+  exercise_type: string;
+  score: number;
+  overall: string;
+  created_at: string;
+}
+
+export interface SessionDetail {
+  session_id: number;
+  user_email: string;
+  exercise_type: string;
+  feedback: FeedbackResult;
+  score: number;
+  created_at: string;
+}
+
+export async function analyzeVideo(
+  file: File,
+  exerciseType: string,
+  userEmail: string
+): Promise<AnalysisResponse> {
+  const formData = new FormData();
+  formData.append("video", file);
+  formData.append("exercise_type", exerciseType);
+  formData.append("user_email", userEmail);
+
+  const response = await api.post<AnalysisResponse>("/analyze", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return response.data;
+}
+
+export async function getHistory(email: string): Promise<HistorySession[]> {
+  const response = await api.get<HistorySession[]>("/history", {
+    params: { email },
+  });
+  return response.data;
+}
+
+export async function getSession(sessionId: number): Promise<SessionDetail> {
+  const response = await api.get<SessionDetail>(`/history/${sessionId}`);
+  return response.data;
+}
+
+// Payment
+export interface UserPlan {
+  plan: string;
+  analyses_this_month: number;
+}
+
+export async function getUserPlan(email: string): Promise<UserPlan> {
+  const response = await api.get<UserPlan>("/payment/user-plan", {
+    params: { email },
+  });
+  return response.data;
+}
+
+export async function verifyCheckoutSession(
+  sessionId: string
+): Promise<{ status: string; plan?: string }> {
+  const response = await api.post("/payment/verify-session", null, {
+    params: { session_id: sessionId },
+  });
+  return response.data;
+}
+
+export async function createCheckoutSession(
+  email: string,
+  plan: string
+): Promise<{ url: string }> {
+  const response = await api.post<{ url: string }>(
+    "/payment/create-checkout-session",
+    { email, plan }
+  );
+  return response.data;
+}
