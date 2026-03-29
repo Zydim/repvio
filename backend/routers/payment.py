@@ -12,8 +12,8 @@ router = APIRouter(prefix="/payment")
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 PRICE_MAP = {
-    "pro": "price_1TEgQ51isOUkj6tBw4aR0fFB",
-    "elite": "price_1TEgQ61isOUkj6tBshwrnMsk",
+    "pro": "price_1TGPZl1Mjn2g7FFmRt74Heg3",
+    "elite": "price_1TGPZx1Mjn2g7FFmAebOA3ek",
 }
 
 FRONTEND_URL = os.getenv("CORS_ORIGIN", "http://localhost:3000")
