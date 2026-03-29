@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
@@ -11,6 +11,20 @@ const geistSans = Geist({
 export const metadata: Metadata = {
   title: "Repvio — KI Fitness Coach",
   description: "Video-Analyse für deine Übungstechnik mit KI-Feedback",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Repvio",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#09090b",
 };
 
 export default function RootLayout({

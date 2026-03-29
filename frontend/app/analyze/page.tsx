@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
-import Link from "next/link";
+import { useSession } from "next-auth/react";
 import VideoUploader from "@/components/VideoUploader";
 import FeedbackCard from "@/components/FeedbackCard";
-import PlanBadge from "@/components/PlanBadge";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { AnalysisResponse } from "@/lib/api";
 
 const EXERCISES = [
@@ -36,32 +36,12 @@ export default function AnalyzePage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-8 py-5 border-b border-zinc-800">
-        <Link href="/" className="text-xl font-bold tracking-tight">
-          Repvio
-        </Link>
-        <div className="flex items-center gap-4">
-          <PlanBadge />
-          <Link href="/pricing" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">
-            Pricing
-          </Link>
-          <Link href="/dashboard" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">
-            Dashboard
-          </Link>
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })}
-            className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors"
-          >
-            Abmelden
-          </button>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-zinc-950 flex flex-col">
+      <Navbar />
 
-      <div className="max-w-2xl mx-auto px-6 py-12">
-        <h1 className="text-3xl font-bold mb-2">Technik analysieren</h1>
-        <p className="text-zinc-400 mb-10">
+      <div className="max-w-2xl mx-auto px-4 md:px-6 py-8 md:py-12 flex-1">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">Technik analysieren</h1>
+        <p className="text-zinc-400 mb-8 md:mb-10 text-sm md:text-base">
           Wähle deine Übung und lade ein Video hoch.
         </p>
 
@@ -82,24 +62,24 @@ export default function AnalyzePage() {
         )}
 
         {!result && (
-          <>
+          <div>
             {/* Exercise selection */}
             <div className="mb-8">
               <label className="block text-xs text-zinc-400 uppercase tracking-wider mb-3">
                 Übung wählen
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
                 {EXERCISES.map((ex) => (
                   <button
                     key={ex.id}
                     onClick={() => setExercise(ex.id)}
-                    className={`flex flex-col items-center gap-2 py-5 rounded-2xl border-2 transition-all text-sm font-medium ${
+                    className={`flex flex-col items-center gap-1.5 md:gap-2 py-3 md:py-5 rounded-2xl border-2 transition-all text-xs md:text-sm font-medium ${
                       exercise === ex.id
                         ? "border-white bg-zinc-800 text-white"
                         : "border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200"
                     }`}
                   >
-                    <span className="text-2xl">{ex.emoji}</span>
+                    <span className="text-xl md:text-2xl">{ex.emoji}</span>
                     {ex.label}
                   </button>
                 ))}
@@ -114,13 +94,15 @@ export default function AnalyzePage() {
                 onResult={handleResult}
               />
             ) : (
-              <div className="border-2 border-dashed border-zinc-800 rounded-2xl p-10 text-center text-zinc-600 text-sm">
+              <div className="border-2 border-dashed border-zinc-800 rounded-2xl p-6 md:p-10 text-center text-zinc-600 text-sm">
                 Bitte zuerst eine Übung auswählen
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 }

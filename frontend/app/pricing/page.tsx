@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Check, Zap, Crown, ArrowLeft } from "lucide-react";
 import { createCheckoutSession, verifyCheckoutSession } from "@/lib/api";
-import PlanBadge from "@/components/PlanBadge";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const PLANS = [
   {
@@ -55,6 +56,14 @@ const PLANS = [
 ];
 
 export default function PricingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-zinc-950" />}>
+      <PricingContent />
+    </Suspense>
+  );
+}
+
+function PricingContent() {
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState<string | null>(null);
@@ -68,7 +77,15 @@ export default function PricingPage() {
   useEffect(() => {
     if (success && sessionId && !verified.current) {
       verified.current = true;
-      verifyCheckoutSession(sessionId).catch(() => {});
+      // Retry a few times in case session takes a moment to load
+      const tryVerify = (attempts = 0) => {
+        verifyCheckoutSession(sessionId)
+          .then(() => { window.location.reload(); })
+          .catch(() => {
+            if (attempts < 3) setTimeout(() => tryVerify(attempts + 1), 2000);
+          });
+      };
+      tryVerify();
     }
   }, [success, sessionId]);
 
@@ -92,40 +109,14 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-8 py-5 border-b border-zinc-800">
-        <Link href="/" className="text-xl font-bold tracking-tight">
-          Repvio
-        </Link>
-        <div className="flex items-center gap-4">
-          <PlanBadge />
-          <Link
-            href="/analyze"
-            className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors"
-          >
-            Analysieren
-          </Link>
-          <Link
-            href="/dashboard"
-            className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors"
-          >
-            Dashboard
-          </Link>
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })}
-            className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors"
-          >
-            Abmelden
-          </button>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-zinc-950 flex flex-col">
+      <Navbar />
 
-      <div className="max-w-5xl mx-auto px-6 py-16">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 py-10 md:py-16 flex-1">
         {/* Success / Cancel Banner */}
         {success && (
-          <div className="mb-8 bg-emerald-950/50 border border-emerald-800 rounded-xl px-6 py-4 text-center">
-            <p className="text-emerald-300 font-medium">
+          <div className="mb-8 bg-emerald-950/50 border border-emerald-800 rounded-xl px-4 md:px-6 py-4 text-center">
+            <p className="text-emerald-300 font-medium text-sm md:text-base">
               Zahlung erfolgreich! Dein Plan wurde aktualisiert.
             </p>
             <Link
@@ -137,26 +128,38 @@ export default function PricingPage() {
           </div>
         )}
         {canceled && (
-          <div className="mb-8 bg-amber-950/50 border border-amber-800 rounded-xl px-6 py-4 text-center">
-            <p className="text-amber-300 font-medium">
+          <div className="mb-8 bg-amber-950/50 border border-amber-800 rounded-xl px-4 md:px-6 py-4 text-center">
+            <p className="text-amber-300 font-medium text-sm md:text-base">
               Zahlung abgebrochen. Du kannst es jederzeit erneut versuchen.
             </p>
           </div>
         )}
 
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-3">Wähle deinen Plan</h1>
-          <p className="text-zinc-400 text-lg">
+        {/* Early Bird Banner */}
+        <div className="mb-8 bg-gradient-to-r from-amber-950/60 to-orange-950/60 border border-amber-800/60 rounded-xl px-4 py-3 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-lg">🔥</span>
+            <div>
+              <p className="text-amber-300 font-semibold text-sm">Early Bird Angebot — nur für die ersten 100 User</p>
+              <p className="text-amber-400/70 text-xs">Pro für 7,99€ statt 9,99€ / Monat</p>
+            </div>
+          </div>
+          <span className="text-amber-300 text-xs font-bold whitespace-nowrap border border-amber-700 px-2 py-1 rounded-full">-20%</span>
+        </div>
+
+        <div className="text-center mb-10 md:mb-12">
+          <h1 className="text-2xl md:text-4xl font-bold mb-3">Wähle deinen Plan</h1>
+          <p className="text-zinc-400 text-sm md:text-lg">
             Mehr Analysen, bessere Technik, schnellere Fortschritte.
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {PLANS.map((plan) => (
             <div
               key={plan.id}
-              className={`relative rounded-2xl border p-8 flex flex-col ${
+              className={`relative rounded-2xl border p-6 md:p-8 flex flex-col ${
                 plan.popular
                   ? "border-white bg-zinc-900"
                   : "border-zinc-800 bg-zinc-900/50"
@@ -171,10 +174,10 @@ export default function PricingPage() {
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-4">
                   <plan.icon className="w-5 h-5 text-zinc-300" />
-                  <h3 className="text-lg font-semibold">{plan.name}</h3>
+                  <h3 className="text-lg font-semibold text-white">{plan.name}</h3>
                 </div>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold">{plan.price}€</span>
+                  <span className="text-3xl md:text-4xl font-bold text-white">{plan.price}€</span>
                   <span className="text-zinc-400 text-sm">{plan.period}</span>
                 </div>
               </div>
@@ -222,6 +225,8 @@ export default function PricingPage() {
           </Link>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

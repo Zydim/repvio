@@ -58,15 +58,14 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
     sig_header = request.headers.get("stripe-signature")
     webhook_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
 
-    if webhook_secret and sig_header:
-        try:
-            event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
-        except (ValueError, stripe.SignatureVerificationError):
-            raise HTTPException(status_code=400, detail="Ungültige Webhook-Signatur.")
-    else:
-        # Dev mode without webhook secret — parse raw event
-        import json
-        event = json.loads(payload)
+    if not webhook_secret:
+        raise HTTPException(status_code=500, detail="Webhook-Secret nicht konfiguriert.")
+    if not sig_header:
+        raise HTTPException(status_code=400, detail="Fehlende Webhook-Signatur.")
+    try:
+        event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
+    except (ValueError, stripe.SignatureVerificationError):
+        raise HTTPException(status_code=400, detail="Ungültige Webhook-Signatur.")
 
     if event.get("type") == "checkout.session.completed":
         session_data = event["data"]["object"]
@@ -107,6 +106,27 @@ def verify_session(session_id: str, db: Session = Depends(get_db)):
             db.commit()
 
     return {"status": "ok", "plan": plan}
+
+
+class CancelRequest(BaseModel):
+    email: EmailStr
+
+
+@router.post("/cancel-subscription")
+def cancel_subscription(body: CancelRequest, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == body.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Benutzer nicht gefunden.")
+    if not user.stripe_subscription_id:
+        raise HTTPException(status_code=400, detail="Kein aktives Abo gefunden.")
+    try:
+        stripe.Subscription.modify(
+            user.stripe_subscription_id,
+            cancel_at_period_end=True,
+        )
+        return {"message": "Abo wird zum Ende des Abrechnungszeitraums gekündigt."}
+    except stripe.StripeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/user-plan")

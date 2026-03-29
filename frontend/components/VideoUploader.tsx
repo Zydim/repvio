@@ -24,6 +24,8 @@ export default function VideoUploader({
 }: VideoUploaderProps) {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [progressLabel, setProgressLabel] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [limitReached, setLimitReached] = useState(false);
 
@@ -49,10 +51,32 @@ export default function VideoUploader({
     if (!file || !exerciseType) return;
     setLoading(true);
     setError(null);
+    setProgress(0);
+
+    const steps = [
+      { pct: 15, label: "Video wird hochgeladen..." },
+      { pct: 35, label: "Frames werden extrahiert..." },
+      { pct: 60, label: "KI analysiert deine Technik..." },
+      { pct: 85, label: "Feedback wird generiert..." },
+      { pct: 95, label: "Fast fertig..." },
+    ];
+    let stepIndex = 0;
+    const interval = setInterval(() => {
+      if (stepIndex < steps.length) {
+        setProgress(steps[stepIndex].pct);
+        setProgressLabel(steps[stepIndex].label);
+        stepIndex++;
+      }
+    }, 1800);
+
     try {
       const result = await analyzeVideo(file, exerciseType, userEmail);
-      onResult(result);
+      clearInterval(interval);
+      setProgress(100);
+      setProgressLabel("Analyse abgeschlossen!");
+      setTimeout(() => { onResult(result); }, 300);
     } catch (err: unknown) {
+      clearInterval(interval);
       const errObj = err as { response?: { status?: number; data?: { detail?: string } } };
       const message =
         errObj?.response?.data?.detail ||
@@ -63,6 +87,8 @@ export default function VideoUploader({
       }
     } finally {
       setLoading(false);
+      setProgress(0);
+      setProgressLabel("");
     }
   }
 
@@ -130,13 +156,29 @@ export default function VideoUploader({
         </div>
       )}
 
+      {/* Progress bar */}
+      {loading && (
+        <div className="space-y-2">
+          <div className="flex justify-between text-xs text-zinc-400">
+            <span>{progressLabel}</span>
+            <span>{progress}%</span>
+          </div>
+          <div className="w-full bg-zinc-800 rounded-full h-2 overflow-hidden">
+            <div
+              className="h-2 rounded-full bg-white transition-all duration-700 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Analyze button */}
       <button
         onClick={handleAnalyze}
         disabled={!file || loading || !exerciseType}
         className="w-full py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed bg-white text-zinc-950 hover:bg-zinc-200"
       >
-        {loading ? "KI analysiert deine Technik..." : "Analysieren"}
+        {loading ? "Analysiere..." : "Analysieren"}
       </button>
     </div>
   );

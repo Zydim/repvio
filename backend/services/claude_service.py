@@ -31,6 +31,7 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
             ],
             capture_output=True,
             text=True,
+            timeout=30,
         )
         duration = float(result.stdout.strip())
 
@@ -50,6 +51,7 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
                     "-y",
                 ],
                 capture_output=True,
+                timeout=60,
             )
             if os.path.exists(frame_path):
                 with open(frame_path, "rb") as f:

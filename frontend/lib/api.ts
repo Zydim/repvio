@@ -96,6 +96,27 @@ export async function verifyCheckoutSession(
   return response.data;
 }
 
+// Auth
+export async function forgotPassword(email: string): Promise<{ message: string }> {
+  const response = await api.post("/auth/forgot-password", { email });
+  return response.data;
+}
+
+export async function resetPassword(token: string, password: string): Promise<{ message: string }> {
+  const response = await api.post("/auth/reset-password", { token, password });
+  return response.data;
+}
+
+export async function cancelSubscription(email: string): Promise<{ message: string }> {
+  const response = await api.post("/payment/cancel-subscription", { email });
+  return response.data;
+}
+
+export async function deleteAccount(email: string, password: string): Promise<{ message: string }> {
+  const response = await api.post("/auth/delete-account", { email, password });
+  return response.data;
+}
+
 export async function createCheckoutSession(
   email: string,
   plan: string

@@ -31,9 +31,23 @@ class User(Base):
     plan = Column(String, default="free", nullable=False)
     stripe_customer_id = Column(String, nullable=True)
     stripe_subscription_id = Column(String, nullable=True)
+    email_verified = Column(Integer, default=0, nullable=False)
+    verification_token = Column(String, nullable=True)
     analyses_this_month = Column(Integer, default=0, nullable=False)
     analyses_reset_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+    failed_login_attempts = Column(Integer, default=0, nullable=False)
+    locked_until = Column(DateTime, nullable=True)
+
+
+class PasswordReset(Base):
+    __tablename__ = "password_resets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, index=True, nullable=False)
+    token = Column(String, unique=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    used = Column(Integer, default=0)
 
 
 class AnalysisSession(Base):

@@ -1,10 +1,15 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 const handler = NextAuth({
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -31,6 +36,39 @@ const handler = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async signIn({ user, account }) {
+      // For Google sign-in, auto-create user in backend
+      if (account?.provider === "google" && user.email) {
+        try {
+          await fetch(`${API_URL}/auth/social-login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: user.email,
+              name: user.name ?? "",
+              provider: "google",
+            }),
+          });
+        } catch {
+          // User might already exist, that's fine
+        }
+      }
+      return true;
+    },
+    async session({ session, token }) {
+      if (token?.email) {
+        session.user = { ...session.user, email: token.email as string };
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user?.email) {
+        token.email = user.email;
+      }
+      return token;
+    },
+  },
   pages: {
     signIn: "/login",
   },

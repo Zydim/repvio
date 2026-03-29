@@ -19,7 +19,7 @@ def _check_and_increment_limit(user: User, db: Session):
     """Reset monthly counter if needed, then check and increment."""
     now = datetime.utcnow()
     # Reset counter if we're in a new month
-    if now.year > user.analyses_reset_at.year or now.month > user.analyses_reset_at.month:
+    if (now.year, now.month) > (user.analyses_reset_at.year, user.analyses_reset_at.month):
         user.analyses_this_month = 0
         user.analyses_reset_at = now
 
