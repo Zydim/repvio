@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Check, Zap, Crown, ArrowLeft } from "lucide-react";
 import { createCheckoutSession, verifyCheckoutSession } from "@/lib/api";
@@ -64,8 +64,9 @@ export default function PricingPage() {
 }
 
 function PricingContent() {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [loading, setLoading] = useState<string | null>(null);
 
   const success = searchParams.get("success");
@@ -77,10 +78,12 @@ function PricingContent() {
   useEffect(() => {
     if (success && sessionId && !verified.current) {
       verified.current = true;
-      // Retry a few times in case session takes a moment to load
       const tryVerify = (attempts = 0) => {
         verifyCheckoutSession(sessionId)
-          .then(() => { window.location.reload(); })
+          .then(async () => {
+            await update(); // Refresh NextAuth session
+            router.replace("/pricing"); // Remove URL params without reload loop
+          })
           .catch(() => {
             if (attempts < 3) setTimeout(() => tryVerify(attempts + 1), 2000);
           });
