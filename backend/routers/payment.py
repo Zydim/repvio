@@ -69,8 +69,10 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
 
     if event.get("type") == "checkout.session.completed":
         session_data = event["data"]["object"]
-        user_email = session_data.get("metadata", {}).get("user_email")
-        plan = session_data.get("metadata", {}).get("plan")
+        raw_metadata = session_data.get("metadata") or {}
+        metadata = dict(raw_metadata) if raw_metadata else {}
+        user_email = metadata.get("user_email")
+        plan = metadata.get("plan")
 
         if user_email and plan:
             user = db.query(User).filter(User.email == user_email).first()
@@ -94,8 +96,9 @@ def verify_session(session_id: str, db: Session = Depends(get_db)):
     if checkout_session.payment_status != "paid":
         return {"status": "not_paid"}
 
-    user_email = checkout_session.metadata.get("user_email")
-    plan = checkout_session.metadata.get("plan")
+    metadata = dict(checkout_session.metadata) if checkout_session.metadata else {}
+    user_email = metadata.get("user_email")
+    plan = metadata.get("plan")
 
     if user_email and plan:
         user = db.query(User).filter(User.email == user_email).first()
