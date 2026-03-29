@@ -19,6 +19,19 @@ PRICE_MAP = {
 FRONTEND_URL = os.getenv("CORS_ORIGIN", "http://localhost:3000")
 
 
+def stripe_obj_to_dict(obj):
+    """Safely convert a Stripe object/metadata to a plain dict."""
+    if obj is None:
+        return {}
+    try:
+        return {k: v for k, v in obj.items()}
+    except Exception:
+        try:
+            return obj._data.copy()
+        except Exception:
+            return {}
+
+
 class CheckoutRequest(BaseModel):
     email: EmailStr
     plan: str
@@ -67,19 +80,23 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
     except (ValueError, stripe.SignatureVerificationError):
         raise HTTPException(status_code=400, detail="Ungültige Webhook-Signatur.")
 
-    if event.get("type") == "checkout.session.completed":
+    event_type = event["type"] if "type" in event else getattr(event, "type", None)
+
+    if event_type == "checkout.session.completed":
         session_data = event["data"]["object"]
-        raw_metadata = session_data.get("metadata") or {}
-        metadata = dict(raw_metadata) if raw_metadata else {}
+        raw_metadata = session_data["metadata"] if "metadata" in session_data else None
+        metadata = stripe_obj_to_dict(raw_metadata)
         user_email = metadata.get("user_email")
         plan = metadata.get("plan")
+        customer = session_data["customer"] if "customer" in session_data else None
+        subscription = session_data["subscription"] if "subscription" in session_data else None
 
         if user_email and plan:
             user = db.query(User).filter(User.email == user_email).first()
             if user:
                 user.plan = plan
-                user.stripe_customer_id = session_data.get("customer")
-                user.stripe_subscription_id = session_data.get("subscription")
+                user.stripe_customer_id = customer
+                user.stripe_subscription_id = subscription
                 db.commit()
 
     return {"status": "ok"}
@@ -93,10 +110,13 @@ def verify_session(session_id: str, db: Session = Depends(get_db)):
     except stripe.StripeError:
         raise HTTPException(status_code=400, detail="Ungültige Session.")
 
-    if checkout_session.payment_status != "paid":
+    payment_status = checkout_session["payment_status"] if "payment_status" in checkout_session else getattr(checkout_session, "payment_status", None)
+
+    if payment_status != "paid":
         return {"status": "not_paid"}
 
-    metadata = dict(checkout_session.metadata) if checkout_session.metadata else {}
+    raw_metadata = checkout_session["metadata"] if "metadata" in checkout_session else None
+    metadata = stripe_obj_to_dict(raw_metadata)
     user_email = metadata.get("user_email")
     plan = metadata.get("plan")
 
@@ -104,8 +124,8 @@ def verify_session(session_id: str, db: Session = Depends(get_db)):
         user = db.query(User).filter(User.email == user_email).first()
         if user and user.plan != plan:
             user.plan = plan
-            user.stripe_customer_id = checkout_session.customer
-            user.stripe_subscription_id = checkout_session.subscription
+            user.stripe_customer_id = checkout_session["customer"] if "customer" in checkout_session else None
+            user.stripe_subscription_id = checkout_session["subscription"] if "subscription" in checkout_session else None
             db.commit()
 
     return {"status": "ok", "plan": plan}
