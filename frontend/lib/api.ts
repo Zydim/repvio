@@ -49,12 +49,14 @@ export interface SessionDetail {
 export async function analyzeVideo(
   file: File,
   exerciseType: string,
-  userEmail: string
+  userEmail: string,
+  muscleFocus?: string
 ): Promise<AnalysisResponse> {
   const formData = new FormData();
   formData.append("video", file);
   formData.append("exercise_type", exerciseType);
   formData.append("user_email", userEmail);
+  if (muscleFocus) formData.append("muscle_focus", muscleFocus);
 
   const response = await api.post<AnalysisResponse>("/analyze", formData, {
     headers: { "Content-Type": "multipart/form-data" },

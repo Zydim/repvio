@@ -23,9 +23,25 @@ const EXERCISES = [
   { id: "Face Pulls Kabelturm", label: "Face Pulls", emoji: "🎯" },
 ];
 
+const MUSCLE_FOCUS: Record<string, string[]> = {
+  "Bankdrücken":              ["Brust", "Trizeps", "Vordere Schulter"],
+  "Schrägbankdrücken":        ["Obere Brust", "Brust allgemein", "Trizeps"],
+  "Dips":                     ["Brust", "Trizeps"],
+  "Klimmzüge":                ["Latissimus / Rücken", "Bizeps"],
+  "Muscle-Ups":               ["Rücken / Lats", "Trizeps", "Gesamtkette"],
+  "Chin-Ups":                 ["Bizeps", "Latissimus / Rücken"],
+  "Seitheben Kabelturm":      ["Mittlerer Deltamuskel", "Hintere Schulter"],
+  "Schulterpress Langhantel": ["Vordere / Mittlere Schulter", "Trizeps"],
+  "Kniebeuge":                ["Quadrizeps", "Gesäß / Glutes", "Gesamt (Beine + Core)"],
+  "Kreuzheben":               ["Rücken / Erector Spinae", "Gesäß / Hamstrings", "Gesamt"],
+  "Hip Thrust":               ["Gesäß / Glutes", "Hamstrings"],
+  "Face Pulls Kabelturm":     ["Hintere Schulter", "Rotatorenmanschette"],
+};
+
 export default function AnalyzePage() {
   const { data: session } = useSession();
   const [exercise, setExercise] = useState<string | null>(null);
+  const [muscleFocus, setMuscleFocus] = useState<string | null>(null);
   const [result, setResult] = useState<AnalysisResponse | null>(null);
 
   const userEmail = session?.user?.email ?? "";
@@ -72,7 +88,7 @@ export default function AnalyzePage() {
                 {EXERCISES.map((ex) => (
                   <button
                     key={ex.id}
-                    onClick={() => setExercise(ex.id)}
+                    onClick={() => { setExercise(ex.id); setMuscleFocus(null); }}
                     className={`flex flex-col items-center gap-1.5 md:gap-2 py-3 md:py-5 rounded-2xl border-2 transition-all text-xs md:text-sm font-medium ${
                       exercise === ex.id
                         ? "border-white bg-zinc-800 text-white"
@@ -86,10 +102,35 @@ export default function AnalyzePage() {
               </div>
             </div>
 
+            {/* Muscle Focus */}
+            {exercise && MUSCLE_FOCUS[exercise] && (
+              <div className="mb-8">
+                <label className="block text-xs text-zinc-400 uppercase tracking-wider mb-3">
+                  Welchen Muskel möchtest du trainieren?
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {MUSCLE_FOCUS[exercise].map((muscle) => (
+                    <button
+                      key={muscle}
+                      onClick={() => setMuscleFocus(muscle)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
+                        muscleFocus === muscle
+                          ? "border-white bg-white text-zinc-950"
+                          : "border-zinc-600 bg-zinc-900 text-zinc-400 hover:border-zinc-400 hover:text-zinc-200"
+                      }`}
+                    >
+                      {muscle}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Uploader */}
             {exercise ? (
               <VideoUploader
                 exerciseType={exercise}
+                muscleFocus={muscleFocus}
                 userEmail={userEmail}
                 onResult={handleResult}
               />

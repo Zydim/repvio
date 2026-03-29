@@ -60,7 +60,7 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
     return frames_b64
 
 
-async def analyze_exercise(video_path: str, exercise_type: str) -> dict:
+async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: str | None = None) -> dict:
     """
     Extract frames from video, analyze with Claude, return structured feedback.
     """
@@ -83,10 +83,19 @@ async def analyze_exercise(video_path: str, exercise_type: str) -> dict:
             },
         })
 
+    focus_line = (
+        f"MUSKEL-FOKUS (vom Nutzer gewählt): {muscle_focus}\n"
+        f"Der Nutzer möchte bewusst den {muscle_focus} trainieren. Passe deine Analyse entsprechend an: "
+        f"Bewerte die Technik primär danach, ob sie optimal für den {muscle_focus} ist. "
+        f"Weise explizit auf Form-Anpassungen hin, die den {muscle_focus} besser aktivieren.\n\n"
+        if muscle_focus else ""
+    )
+
     content.append({
         "type": "text",
         "text": (
-            f"ÜBUNG (vom Nutzer festgelegt): {exercise_type}\n\n"
+            f"ÜBUNG (vom Nutzer festgelegt): {exercise_type}\n"
+            f"{focus_line}"
             f"Die {len(frames)} Frames oben zeigen die vollständige Bewegungsausführung von {exercise_type}. "
             f"Analysiere die Technik anhand dieser Kriterien. "
             f"WICHTIG: Nenne NIEMALS Frame-Nummern oder -Bezeichnungen in deiner Antwort — der Nutzer sieht keine Frames, nur das Feedback.\n"

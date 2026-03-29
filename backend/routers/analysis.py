@@ -40,6 +40,7 @@ async def analyze_video(
     video: UploadFile = File(...),
     exercise_type: str = Form(...),
     user_email: str = Form(default="anonymous@repvio.app"),
+    muscle_focus: str = Form(default=""),
     db: Session = Depends(get_db),
 ):
     # Validate file extension
@@ -71,7 +72,7 @@ async def analyze_video(
             f.write(contents)
 
         # Analyze with Claude
-        feedback = await analyze_exercise(str(tmp_path), exercise_type)
+        feedback = await analyze_exercise(str(tmp_path), exercise_type, muscle_focus or None)
 
         score = float(feedback.get("score", 0))
 

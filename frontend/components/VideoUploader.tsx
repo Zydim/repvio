@@ -8,6 +8,7 @@ import { analyzeVideo, AnalysisResponse } from "@/lib/api";
 
 interface VideoUploaderProps {
   exerciseType: string;
+  muscleFocus?: string | null;
   userEmail: string;
   onResult: (result: AnalysisResponse) => void;
 }
@@ -19,6 +20,7 @@ function formatBytes(bytes: number): string {
 
 export default function VideoUploader({
   exerciseType,
+  muscleFocus,
   userEmail,
   onResult,
 }: VideoUploaderProps) {
@@ -70,7 +72,7 @@ export default function VideoUploader({
     }, 1800);
 
     try {
-      const result = await analyzeVideo(file, exerciseType, userEmail);
+      const result = await analyzeVideo(file, exerciseType, userEmail, muscleFocus ?? undefined);
       clearInterval(interval);
       setProgress(100);
       setProgressLabel("Analyse abgeschlossen!");
