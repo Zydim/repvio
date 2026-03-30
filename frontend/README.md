@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Repvio — KI-gestützte Fitness-Technik-Analyse
 
-## Getting Started
+Repvio analysiert deine Trainingsvideos mit Claude AI und gibt dir präzises Technik-Feedback wie ein persönlicher Coach.
 
-First, run the development server:
+## Features
+
+- **Video-Analyse** — Lade ein Video hoch und erhalte sofort KI-Feedback zu deiner Übungsausführung
+- **Muskel-Fokus** — Wähle gezielt welchen Muskel du trainieren willst und erhalte angepasstes Feedback
+- **Score & Korrekturen** — Bewertung von 0–100, konkrete Fehler mit Korrekturanweisungen
+- **Trainingshistorie** — Alle deine Analysen auf einen Blick, Fortschritt verfolgen
+- **Abo-Modelle** — Free (3/Monat), Pro (30/Monat), Elite (100/Monat)
+- **Kamera-Guide** — Tipps für optimale Videoqualität direkt in der App
+
+## Tech Stack
+
+### Frontend
+- **Next.js 14** (App Router) — React Framework
+- **Tailwind CSS** — Styling
+- **NextAuth.js** — Authentifizierung (Email + Google OAuth)
+- **Stripe** — Zahlungsabwicklung
+- **Vercel** — Hosting & Deployment
+
+### Backend
+- **FastAPI** (Python) — REST API
+- **SQLAlchemy** + **PostgreSQL** — Datenbank
+- **Anthropic Claude** — KI-Analyse (claude-sonnet-4-6 mit Prompt Caching)
+- **FFmpeg** — Video-Frame-Extraktion
+- **Stripe Webhooks** — Abo-Verwaltung
+- **Resend** — Transaktions-E-Mails
+- **Railway** — Backend Hosting
+
+## Unterstützte Übungen
+
+Bankdrücken, Schrägbankdrücken, Dips, Klimmzüge, Muscle-Ups, Chin-Ups, Seitheben, Schulterpress, Kniebeuge, Kreuzheben, Hip Thrust, Face Pulls
+
+## Lokale Entwicklung
+
+### Voraussetzungen
+- Node.js 18+
+- Python 3.13+
+- FFmpeg installiert
+- PostgreSQL (oder SQLite für lokale Entwicklung)
+
+### Frontend starten
 
 ```bash
+cd frontend
+npm install
+cp .env.example .env.local  # Umgebungsvariablen anpassen
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Backend starten
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd backend
+pip install -r requirements.txt
+cp .env.example .env  # Umgebungsvariablen anpassen
+uvicorn main:app --reload
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Umgebungsvariablen Frontend (`.env.local`)
 
-## Learn More
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=...
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Umgebungsvariablen Backend (`.env`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+ANTHROPIC_API_KEY=...
+DATABASE_URL=sqlite:///./repvio.db
+STRIPE_SECRET_KEY=...
+STRIPE_WEBHOOK_SECRET=...
+STRIPE_PRO_PRICE_ID=...
+STRIPE_ELITE_PRICE_ID=...
+FRONTEND_URL=http://localhost:3000
+RESEND_API_KEY=...
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+- **Frontend** → Vercel (automatisches Deployment bei Git Push)
+- **Backend** → Railway (automatisches Deployment bei Git Push, FFmpeg via nixpacks.toml)
+- **Datenbank** → Railway PostgreSQL
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Abo-Modell
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Plan  | Analysen/Monat | Preis      |
+|-------|---------------|------------|
+| Free  | 3             | 0€         |
+| Pro   | 30            | 9,99€/Monat|
+| Elite | 100           | 19,99€/Monat|
+
+## Sicherheit & Compliance
+
+- Disposable-Email-Blocking bei Registrierung
+- IP-basiertes Rate Limiting (10 Analysen/Monat für unangemeldete Nutzer)
+- Account-Sperrung nach zu vielen fehlgeschlagenen Login-Versuchen
+- EU AI Act konformes Disclaimer-Wording
+- Keine medizinischen Diagnosen — nur biomechanisches Technik-Feedback
