@@ -18,7 +18,7 @@ Base = declarative_base()
 PLAN_LIMITS = {
     "free": 3,
     "pro": 50,
-    "elite": None,  # unlimited
+    "elite": 200,
 }
 
 

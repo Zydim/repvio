@@ -44,7 +44,7 @@ const PLANS = [
     price: "19,99",
     period: "/ Monat",
     features: [
-      "Unbegrenzte Video-Analysen",
+      "200 Video-Analysen / Monat",
       "KI-Technik-Feedback",
       "Trainingshistorie",
       "Prioritäts-Analyse",
