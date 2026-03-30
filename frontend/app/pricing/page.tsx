@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Check, Zap, Crown, ArrowLeft } from "lucide-react";
-import { createCheckoutSession, verifyCheckoutSession } from "@/lib/api";
+import { createCheckoutSession, verifyCheckoutSession, getUserPlan } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -68,12 +68,22 @@ function PricingContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState<string | null>(null);
+  const [currentPlan, setCurrentPlan] = useState<string>("free");
 
   const success = searchParams.get("success");
   const canceled = searchParams.get("canceled");
   const sessionId = searchParams.get("session_id");
   const userEmail = session?.user?.email ?? "";
   const verified = useRef(false);
+
+  // Fetch the user's current plan when session is available
+  useEffect(() => {
+    if (userEmail) {
+      getUserPlan(userEmail)
+        .then((data) => setCurrentPlan(data.plan))
+        .catch(() => setCurrentPlan("free"));
+    }
+  }, [userEmail]);
 
   useEffect(() => {
     if (success && sessionId && !verified.current) {
@@ -82,6 +92,11 @@ function PricingContent() {
         verifyCheckoutSession(sessionId)
           .then(async () => {
             await update(); // Refresh NextAuth session
+            if (userEmail) {
+              getUserPlan(userEmail)
+                .then((data) => setCurrentPlan(data.plan))
+                .catch(() => {});
+            }
             router.replace("/pricing"); // Remove URL params without reload loop
           })
           .catch(() => {
@@ -197,7 +212,11 @@ function PricingContent() {
                 ))}
               </ul>
 
-              {plan.id === "free" ? (
+              {plan.id === currentPlan ? (
+                <div className="py-3 rounded-xl text-center text-sm font-medium text-zinc-500 bg-zinc-800/50 border border-zinc-700">
+                  Aktueller Plan
+                </div>
+              ) : plan.id === "free" ? (
                 <div className="py-3 rounded-xl text-center text-sm font-medium text-zinc-500 bg-zinc-800/50 border border-zinc-700">
                   {plan.cta}
                 </div>
