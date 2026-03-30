@@ -126,6 +126,31 @@ export default function AnalyzePage() {
               </div>
             )}
 
+            {/* Camera Guide */}
+            {exercise && (
+              <div className="mb-6 bg-zinc-900 border border-zinc-700 rounded-2xl p-4">
+                <p className="text-xs text-zinc-400 uppercase tracking-wider mb-3 font-semibold">📷 Tipps für beste Ergebnisse</p>
+                <div className="grid grid-cols-2 gap-2 text-xs text-zinc-300">
+                  <div className="flex items-start gap-2">
+                    <span className="text-emerald-400 mt-0.5">✓</span>
+                    <span>Von der <strong>Seite</strong> filmen (nicht frontal)</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-emerald-400 mt-0.5">✓</span>
+                    <span><strong>Ganzer Körper</strong> im Bild sichtbar</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-emerald-400 mt-0.5">✓</span>
+                    <span><strong>Gutes Licht</strong> — kein Gegenlicht</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-emerald-400 mt-0.5">✓</span>
+                    <span>Mindestens <strong>2-3 Wiederholungen</strong> im Video</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Uploader */}
             {exercise ? (
               <VideoUploader

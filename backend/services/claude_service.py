@@ -13,6 +13,27 @@ load_dotenv(override=True)
 NUM_FRAMES = 3
 MODEL = "claude-sonnet-4-6"
 
+# Cached system prompt — stays constant across all analyses
+SYSTEM_PROMPT = [
+    {
+        "type": "text",
+        "text": (
+            "Du bist ein erfahrener, zertifizierter Kraftsport- und Bewegungscoach mit Expertise in "
+            "Biomechanik, funktionellem Training und Verletzungsprävention. "
+            "Du analysierst Übungsvideos frame-by-frame mit dem Blick eines professionellen Trainers: "
+            "präzise, konstruktiv und sicherheitsbewusst. "
+            "Deine Korrekturen sind konkret und umsetzbar — du nennst immer den betroffenen Körperteil "
+            "und die genaue Verbesserung. "
+            "WICHTIG: Du gibst ausschließlich Technik-Feedback zur Bewegungsoptimierung. "
+            "Deine Analyse ersetzt keine medizinische oder physiotherapeutische Beratung. "
+            "Verwende keine medizinischen Diagnosen. Beschreibe Risiken als erhöhte Gelenkbelastung "
+            "oder biomechanische Ineffizienz, nicht als medizinische Befunde. "
+            "Antworte ausschließlich mit gültigem JSON, ohne Markdown-Formatierung."
+        ),
+        "cache_control": {"type": "ephemeral"},
+    }
+]
+
 
 def get_client() -> anthropic.Anthropic:
     return anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
@@ -21,7 +42,6 @@ def get_client() -> anthropic.Anthropic:
 def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
     """Extract evenly-spaced frames from video, return list of base64-encoded JPEGs."""
     with tempfile.TemporaryDirectory() as tmp_dir:
-        # Get video duration
         result = subprocess.run(
             [
                 "ffprobe", "-v", "error",
@@ -35,7 +55,6 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
         )
         duration = float(result.stdout.strip())
 
-        # Extract frames at evenly spaced timestamps
         frames_b64 = []
         for i in range(num_frames):
             timestamp = duration * (i + 0.5) / num_frames
@@ -61,13 +80,10 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
 
 
 async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: str | None = None) -> dict:
-    """
-    Extract frames from video, analyze with Claude, return structured feedback.
-    """
+    """Extract frames from video, analyze with Claude using prompt caching."""
     client = get_client()
     frames = _extract_frames(video_path)
 
-    # Build content: frames first, then the prompt
     content = []
     for i, frame_b64 in enumerate(frames):
         content.append({
@@ -106,7 +122,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
             "- Stabilität — Core-Spannung, Balance, Kontrolle\n"
             "- Bewegungsfluss — Tempo, kontrollierte Exzentrik und Konzentrik\n"
             "- Wiederholungsqualität — wird die Technik über alle Reps gehalten?\n"
-            "- Verletzungsrisiken — kritische Fehler die zu Schäden führen könnten\n\n"
+            "- Biomechanische Belastung — erhöhte Gelenkbelastung oder Ineffizienzen erkennen\n\n"
             "Antworte NUR als JSON (kein Markdown, kein Codeblock):\n"
             "{\n"
             '  "score": <0-100>,\n'
@@ -116,7 +132,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
             '    {"fehler": "<was genau falsch ist>", "korrektur": "<wie es richtig gemacht wird>"},\n'
             '    {"fehler": "<was genau falsch ist>", "korrektur": "<wie es richtig gemacht wird>"}\n'
             '  ],\n'
-            '  "verletzungsrisiko": "<niedrig|mittel|hoch> — kurze Begründung",\n'
+            '  "verletzungsrisiko": "<niedrig|mittel|erhöht> — kurze Beschreibung der biomechanischen Belastung",\n'
             '  "cue": "<1 einprägsamer Coaching-Cue der den wichtigsten Fehler behebt>",\n'
             '  "naechste_schritte": ["<konkrete Übung oder Drill zur Verbesserung>", "<weiterer Schritt>"]\n'
             "}"
@@ -127,15 +143,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
         model=MODEL,
         max_tokens=4096,
         temperature=0,
-        system=(
-            "Du bist ein erfahrener, zertifizierter Kraftsport- und Bewegungscoach mit Expertise in "
-            "Biomechanik, funktionellem Training und Verletzungsprävention. "
-            "Du analysierst Übungsvideos frame-by-frame mit dem Blick eines professionellen Trainers: "
-            "präzise, konstruktiv und sicherheitsbewusst. "
-            "Deine Korrekturen sind konkret und umsetzbar — du nennst immer den betroffenen Körperteil "
-            "und die genaue Verbesserung. "
-            "Antworte ausschließlich mit gültigem JSON, ohne Markdown-Formatierung."
-        ),
+        system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": content}],
     )
 
