@@ -20,7 +20,7 @@ const PLANS = [
       "KI-Technik-Feedback",
       "Trainingshistorie",
     ],
-    cta: "Aktueller Plan",
+    cta: "Kostenlos",
     icon: Zap,
   },
   {
