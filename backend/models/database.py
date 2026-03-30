@@ -17,8 +17,8 @@ Base = declarative_base()
 
 PLAN_LIMITS = {
     "free": 3,
-    "pro": 50,
-    "elite": 200,
+    "pro": 30,
+    "elite": 100,
 }
 
 
@@ -60,6 +60,15 @@ class AnalysisSession(Base):
     feedback_json = Column(Text, nullable=False)
     score = Column(Float, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class IpAnalysisTracker(Base):
+    __tablename__ = "ip_analysis_tracker"
+
+    id = Column(Integer, primary_key=True, index=True)
+    ip_address = Column(String, index=True, nullable=False)
+    analyses_this_month = Column(Integer, default=0, nullable=False)
+    reset_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 
 def get_db():

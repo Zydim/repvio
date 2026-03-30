@@ -2,11 +2,13 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
 from sqlalchemy.orm import Session
 
-from models.database import AnalysisSession, User, PLAN_LIMITS, get_db
+from models.database import AnalysisSession, IpAnalysisTracker, User, PLAN_LIMITS, get_db
 from services.claude_service import analyze_exercise
+
+IP_FREE_LIMIT = 10  # max free analyses per IP per month
 
 router = APIRouter()
 
@@ -35,8 +37,24 @@ def _check_and_increment_limit(user: User, db: Session):
     db.commit()
 
 
+def _check_ip_limit(ip: str, db: Session):
+    now = datetime.utcnow()
+    tracker = db.query(IpAnalysisTracker).filter(IpAnalysisTracker.ip_address == ip).first()
+    if not tracker:
+        tracker = IpAnalysisTracker(ip_address=ip, analyses_this_month=0, reset_at=now)
+        db.add(tracker)
+    elif (now.year, now.month) > (tracker.reset_at.year, tracker.reset_at.month):
+        tracker.analyses_this_month = 0
+        tracker.reset_at = now
+    if tracker.analyses_this_month >= IP_FREE_LIMIT:
+        raise HTTPException(status_code=429, detail="Zu viele Analysen von dieser IP-Adresse. Bitte registriere dich für mehr.")
+    tracker.analyses_this_month += 1
+    db.commit()
+
+
 @router.post("/analyze")
 async def analyze_video(
+    request: Request,
     video: UploadFile = File(...),
     exercise_type: str = Form(...),
     user_email: str = Form(default="anonymous@repvio.app"),
@@ -60,6 +78,10 @@ async def analyze_video(
     user = db.query(User).filter(User.email == user_email).first()
     if user:
         _check_and_increment_limit(user, db)
+        # IP-limit only for free users
+        if user.plan == "free":
+            client_ip = request.headers.get("x-forwarded-for", request.client.host).split(",")[0].strip()
+            _check_ip_limit(client_ip, db)
 
     # Save temporarily
     TMP_DIR.mkdir(parents=True, exist_ok=True)

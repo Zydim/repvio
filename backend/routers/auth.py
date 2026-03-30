@@ -9,6 +9,19 @@ from sqlalchemy.orm import Session
 from models.database import User, PasswordReset, get_db
 from services.email_service import send_verification_email, send_password_reset_email
 
+DISPOSABLE_DOMAINS = {
+    "mailinator.com", "tempmail.com", "guerrillamail.com", "10minutemail.com",
+    "throwaway.email", "yopmail.com", "sharklasers.com", "guerrillamailblock.com",
+    "grr.la", "guerrillamail.info", "spam4.me", "trashmail.com", "trashmail.me",
+    "trashmail.net", "dispostable.com", "maildrop.cc", "spamgourmet.com",
+    "tempr.email", "discard.email", "mailnull.com", "spamhereplease.com",
+    "spamex.com", "mailnesia.com", "spamfree24.org", "tempinbox.com",
+    "fakeinbox.com", "mailforspam.com", "spamhole.com", "spamify.com",
+    "mt2015.com", "spamthisplease.com", "getairmail.com", "filzmail.com",
+    "throwam.com", "spamgob.com", "wegwerfmail.de", "muellmail.com",
+    "trash-mail.at", "tempail.com", "emailondeck.com", "owlpic.com",
+}
+
 router = APIRouter(prefix="/auth")
 
 
@@ -26,6 +39,9 @@ class LoginRequest(BaseModel):
 def register(body: RegisterRequest, db: Session = Depends(get_db)):
     if len(body.password) < 6:
         raise HTTPException(status_code=400, detail="Passwort muss mindestens 6 Zeichen haben.")
+    domain = body.email.split("@")[-1].lower()
+    if domain in DISPOSABLE_DOMAINS:
+        raise HTTPException(status_code=400, detail="Wegwerf-E-Mail-Adressen sind nicht erlaubt.")
     if db.query(User).filter(User.email == body.email).first():
         raise HTTPException(status_code=400, detail="E-Mail bereits registriert.")
     hashed = bcrypt.hashpw(body.password.encode(), bcrypt.gensalt()).decode()
