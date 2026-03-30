@@ -45,7 +45,7 @@ export default function AccountPage() {
     <div className="min-h-screen bg-zinc-950 flex flex-col">
       <Navbar />
 
-      <div className="max-w-2xl mx-auto px-4 md:px-6 py-10 flex-1 w-full">
+      <main className="max-w-2xl mx-auto px-4 md:px-6 py-10 flex-1 w-full">
         <h1 className="text-2xl md:text-3xl font-bold mb-8">Mein Account</h1>
 
         {/* Profile */}
@@ -163,7 +163,7 @@ export default function AccountPage() {
             </button>
           </div>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>

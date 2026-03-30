@@ -27,7 +27,7 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-zinc-950 flex flex-col">
       <Navbar />
 
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12 flex-1 w-full">
+      <main className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12 flex-1 w-full">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">Dashboard</h1>
         <p className="text-zinc-400 mb-8 md:mb-10 text-sm">
           {session?.user?.email ?? ""}
@@ -45,7 +45,7 @@ export default function DashboardPage() {
             <HistoryTable sessions={sessions} />
           </>
         )}
-      </div>
+      </main>
 
       <Footer />
     </div>

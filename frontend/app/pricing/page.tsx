@@ -130,7 +130,7 @@ function PricingContent() {
     <div className="min-h-screen bg-zinc-950 flex flex-col">
       <Navbar />
 
-      <div className="max-w-5xl mx-auto px-4 md:px-6 py-10 md:py-16 flex-1">
+      <main className="max-w-5xl mx-auto px-4 md:px-6 py-10 md:py-16 flex-1">
         {/* Success / Cancel Banner */}
         {success && (
           <div className="mb-8 bg-emerald-950/50 border border-emerald-800 rounded-xl px-4 md:px-6 py-4 text-center">
@@ -246,7 +246,7 @@ function PricingContent() {
             Zurück zur Analyse
           </Link>
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>

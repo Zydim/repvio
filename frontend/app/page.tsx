@@ -14,6 +14,7 @@ export default function Home() {
     <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <Navbar />
 
+      <main>
       {/* Hero */}
       <section className="flex flex-col items-center justify-center text-center px-4 md:px-6 py-16 md:py-32">
         <div className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-full px-4 py-1.5 mb-6 md:mb-8">
@@ -143,6 +144,7 @@ export default function Home() {
           {isLoggedIn ? "Jetzt analysieren" : "Kostenlos starten"}
         </Link>
       </section>
+      </main>
 
       <Footer />
     </div>

@@ -58,6 +58,9 @@ export default function Navbar() {
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden p-2 text-zinc-400 hover:text-zinc-100"
+          aria-label={open ? "Menü schließen" : "Menü öffnen"}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
         >
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
@@ -65,7 +68,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="md:hidden border-t border-zinc-800 px-4 py-4 space-y-3 bg-zinc-950">
+        <div id="mobile-menu" className="md:hidden border-t border-zinc-800 px-4 py-4 space-y-3 bg-zinc-950">
           {isLoggedIn && (
             <div className="pb-2">
               <PlanBadge />
