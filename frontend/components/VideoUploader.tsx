@@ -158,18 +158,36 @@ export default function VideoUploader({
         </div>
       )}
 
-      {/* Progress bar */}
+      {/* Scanner animation + Progress */}
       {loading && (
-        <div className="space-y-2">
-          <div className="flex justify-between text-xs text-zinc-400">
-            <span>{progressLabel}</span>
-            <span>{progress}%</span>
+        <div className="space-y-4">
+          {/* Scanner box */}
+          <div className="relative rounded-2xl border-2 animate-pulse-border bg-zinc-900 overflow-hidden px-5 py-6">
+            {/* Scan beam */}
+            <div className="animate-scan absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-transparent via-emerald-400/30 to-transparent pointer-events-none" />
+            {/* Corner brackets */}
+            <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-emerald-400 rounded-tl" />
+            <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-emerald-400 rounded-tr" />
+            <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-emerald-400 rounded-bl" />
+            <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-emerald-400 rounded-br" />
+            {/* Content */}
+            <div className="text-center">
+              <p className="text-emerald-400 text-xs font-mono tracking-widest uppercase mb-1">KI analysiert</p>
+              <p className="text-zinc-200 text-sm font-medium">{progressLabel}</p>
+            </div>
           </div>
-          <div className="w-full bg-zinc-800 rounded-full h-2 overflow-hidden">
-            <div
-              className="h-2 rounded-full bg-white transition-all duration-700 ease-out"
-              style={{ width: `${progress}%` }}
-            />
+          {/* Progress bar */}
+          <div className="space-y-1.5">
+            <div className="flex justify-between text-xs text-zinc-400">
+              <span>{progress}%</span>
+              <span>{progress < 100 ? "läuft..." : "✓ fertig"}</span>
+            </div>
+            <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+              <div
+                className="h-1.5 rounded-full bg-emerald-400 transition-all duration-700 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
           </div>
         </div>
       )}

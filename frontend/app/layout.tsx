@@ -16,6 +16,18 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "Repvio",
+    startupImage: "/icon-512.png",
+  },
+  icons: {
+    apple: "/icon-192.png",
+    icon: "/icon-192.png",
+    shortcut: "/icon-192.png",
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-title": "Repvio",
   },
 };
 
