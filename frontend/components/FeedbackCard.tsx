@@ -1,6 +1,7 @@
 "use client";
 
-import { CheckCircle, AlertTriangle, Zap, ShieldAlert, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { CheckCircle, AlertTriangle, Zap, ShieldAlert, ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
 import { FeedbackResult } from "@/lib/api";
 
 function ScoreCircle({ score }: { score: number }) {
@@ -19,26 +20,8 @@ function ScoreCircle({ score }: { score: number }) {
     <div className="flex flex-col items-center gap-2">
       <div className="relative w-28 h-28">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-          <circle
-            cx="50"
-            cy="50"
-            r={radius}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="8"
-            className="text-zinc-700"
-          />
-          <circle
-            cx="50"
-            cy="50"
-            r={radius}
-            fill="none"
-            strokeWidth="8"
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
-            strokeLinecap="round"
-            className={color}
-          />
+          <circle cx="50" cy="50" r={radius} fill="none" stroke="currentColor" strokeWidth="8" className="text-zinc-700" />
+          <circle cx="50" cy="50" r={radius} fill="none" strokeWidth="8" strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round" className={color} />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <span className={`text-2xl font-bold ${color.split(" ")[0]}`}>{score}</span>
@@ -61,7 +44,7 @@ function RisikoBadge({ risiko }: { risiko: string }) {
     <div className={`flex items-start gap-2 border rounded-xl px-4 py-3 text-sm ${color}`}>
       <ShieldAlert className="w-4 h-4 mt-0.5 shrink-0" />
       <div>
-        <span className="font-semibold uppercase tracking-wide text-xs block mb-0.5">Verletzungsrisiko</span>
+        <span className="font-semibold uppercase tracking-wide text-xs block mb-0.5">Biomechanische Belastung</span>
         {risiko}
       </div>
     </div>
@@ -77,6 +60,11 @@ export default function FeedbackCard({
   cue,
   naechste_schritte,
 }: FeedbackResult) {
+  const [correctionsOpen, setCorrectionsOpen] = useState(false);
+
+  const quickFix = corrections?.[0] ?? null;
+  const remainingCorrections = corrections?.slice(1) ?? [];
+
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-6">
       {/* Header */}
@@ -88,8 +76,31 @@ export default function FeedbackCard({
         </div>
       </div>
 
+      {/* Quick-Fix — #1 Korrektur prominent gepinnt */}
+      {quickFix && (
+        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Zap className="w-4 h-4 text-yellow-400 shrink-0" />
+            <span className="text-xs font-bold uppercase tracking-wider text-yellow-400">Quick-Fix #1</span>
+          </div>
+          <p className="text-yellow-200 font-medium text-sm mb-1">{quickFix.fehler}</p>
+          <p className="text-zinc-300 text-sm">{quickFix.korrektur}</p>
+        </div>
+      )}
+
       {/* Verletzungsrisiko */}
       {verletzungsrisiko && <RisikoBadge risiko={verletzungsrisiko} />}
+
+      {/* Coaching Cue */}
+      <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-4">
+        <div className="flex items-center gap-2 mb-2">
+          <Zap className="w-4 h-4 text-yellow-400" />
+          <span className="text-xs font-semibold uppercase tracking-wider text-yellow-400">
+            Dein Coaching-Cue
+          </span>
+        </div>
+        <p className="text-zinc-100 font-medium">{cue}</p>
+      </div>
 
       {/* Positives */}
       {positives?.length > 0 && (
@@ -108,36 +119,36 @@ export default function FeedbackCard({
         </div>
       )}
 
-      {/* Corrections */}
-      {corrections?.length > 0 && (
+      {/* Weitere Verbesserungen — Accordion */}
+      {remainingCorrections.length > 0 && (
         <div>
-          <h3 className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-3">
-            Verbesserungen
-          </h3>
-          <ul className="space-y-3">
-            {corrections.map((c, i) => (
-              <li key={i} className="bg-zinc-800/50 rounded-xl p-3 text-sm">
-                <div className="flex items-start gap-2 text-yellow-300 font-medium mb-1">
-                  <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
-                  {c.fehler}
-                </div>
-                <p className="text-zinc-300 pl-6">{c.korrektur}</p>
-              </li>
-            ))}
-          </ul>
+          <button
+            onClick={() => setCorrectionsOpen(!correctionsOpen)}
+            className="w-full flex items-center justify-between text-sm font-medium text-zinc-400 uppercase tracking-wider py-2 hover:text-zinc-200 transition-colors"
+          >
+            <span>Alle Verbesserungen ({corrections.length})</span>
+            {correctionsOpen ? (
+              <ChevronUp className="w-4 h-4" />
+            ) : (
+              <ChevronDown className="w-4 h-4" />
+            )}
+          </button>
+
+          {correctionsOpen && (
+            <ul className="space-y-3 mt-3">
+              {corrections.map((c, i) => (
+                <li key={i} className="bg-zinc-800/50 rounded-xl p-3 text-sm">
+                  <div className="flex items-start gap-2 text-yellow-300 font-medium mb-1">
+                    <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
+                    {c.fehler}
+                  </div>
+                  <p className="text-zinc-300 pl-6">{c.korrektur}</p>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
-
-      {/* Coaching Cue */}
-      <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-4">
-        <div className="flex items-center gap-2 mb-2">
-          <Zap className="w-4 h-4 text-yellow-400" />
-          <span className="text-xs font-semibold uppercase tracking-wider text-yellow-400">
-            Dein Coaching-Cue
-          </span>
-        </div>
-        <p className="text-zinc-100 font-medium">{cue}</p>
-      </div>
 
       {/* Nächste Schritte */}
       {naechste_schritte?.length > 0 && (
