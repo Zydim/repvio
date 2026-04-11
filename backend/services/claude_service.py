@@ -185,4 +185,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
         raw = raw.split("\n", 1)[-1]
         raw = raw.rsplit("```", 1)[0].strip()
 
-    return json.loads(raw)
+    result = json.loads(raw)
+    if "score" in result:
+        result["score"] = round(result["score"] / 5) * 5
+    return result
