@@ -142,14 +142,20 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
             "- Bewegungsfluss — Tempo, kontrollierte Exzentrik und Konzentrik\n"
             "- Wiederholungsqualität — wird die Technik über alle Reps gehalten?\n"
             "- Biomechanische Belastung — erhöhte Gelenkbelastung oder Ineffizienzen erkennen\n\n"
-            "### SCHRITT 2: SCORING\n"
-            "Vergib den Score nach dieser Hierarchie:\n"
+            "### SCHRITT 2: SCORING (Rubrik-basiert)\n"
+            "Berechne den Score als Summe dieser 5 Kategorien (je 0-20 Punkte):\n"
+            "1. HALTUNG & WIRBELSÄULE (0-20): Neutrale Wirbelsäule, Kopfposition, Core-Spannung\n"
+            "2. GELENKSTELLUNGEN (0-20): Korrekte Winkel in Knie/Hüfte/Schulter/Ellbogen\n"
+            "3. BEWEGUNGSUMFANG (0-20): Volle ROM erreicht, kontrollierte End-Positionen\n"
+            "4. BEWEGUNGSFLUSS (0-20): Tempo, Kontrolle in Exzentrik/Konzentrik, kein unkontrollierter Schwung\n"
+            "5. GESAMTEINDRUCK (0-20): Symmetrie, Wiederholungsqualität, Stabilität\n\n"
+            "Leitlinien:\n"
             "- 85-100: Solide bis exzellente Technik, nur Feinschliff nötig\n"
             "- 70-84: Gute Grundtechnik mit Optimierungspotenzial (KEIN Verletzungsrisiko)\n"
             "- 55-69: Deutliche Technikfehler, die korrigiert werden sollten\n"
             "- Unter 55: NUR bei ernsthafter Verletzungsgefahr oder komplett falscher Ausführung\n"
             "Bei schweren Gewichten: Leichtes Kipping, minimaler Schwung oder leichte ROM-Einschränkung "
-            "sind NORMAL und maximal 2-5 Punkte Abzug wert.\n\n"
+            "sind NORMAL und maximal 2-3 Punkte Abzug pro Kategorie.\n\n"
             "Antworte NUR als JSON (kein Markdown, kein Codeblock):\n"
             "{\n"
             '  "score": <0-100>,\n'
@@ -169,7 +175,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
     response = client.messages.create(
         model=MODEL,
         max_tokens=4096,
-        temperature=0,
+        temperature=0.3,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": content}],
     )
