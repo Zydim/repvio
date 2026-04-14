@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle, AlertTriangle, Zap, ShieldAlert, ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
-import { FeedbackResult } from "@/lib/api";
+import { FeedbackResult, Teilscores } from "@/lib/api";
 
 function ScoreCircle({ score }: { score: number }) {
   const color =
@@ -32,6 +32,30 @@ function ScoreCircle({ score }: { score: number }) {
   );
 }
 
+const TEILSCORE_LABELS: Record<keyof Teilscores, string> = {
+  haltung: "Haltung & Wirbelsäule",
+  gelenke: "Gelenkstellungen",
+  rom: "Bewegungsumfang",
+  bewegungsfluss: "Bewegungsfluss",
+  gesamteindruck: "Gesamteindruck",
+};
+
+function TeilscoreBar({ label, value }: { label: string; value: number }) {
+  const pct = (value / 20) * 100;
+  const color =
+    value >= 16 ? "bg-green-500" : value >= 12 ? "bg-yellow-500" : "bg-red-500";
+
+  return (
+    <div className="flex items-center gap-3">
+      <span className="text-xs text-zinc-400 w-40 shrink-0">{label}</span>
+      <div className="flex-1 bg-zinc-700 rounded-full h-2 overflow-hidden">
+        <div className={`h-full rounded-full ${color} transition-all duration-500`} style={{ width: `${pct}%` }} />
+      </div>
+      <span className="text-xs font-mono text-zinc-300 w-10 text-right">{value}/20</span>
+    </div>
+  );
+}
+
 function RisikoBadge({ risiko }: { risiko: string }) {
   const lower = risiko.toLowerCase();
   const color = lower.startsWith("hoch")
@@ -53,6 +77,7 @@ function RisikoBadge({ risiko }: { risiko: string }) {
 
 export default function FeedbackCard({
   score,
+  teilscores,
   overall,
   positives,
   corrections,
@@ -75,6 +100,16 @@ export default function FeedbackCard({
           <p className="text-zinc-300 text-sm leading-relaxed">{overall}</p>
         </div>
       </div>
+
+      {/* Teilscores Breakdown */}
+      {teilscores && (
+        <div className="bg-zinc-800/50 border border-zinc-700/50 rounded-xl p-4 space-y-2.5">
+          <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3">Bewertung im Detail</h3>
+          {(Object.keys(TEILSCORE_LABELS) as (keyof Teilscores)[]).map((key) => (
+            <TeilscoreBar key={key} label={TEILSCORE_LABELS[key]} value={teilscores[key]} />
+          ))}
+        </div>
+      )}
 
       {/* Quick-Fix — #1 Korrektur prominent gepinnt */}
       {quickFix && (

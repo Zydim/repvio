@@ -11,8 +11,17 @@ export interface Correction {
   korrektur: string;
 }
 
+export interface Teilscores {
+  haltung: number;
+  gelenke: number;
+  rom: number;
+  bewegungsfluss: number;
+  gesamteindruck: number;
+}
+
 export interface FeedbackResult {
   score: number;
+  teilscores?: Teilscores;
   overall: string;
   positives: string[];
   corrections: Correction[];
