@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-NUM_FRAMES = 5
+NUM_FRAMES = 3
 MODEL = "claude-sonnet-4-6"
 
 # Cached system prompt — stays constant across all analyses
@@ -280,7 +280,6 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
     # Validate & recalculate score from teilscores if present
     if "teilscores" in result:
         ts = result["teilscores"]
-        calculated = sum(ts.get(k, 0) for k in ["haltung", "gelenke", "rom", "bewegungsfluss", "gesamteindruck"])
-        result["score"] = round(calculated / 5) * 5
+        result["score"] = sum(ts.get(k, 0) for k in ["haltung", "gelenke", "rom", "bewegungsfluss", "gesamteindruck"])
 
     return result
