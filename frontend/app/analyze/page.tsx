@@ -21,6 +21,8 @@ const EXERCISES = [
   { id: "Kreuzheben", label: "Kreuzheben", emoji: "🏗️" },
   { id: "Hip Thrust", label: "Hip Thrust", emoji: "🍑" },
   { id: "Face Pulls Kabelturm", label: "Face Pulls", emoji: "🎯" },
+  { id: "Step Up Kabelzug", label: "Step Up Kabel", emoji: "🪜" },
+  { id: "Bulgarian Split Squat", label: "Bulgarian SS", emoji: "🦿" },
 ];
 
 const MUSCLE_FOCUS: Record<string, string[]> = {
@@ -36,6 +38,8 @@ const MUSCLE_FOCUS: Record<string, string[]> = {
   "Kreuzheben":               ["Rücken / Erector Spinae", "Gesäß / Hamstrings", "Gesamt"],
   "Hip Thrust":               ["Gesäß / Glutes", "Hamstrings"],
   "Face Pulls Kabelturm":     ["Hintere Schulter", "Rotatorenmanschette"],
+  "Step Up Kabelzug":         ["Quadrizeps", "Gesäß / Glutes", "Gesamt (Beine + Core)"],
+  "Bulgarian Split Squat":    ["Quadrizeps", "Gesäß / Glutes", "Hamstrings"],
 };
 
 export default function AnalyzePage() {
