@@ -115,6 +115,51 @@ EXERCISE_CRITERIA: dict[str, str] = {
     ),
 }
 
+# Muskel-fokus-spezifische Kriterien — überschreiben EXERCISE_CRITERIA wenn Muskel-Fokus gesetzt ist
+EXERCISE_CRITERIA_BY_FOCUS: dict[str, dict[str, str]] = {
+    "Step Up Kabelzug": {
+        "Gesäß / Glutes": (
+            "FOKUS GESÄSS — angepasste Kriterien:\n"
+            "✓ Oberkörper-Vorbeuge (ca. 30-45°) ist KORREKTE TECHNIK für Glute-Aktivierung — NICHT als Fehler werten.\n"
+            "  Bewerte es positiv, wenn der Oberkörper kontrolliert nach vorne geneigt wird (starrer Rücken = Hüfte geht nach hinten).\n"
+            "  Kritisiere NUR: Rundrücken/Katzenbuckel, oder so extremes Vorlehnen dass die Balance nur durch Festhalten am Turm gehalten wird.\n"
+            "✓ Schienbein möglichst vertikal halten.\n"
+            "✓ Volle Hüftstreckung oben (Lockout + Gluteus-Kontraktion) trotz Vorbeuge — streng bewerten.\n"
+            "✓ Arbeitendes Bein trägt das Gewicht (kein Abstoßen vom Standbein).\n"
+            "✓ Kontrolliertes Absenken, Knie folgt der Fußspitze.\n"
+            "UNTERSCHIED: Vorlehnen (Technik) = bewusstes Neigen mit geradem Rücken. Vorkippen (Fehler) = unkontrolliert, runder Rücken."
+        ),
+        "Quadrizeps": (
+            "FOKUS QUADRIZEPS — angepasste Kriterien:\n"
+            "✓ Aufrechter Oberkörper erwünscht — fördert Knie-dominante Bewegung.\n"
+            "✓ Knie darf und soll aktiv nach vorne über die Zehenspitzen wandern.\n"
+            "✓ Volle Kniestreckung oben (Lockout).\n"
+            "✓ Arbeitendes Bein trägt das Gewicht (kein Abstoßen vom Standbein).\n"
+            "✓ Kontrolliertes Absenken, Knie folgt der Fußspitze."
+        ),
+    },
+    "Bulgarian Split Squat": {
+        "Gesäß / Glutes": (
+            "FOKUS GESÄSS — angepasste Kriterien:\n"
+            "✓ Oberkörper-Vorbeuge (ca. 20-40°) ist KORREKTE TECHNIK — NICHT als Fehler werten.\n"
+            "  Bewerte es positiv wenn der Oberkörper kontrolliert vorgelehnt wird (mehr Hüft-Flexion = mehr Glute-Dehnung).\n"
+            "  Kritisiere NUR: Rundrücken, oder so extremes Vorlehnen dass Stabilität verloren geht.\n"
+            "✓ Vorderer Fuß weiter vorne positioniert (mehr Hüft-Abstand zur Bank).\n"
+            "✓ Volle Hüftstreckung oben (Lockout + Gluteus-Kontraktion) trotz Vorbeuge — streng bewerten.\n"
+            "✓ Tiefe: hinteres Knie fast am Boden.\n"
+            "✓ Kein seitliches Ausweichen, Balance und Stabilität."
+        ),
+        "Quadrizeps": (
+            "FOKUS QUADRIZEPS — angepasste Kriterien:\n"
+            "✓ Aufrechter Oberkörper erwünscht.\n"
+            "✓ Vorderer Fuß eher näher unter dem Körper (mehr Knie-dominante Bewegung).\n"
+            "✓ Knie darf aktiv nach vorne über die Zehenspitzen wandern.\n"
+            "✓ Volle Kniestreckung oben.\n"
+            "✓ Tiefe: hinteres Knie fast am Boden, kein seitliches Ausweichen."
+        ),
+    },
+}
+
 
 def get_client() -> anthropic.Anthropic:
     return anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
@@ -180,8 +225,9 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
             },
         })
 
-    # Exercise-specific criteria
-    exercise_criteria = EXERCISE_CRITERIA.get(exercise_type, "")
+    # Exercise-specific criteria — muskel-fokus-spezifisch wenn vorhanden
+    focus_criteria = EXERCISE_CRITERIA_BY_FOCUS.get(exercise_type, {}).get(muscle_focus or "", "")
+    exercise_criteria = focus_criteria or EXERCISE_CRITERIA.get(exercise_type, "")
     criteria_block = f"\nÜBUNGSSPEZIFISCHE KRITERIEN für {exercise_type}:\n{exercise_criteria}\n\n" if exercise_criteria else ""
 
     focus_line = (
