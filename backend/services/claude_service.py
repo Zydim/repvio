@@ -65,71 +65,108 @@ EXERCISE_CRITERIA: dict[str, str] = {
     "Bankdrücken": (
         "Fokus-Kriterien: Schulterblatt-Retraktion, Bogen in der Brustwirbelsäule, "
         "Ellbogen-Winkel (45-75° zum Körper), Handgelenk über Ellbogen, "
-        "Stange berührt untere Brust, volle Lockout-Extension, Füße fest am Boden."
+        "Stange berührt untere Brust, volle Lockout-Extension, Füße fest am Boden.\n"
+        "TOLERANZEN: Ein sichtbarer Bogen (Arch) ist KORREKTE Powerlifting-Technik — kein Hohlkreuz. "
+        "Ellbogen-Winkel variiert je nach Griffbreite: breiter Griff = flachere Ellbogen, beides akzeptabel. "
+        "Stange muss nicht die Brust berühren wenn der Athlet bewusst knapp darüber stoppt (Schulter-schonend)."
     ),
     "Schrägbankdrücken": (
         "Fokus-Kriterien: Schulterblatt-Retraktion trotz Schrägbank, Ellbogen-Winkel, "
-        "Stangen-Pfad zur oberen Brust, Handgelenk-Alignment, stabile Fußposition, "
-        "kein übermäßiges Hohlkreuz."
+        "Stangen-Pfad zur oberen Brust, Handgelenk-Alignment, stabile Fußposition.\n"
+        "TOLERANZEN: Leichtes Hohlkreuz ist bei schweren Gewichten normal und stabilisierend — "
+        "nur extremes Abheben des Gesäßes von der Bank ist ein Fehler. "
+        "Stangen-Pfad variiert je nach Bankwinkel."
     ),
     "Dips": (
         "Fokus-Kriterien: Schultern tief und stabil (nicht nach vorn gezogen), "
-        "Ellbogen-Winkel min. 90° in der Tiefe, kontrollierter Absenkwinkel, "
-        "Oberkörper-Neigung (leicht vor für Brust, aufrecht für Trizeps), voller Lockout."
+        "kontrollierter Absenkwinkel, voller Lockout oben.\n"
+        "TOLERANZEN: Die Tiefe variiert je nach Schulter-Mobilität — 90° Ellbogen ist ein Richtwert, "
+        "KEIN Muss. Leichtes Vorschwingen des Körpers ist bei schweren Dips normal. "
+        "Oberkörper-Neigung ist stilabhängig: leicht vor = mehr Brust, aufrecht = mehr Trizeps — beides korrekt, "
+        "nur bewerten wenn ein Muskel-Fokus gewählt wurde."
     ),
     "Klimmzüge": (
-        "Fokus-Kriterien: Scapula-Retraktion am Anfang, Kinn über Stange oder Brust zur Stange, "
-        "kontrollierte Exzentrik (kein freies Fallen), minimaler Schwung (bei Zusatzgewicht toleriert), "
-        "Schultern weg von den Ohren, volle Extension unten."
+        "Fokus-Kriterien: Scapula-Retraktion/Depression am Anfang, kontrollierte Exzentrik, "
+        "Schultern weg von den Ohren, volle Extension unten.\n"
+        "TOLERANZEN: Kinn muss NICHT zwingend über die Stange — Brust-zur-Stange oder Kinn auf Stangenhöhe "
+        "ist genauso akzeptabel. Bei Zusatzgewicht: Schwung, leichtes Kipping und eingeschränkte ROM "
+        "sind NORMAL — maximal 1-2 Punkte Abzug. Leichtes Beine-Anwinkeln ist kein Fehler."
     ),
     "Muscle-Ups": (
         "Fokus-Kriterien: Explosiver Pull über die Stange, sauberer Transition-Punkt, "
-        "Dip-Phase mit Kontrolle, volle Extension oben, "
-        "Schwung ist bei Muscle-Ups TEIL der Technik — nur unkontrollierter Schwung abziehen."
+        "Dip-Phase mit Kontrolle, volle Extension oben.\n"
+        "TOLERANZEN: Schwung/Kipping ist bei Muscle-Ups TEIL der Technik — NUR unkontrollierten, "
+        "chaotischen Schwung abziehen. Bei gewichteten Muscle-Ups ist mehr Schwung zu erwarten. "
+        "Die Transition muss nicht perfekt smooth sein — es ist eine explosiv-athletische Bewegung."
     ),
     "Chin-Ups": (
-        "Fokus-Kriterien: Supinierter Griff, Kinn über Stange, Bizeps-Aktivierung sichtbar, "
-        "kontrollierte Exzentrik, volle Extension unten, Schulter-Stabilität."
+        "Fokus-Kriterien: Supinierter Griff, Bizeps-Aktivierung, "
+        "kontrollierte Exzentrik, volle Extension unten, Schulter-Stabilität.\n"
+        "TOLERANZEN: Kinn muss NICHT zwingend über die Stange. "
+        "Bei Zusatzgewicht: leichter Schwung und eingeschränkte ROM sind NORMAL. "
+        "Leichtes Beine-Anwinkeln ist kein Fehler."
     ),
     "Seitheben Kabelturm": (
-        "Fokus-Kriterien: Arm leicht gebeugt (15-20°), Bewegung aus der Schulter (nicht Trapez), "
-        "Endposition auf Schulterhöhe oder leicht darüber, kontrollierte Exzentrik, "
-        "kein übermäßiges Schwingen des Oberkörpers, Handgelenk neutral."
+        "Fokus-Kriterien: Arm leicht gebeugt, Bewegung aus der Schulter (nicht Trapez), "
+        "Endposition auf Schulterhöhe oder leicht darüber, kontrollierte Exzentrik.\n"
+        "TOLERANZEN: Arm-Beugewinkel variiert (15-30° ist alles akzeptabel). "
+        "Leichtes Oberkörper-Schwingen bei den letzten Wiederholungen ist normal. "
+        "Über Schulterhöhe heben ist KEIN Fehler solange kontrolliert. "
+        "Handgelenk muss nicht perfekt neutral sein."
     ),
     "Schulterpress Langhantel": (
         "Fokus-Kriterien: Stange startet an der vorderen Schulter, volle Lockout-Extension, "
-        "Kopf weicht leicht nach hinten aus (nicht übertrieben), kein Hohlkreuz, "
-        "Core angespannt, Knie nicht durchgedrückt, Ellbogen unter der Stange."
+        "Core angespannt, Ellbogen unter der Stange.\n"
+        "TOLERANZEN: Leichter Lean-Back bei schweren Gewichten ist NORMAL und akzeptabel — "
+        "nur extremes Hohlkreuz ist ein Fehler. Kopf weicht natürlich nach hinten aus für den Stangen-Pfad. "
+        "Leichte Kniebeugung für Stabilität ist kein Fehler. "
+        "Push-Press (mit Bein-Drive) ist eine andere Übung, aber kein Fehler wenn der Athlet es bewusst einsetzt."
     ),
     "Kniebeuge": (
-        "Fokus-Kriterien: Knie folgen der Fußspitzenrichtung, Tiefe mindestens parallel (Hüfte auf Kniehöhe), "
-        "neutrale Wirbelsäule (kein Butt-Wink), Fersen am Boden, Brustkorb aufrecht, "
-        "Stange stabil auf dem Trapez, gleichmäßige Gewichtsverteilung."
+        "Fokus-Kriterien: Knie folgen der Fußspitzenrichtung, stabile Wirbelsäule, "
+        "Fersen am Boden, Stange stabil auf dem Trapez.\n"
+        "TOLERANZEN: Tiefe ist individuell — parallel ist ideal, aber leicht über parallel bei schweren Gewichten "
+        "ist KEIN schwerer Fehler (max 1-2 Punkte Abzug). Minimaler Butt-Wink am tiefsten Punkt "
+        "ist anatomisch normal und kein Fehler. Knie DÜRFEN über die Zehenspitzen gehen — "
+        "das ist biomechanisch korrekt und bei tiefen Squats unvermeidbar. "
+        "Oberkörper-Neigung variiert je nach Hebelverhältnissen: langer Oberschenkel = mehr Lean."
     ),
     "Kreuzheben": (
-        "Fokus-Kriterien: Stange nah am Körper (Schienbein/Oberschenkel), "
-        "Rücken durchgehend neutral (KEIN Rundrücken), Hüft-Hinge-Pattern klar erkennbar, "
-        "Lockout mit Hüftstreckung (nicht Überstreckung), Schultern über/leicht vor der Stange beim Start."
+        "Fokus-Kriterien: Stange nah am Körper, Hüft-Hinge-Pattern klar erkennbar, "
+        "Lockout mit Hüftstreckung (nicht Überstreckung), Schultern über/leicht vor der Stange beim Start.\n"
+        "TOLERANZEN: Leichter oberer Rücken-Rundung (Thorakal) ist bei schwerem Kreuzheben akzeptabel "
+        "und bei vielen Strongman/Powerliftern normal — nur LUMBALER Rundrücken (unterer Rücken) ist gefährlich. "
+        "Leichtes Hitchen oder kurzes Verlangsamen an den Knien ist bei Maximalgewichten normal. "
+        "Rücken muss nicht perfekt flach sein — neutral mit natürlicher Krümmung reicht."
     ),
     "Hip Thrust": (
-        "Fokus-Kriterien: Schulterblätter auf der Bank, Knie 90° in der Endposition, "
-        "volle Hüftstreckung oben (Squeeze), Kinn leicht zur Brust (kein Nacken-Überstrecken), "
-        "kein übermäßiges Hohlkreuz, Füße hüftbreit und fest."
+        "Fokus-Kriterien: Schulterblätter auf der Bank, volle Hüftstreckung oben (Squeeze), "
+        "Kinn leicht zur Brust, Füße hüftbreit und fest.\n"
+        "TOLERANZEN: Kniewinkel muss nicht exakt 90° sein — 80-100° ist akzeptabel. "
+        "Füße dürfen leicht nach außen rotiert sein. Leichtes Hohlkreuz am obersten Punkt "
+        "ist bei schwerem Gewicht normal und kein Fehler — nur EXTREMES Überstrecken abziehen. "
+        "Schulterblatt-Position variiert je nach Bankhöhe."
     ),
     "Face Pulls Kabelturm": (
-        "Fokus-Kriterien: Seilansatz auf Gesichtshöhe, Ellbogen hoch (über Schultern), "
-        "externe Rotation am Ende der Bewegung, Schulterblätter zusammen, "
-        "kontrollierte Exzentrik, kein Schwung aus dem Rumpf."
+        "Fokus-Kriterien: Seilansatz auf Gesichtshöhe, Ellbogen hoch, "
+        "externe Rotation am Ende der Bewegung, Schulterblätter zusammen.\n"
+        "TOLERANZEN: Die Höhe der Ellbogen variiert — sie müssen nicht zwingend ÜBER Schulterhöhe sein. "
+        "Leichter Schwung aus dem Rumpf bei den letzten Wiederholungen ist normal. "
+        "Kabelansatz-Höhe variiert je nach Gerät — das ist kein Technikfehler des Athleten."
     ),
     "Step Up Kabelzug": (
         "Fokus-Kriterien: Arbeitendes Bein trägt das Gewicht (nicht vom Standbein abstoßen), "
-        "Knie folgt der Fußspitze, aufrechter Oberkörper, volle Hüftstreckung oben, "
-        "kontrolliertes Absenken, Kabel-Zugrichtung beachten."
+        "Knie folgt der Fußspitze, volle Hüftstreckung oben, "
+        "kontrolliertes Absenken, Kabel-Zugrichtung beachten.\n"
+        "TOLERANZEN: Oberkörperposition variiert je nach Zielmuskel — aufrecht und vorgeneigt sind beides "
+        "akzeptabel ohne Muskel-Fokus. Sich am Turm festhalten für Balance ist KEIN Fehler."
     ),
     "Bulgarian Split Squat": (
-        "Fokus-Kriterien: Hinterer Fuß erhöht auf Bank, vorderes Knie über dem Fuß (nicht darüber hinaus), "
-        "aufrechter Oberkörper, Tiefe: hinteres Knie fast am Boden, "
-        "kein seitliches Ausweichen, Balance und Stabilität."
+        "Fokus-Kriterien: Hinterer Fuß erhöht auf Bank, Knie folgt der Fußspitze, "
+        "Tiefe: hinteres Knie fast am Boden, kein seitliches Ausweichen, Balance und Stabilität.\n"
+        "TOLERANZEN: Knie DARF über die Zehenspitzen gehen — biomechanisch korrekt bei dieser Übung. "
+        "Oberkörperposition variiert je nach Zielmuskel. Leichtes Wackeln bei schweren Gewichten ist normal "
+        "— nur starkes seitliches Ausweichen ist ein Fehler. Hinterer Fuß: Spann oder Zehen auf Bank, beides OK."
     ),
 }
 
