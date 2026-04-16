@@ -218,25 +218,29 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
             "- Konsistenz über alle sichtbaren Wiederholungen\n\n"
 
             "### SCHRITT 2: SCORING (Rubrik-basiert)\n"
-            "Vergib für jede der 5 Kategorien einen Teilscore (0-20) basierend auf deiner Analyse:\n\n"
+            "Vergib für jede der 5 Kategorien einen Teilscore (0-20) basierend auf deiner Analyse.\n\n"
+            "KALIBRIERUNG (Gesamtscore-Referenz):\n"
+            "  90-100 = Elite-Technik | 78-89 = Sehr gut | 65-77 = Solide Grundtechnik | 50-64 = Mehrere Fehler | <50 = Grundlegende Probleme\n\n"
+            "SCORING-REGEL: Starte pro Kategorie bei 15 (= korrekte Grundausführung ohne schwere Fehler). "
+            "Erhöhe für beobachtete Stärken, reduziere für konkrete Fehler. "
+            "Jeder Teilscore muss durch eine spezifische Beobachtung begründet sein — kein Standardwert.\n\n"
             "1. HALTUNG & WIRBELSÄULE (0-20)\n"
             "   Neutrale Wirbelsäule, Kopfposition, Core-Spannung, Beckenstellung\n"
-            "   → 18-20: nahezu perfekt | 14-17: kleine Abweichungen | 10-13: deutliche Fehler | <10: schwere Fehler\n\n"
+            "   → 17-20: nahezu perfekt | 13-16: korrekte Grundhaltung, kleine Abweichungen | 8-12: sichtbare Fehler | <8: schwere Fehler\n\n"
             "2. GELENKSTELLUNGEN (0-20)\n"
             "   Korrekte Winkel in allen beteiligten Gelenken über den gesamten Bewegungsablauf\n"
-            "   → 18-20: nahezu perfekt | 14-17: kleine Abweichungen | 10-13: deutliche Fehler | <10: schwere Fehler\n\n"
+            "   → 17-20: nahezu perfekt | 13-16: korrekte Grundwinkel, kleine Abweichungen | 8-12: sichtbare Fehler | <8: schwere Fehler\n\n"
             "3. BEWEGUNGSUMFANG (0-20)\n"
             "   Volle Range of Motion erreicht, kontrollierte Umkehrpunkte\n"
-            "   → 18-20: volle ROM | 14-17: leicht eingeschränkt | 10-13: deutlich eingeschränkt | <10: stark eingeschränkt\n\n"
+            "   → 17-20: volle ROM | 13-16: leicht eingeschränkt | 8-12: deutlich eingeschränkt | <8: stark eingeschränkt\n\n"
             "4. BEWEGUNGSFLUSS (0-20)\n"
             "   Tempo, Kontrolle, Exzentrik vs. Konzentrik, ungewollter Schwung\n"
-            "   → 18-20: flüssig und kontrolliert | 14-17: leichter Schwung | 10-13: unkontrollierte Phasen | <10: unkontrolliert\n\n"
+            "   → 17-20: flüssig und kontrolliert | 13-16: überwiegend kontrolliert, leichter Schwung | 8-12: unkontrollierte Phasen | <8: unkontrolliert\n\n"
             "5. GESAMTEINDRUCK (0-20)\n"
             "   Symmetrie, Wiederholungsqualität, Stabilität, Athletik\n"
-            "   → 18-20: sehr stabil und symmetrisch | 14-17: kleine Asymmetrien | 10-13: deutliche Schwächen | <10: instabil\n\n"
+            "   → 17-20: sehr stabil und symmetrisch | 13-16: solide mit kleinen Asymmetrien | 8-12: deutliche Schwächen | <8: instabil\n\n"
 
-            "Der Gesamtscore = Summe aller 5 Teilscores.\n"
-            "WICHTIG: Jeder Teilscore muss unabhängig und ehrlich vergeben werden.\n\n"
+            "Der Gesamtscore = Summe aller 5 Teilscores.\n\n"
 
             "Antworte NUR als JSON (kein Markdown, kein Codeblock):\n"
             "{\n"
@@ -264,7 +268,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
     response = client.messages.create(
         model=MODEL,
         max_tokens=4096,
-        temperature=0.3,
+        temperature=0.5,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": content}],
     )
