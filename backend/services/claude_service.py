@@ -261,38 +261,93 @@ def get_client() -> anthropic.Anthropic:
     return anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 
-def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
-    """Extract evenly-spaced frames from video, return list of base64-encoded JPEGs."""
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        result = subprocess.run(
-            [
-                "ffprobe", "-v", "error",
-                "-show_entries", "format=duration",
-                "-of", "default=noprint_wrappers=1:nokey=1",
-                video_path,
-            ],
-            capture_output=True,
-            text=True,
-            timeout=30,
-        )
-        duration = float(result.stdout.strip())
+def _get_duration(video_path: str) -> float:
+    """Get video duration in seconds."""
+    result = subprocess.run(
+        [
+            "ffprobe", "-v", "error",
+            "-show_entries", "format=duration",
+            "-of", "default=noprint_wrappers=1:nokey=1",
+            video_path,
+        ],
+        capture_output=True, text=True, timeout=30,
+    )
+    return float(result.stdout.strip())
 
-        frames_b64 = []
-        for i in range(num_frames):
-            timestamp = duration * (i + 0.5) / num_frames
-            frame_path = os.path.join(tmp_dir, f"frame_{i:02d}.jpg")
+
+def _frame_diff(path1: str, path2: str) -> float:
+    """Calculate mean pixel difference between two frames (no numpy needed)."""
+    from PIL import Image
+    img1 = Image.open(path1).convert("L").resize((80, 60))
+    img2 = Image.open(path2).convert("L").resize((80, 60))
+    p1, p2 = list(img1.getdata()), list(img2.getdata())
+    return sum(abs(a - b) for a, b in zip(p1, p2)) / len(p1)
+
+
+def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
+    """Extract frames at movement extremes (Umkehrpunkte) using motion analysis.
+
+    Strategy:
+    1. Extract NUM_CANDIDATES candidate frames evenly spaced (small size, fast)
+    2. Calculate motion score per candidate = avg diff to neighbours
+    3. Low motion score = little movement = Umkehrpunkt (top/bottom of rep)
+    4. Always keep first + last frame, fill rest with lowest-motion candidates
+    5. Re-extract selected frames at full resolution for Claude
+    """
+    NUM_CANDIDATES = max(num_frames * 3, 15)
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        duration = _get_duration(video_path)
+
+        # Step 1: Extract candidates at small size (fast, cheap)
+        candidate_paths = []
+        for i in range(NUM_CANDIDATES):
+            timestamp = duration * i / (NUM_CANDIDATES - 1)
+            path = os.path.join(tmp_dir, f"cand_{i:02d}.jpg")
             subprocess.run(
-                [
-                    "ffmpeg", "-ss", str(timestamp),
-                    "-i", video_path,
-                    "-vframes", "1",
-                    "-q:v", "2",
-                    "-vf", "scale=640:-1",
-                    frame_path,
-                    "-y",
-                ],
-                capture_output=True,
-                timeout=60,
+                ["ffmpeg", "-ss", str(timestamp), "-i", video_path,
+                 "-vframes", "1", "-q:v", "5", "-vf", "scale=160:-1", path, "-y"],
+                capture_output=True, timeout=30,
+            )
+            if os.path.exists(path):
+                candidate_paths.append((i, timestamp, path))
+
+        if len(candidate_paths) < num_frames:
+            # Fallback: evenly spaced if candidates failed
+            candidate_paths = []
+            for i in range(num_frames):
+                timestamp = duration * (i + 0.5) / num_frames
+                candidate_paths.append((i, timestamp, None))
+
+        # Step 2: Motion score per candidate (avg diff to neighbours)
+        motion_scores: dict[int, float] = {}
+        for idx, (i, ts, path) in enumerate(candidate_paths):
+            if path is None:
+                motion_scores[i] = 999.0
+                continue
+            diffs = []
+            if idx > 0 and candidate_paths[idx - 1][2]:
+                diffs.append(_frame_diff(candidate_paths[idx - 1][2], path))
+            if idx < len(candidate_paths) - 1 and candidate_paths[idx + 1][2]:
+                diffs.append(_frame_diff(path, candidate_paths[idx + 1][2]))
+            motion_scores[i] = sum(diffs) / len(diffs) if diffs else 999.0
+
+        # Step 3: Always keep first + last, select lowest-motion for the rest
+        first = candidate_paths[0]
+        last = candidate_paths[-1]
+        middle = candidate_paths[1:-1]
+        middle_sorted = sorted(middle, key=lambda x: motion_scores[x[0]])
+        selected = [first] + middle_sorted[: num_frames - 2] + [last]
+        selected = sorted(selected, key=lambda x: x[0])  # restore chronological order
+
+        # Step 4: Re-extract selected frames at full resolution
+        frames_b64 = []
+        for rank, (i, timestamp, _) in enumerate(selected):
+            frame_path = os.path.join(tmp_dir, f"frame_{rank:02d}.jpg")
+            subprocess.run(
+                ["ffmpeg", "-ss", str(timestamp), "-i", video_path,
+                 "-vframes", "1", "-q:v", "2", "-vf", "scale=640:-1", frame_path, "-y"],
+                capture_output=True, timeout=60,
             )
             if os.path.exists(frame_path):
                 with open(frame_path, "rb") as f:
