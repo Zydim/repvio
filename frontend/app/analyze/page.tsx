@@ -91,7 +91,11 @@ export default function AnalyzePage() {
                 {EXERCISES.map((ex) => (
                   <button
                     key={ex.id}
-                    onClick={() => { setExercise(ex.id); setMuscleFocus(null); }}
+                    onClick={() => {
+                      setExercise(ex.id);
+                      const opts = MUSCLE_FOCUS[ex.id];
+                      setMuscleFocus(opts?.length === 1 ? opts[0] : null);
+                    }}
                     className={`flex flex-col items-center gap-1.5 md:gap-2 py-3 md:py-5 rounded-2xl border-2 transition-all text-xs md:text-sm font-medium ${
                       exercise === ex.id
                         ? "border-white bg-zinc-800 text-white"
@@ -106,7 +110,7 @@ export default function AnalyzePage() {
             </div>
 
             {/* Muscle Focus */}
-            {exercise && MUSCLE_FOCUS[exercise] && (
+            {exercise && MUSCLE_FOCUS[exercise] && MUSCLE_FOCUS[exercise].length > 1 && (
               <div className="mb-8">
                 <label className="block text-xs text-zinc-400 uppercase tracking-wider mb-3">
                   Welchen Muskel möchtest du trainieren?
