@@ -49,7 +49,9 @@ SYSTEM_PROMPT = [
             "- Ein stark vorgebeugter Oberkörper allein ist KEIN Rundrücken — das kann kontrolliertes "
             "Vorlehnen mit neutraler Wirbelsäule sein.\n"
             "- Im Zweifel: kein Fehler diagnostizieren. Lieber erwähnen dass die Kleidung "
-            "die Beurteilung der Wirbelsäulenposition einschränkt.\n\n"
+            "die Beurteilung der Wirbelsäulenposition einschränkt.\n"
+            "- Knie-Streckung bei weiter Kleidung: KEIN 'leicht gebeugt' oder 'nicht vollständig gestreckt' "
+            "schreiben wenn kein klarer sichtbarer Knick erkennbar ist — im Zweifel als gestreckt werten.\n\n"
 
             "STRENGE-KALIBRIERUNG:\n"
             "- Sei ein erfahrener Coach, kein überkritischer Prüfer.\n"
@@ -189,7 +191,9 @@ EXERCISE_CRITERIA_BY_FOCUS: dict[str, dict[str, str]] = {
             "✓ Schienbein möglichst vertikal halten.\n"
             "✓ Lockout-Definition bei Glute-Fokus: Das KNIE des Arbeitsbeins ist gestreckt = Lockout erreicht. "
             "Der Oberkörper muss dabei NICHT aufrecht sein — Vorbeuge oben ist bei Glute-Fokus normal. "
-            "Bewerte den Lockout am Bein, nicht an der Oberkörperposition.\n"
+            "Bewerte den Lockout am Bein, nicht an der Oberkörperposition. "
+            "BEI WEITER KLEIDUNG (Jogginghose, weite Sporthose): Im Zweifel das Knie als gestreckt werten — "
+            "KEIN 'leicht gebeugt' schreiben wenn kein klarer sichtbarer Knick erkennbar ist.\n"
             "✓ Arbeitendes Bein trägt das Gewicht (kein Abstoßen vom Standbein).\n"
             "✓ Kontrolliertes Absenken, Knie folgt der Fußspitze.\n"
             "UNTERSCHIED: Vorlehnen (Technik) = bewusstes Neigen mit geradem Rücken. Vorkippen (Fehler) = unkontrolliert, runder Rücken."
@@ -380,7 +384,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
 
     response = client.messages.create(
         model=MODEL,
-        max_tokens=4096,
+        max_tokens=2800,
         temperature=0.5,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": content}],
