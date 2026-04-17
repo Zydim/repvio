@@ -262,7 +262,7 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
                     "-i", video_path,
                     "-vframes", "1",
                     "-q:v", "2",
-                    "-vf", "scale=768:-1",
+                    "-vf", "scale=640:-1",
                     frame_path,
                     "-y",
                 ],
@@ -369,22 +369,22 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
             '    "bewegungsfluss": <0-20>,\n'
             '    "gesamteindruck": <0-20>\n'
             '  },\n'
-            '  "overall": "<3-4 Sätze: beginne mit Anerkennung, dann wichtigste Beobachtungen. Bei einseitigen Übungen: erwähne welche Seite (links/rechts)>",\n'
-            '  "positives": ["<1-4 konkrete Stärken — NUR was tatsächlich gut ist, keine Füllpunkte>"],\n'
+            '  "overall": "<2 Sätze: 1. Anerkennung + stärkste Beobachtung. 2. Wichtigster Verbesserungspunkt. Bei einseitigen Übungen: welche Seite (links/rechts)>",\n'
+            '  "positives": ["<1-3 konkrete Stärken — NUR was tatsächlich gut ist>"],\n'
             '  "corrections": [\n'
-            '    // NUR echte Technikfehler! 0-3 Einträge. KEINE erfundenen Korrekturen wenn die Technik gut ist.\n'
-            '    {"fehler": "<was genau falsch ist + in welcher Phase>", "korrektur": "<konkrete Anweisung>"}\n'
+            '    // NUR echte Technikfehler! 0-2 Einträge max. KEINE erfundenen Korrekturen.\n'
+            '    {"fehler": "<konkret was + in welcher Phase>", "korrektur": "<1 Satz Anweisung>"}\n'
             '  ],\n'
-            '  "verletzungsrisiko": "<niedrig|mittel|erhöht> — kurze Beschreibung",\n'
-            '  "cue": "<1 einprägsamer Coaching-Cue — nur wenn es einen echten Hauptfehler gibt, sonst Bestätigungs-Cue>",\n'
-            '  "naechste_schritte": ["<konkreter nächster Schritt zur Verbesserung>", "<optionaler zweiter Schritt>"]\n'
+            '  "verletzungsrisiko": "<niedrig|mittel|erhöht> — max 1 Satz",\n'
+            '  "cue": "<1 kurzer prägnanter Cue, max 10 Wörter>",\n'
+            '  "naechste_schritte": ["<1 konkreter nächster Schritt>"]\n'
             "}"
         ),
     })
 
     response = client.messages.create(
         model=MODEL,
-        max_tokens=2800,
+        max_tokens=1800,
         temperature=0.5,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": content}],
