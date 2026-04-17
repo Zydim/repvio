@@ -115,7 +115,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "TOLERANZEN: Kinn muss NICHT über die Stange — Brust-zur-Stange oder Kinn auf Stangenhöhe OK. "
         "Bei Zusatzgewicht: Schwung und eingeschränkte ROM NORMAL. Beine-Anwinkeln kein Fehler.\n"
         "NICHT BEURTEILBAR: Ob Kinn die Stange erreicht wenn von der Seite gefilmt. "
-        "Scapula-Aktivierung unter weitem Shirt. Senktempo."
+        "Scapula-Aktivierung unter weitem Shirt. Senktempo.\n"
+        "EXTENSION-REGEL: SCHREIBE NIEMALS 'Ellbogen nicht vollständig gestreckt' oder "
+        "'Arme nicht komplett durchgestreckt am unteren Umkehrpunkt' — "
+        "bei weiter Kleidung und Kamera von unten/schräg ist das fast immer ein false positive. "
+        "Nur bei einem KLAREN sichtbaren Winkel über 30° in den Ellbogen erwähnen."
     ),
     "Muscle-Ups": (
         "Fokus-Kriterien: Explosiver Pull über die Stange, Dip-Phase mit Kontrolle, volle Extension oben.\n"
@@ -129,7 +133,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "TOLERANZEN: Kinn muss NICHT zwingend über die Stange. "
         "Bei Zusatzgewicht leichter Schwung und eingeschränkte ROM NORMAL. Beine-Anwinkeln kein Fehler.\n"
         "NICHT BEURTEILBAR: Bizeps-Aktivierung — nicht sichtbar. "
-        "Kinn-über-Stange wenn von der Seite gefilmt. Senktempo."
+        "Kinn-über-Stange wenn von der Seite gefilmt. Senktempo.\n"
+        "EXTENSION-REGEL: SCHREIBE NIEMALS 'Ellbogen nicht vollständig gestreckt' oder "
+        "'Arme nicht komplett durchgestreckt am unteren Umkehrpunkt' — "
+        "bei weiter Kleidung und Kamera von unten/schräg ist das fast immer ein false positive. "
+        "Nur bei einem KLAREN sichtbaren Winkel über 30° in den Ellbogen erwähnen."
     ),
     "Seitheben Kabelturm": (
         "Fokus-Kriterien: Arm leicht gebeugt, Bewegung aus der Schulter, "
