@@ -204,6 +204,35 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "Oberkörperposition variiert je nach Zielmuskel. Leichtes Wackeln bei schweren Gewichten ist normal "
         "— nur starkes seitliches Ausweichen ist ein Fehler. Hinterer Fuß: Spann oder Zehen auf Bank, beides OK."
     ),
+    "Rudern Kabelzug": (
+        "Fokus-Kriterien: Neutrale Wirbelsäule beim Ziehen, Schulterblätter aktiv zusammenziehen am Ende, "
+        "Ellbogen nah am Körper, Kabelzug zur Bauch-/Hüftregion, stabile Hüfte.\n"
+        "TOLERANZEN: Leichter Oberkörper-Schwung bei schweren Gewichten normal — nur starkes Hin- und Herschaukeln ist Fehler. "
+        "Griffposition variiert je nach Aufsatz (eng/weit/neutral) — kein Fehler. "
+        "Ellbogen müssen nicht zwingend hinter den Körper — Schulterblatt-Retraktion wichtiger.\n"
+        "NICHT BEURTEILBAR: Schulterblatt-Retraktion vollständig unter weitem Shirt. "
+        "Griffkraft. Tempo. Atemtechnik."
+    ),
+    "Rumänisches Kreuzheben": (
+        "Fokus-Kriterien: Hüft-Hinge klar erkennbar (Hüfte geht nach hinten, nicht Knie nach vorne), "
+        "Wirbelsäule neutral über die gesamte Bewegung, Stange/Hanteln bleiben nah am Körper, "
+        "leichte Kniebeugung OK aber Bewegung kommt aus der Hüfte, Dehnung in der hinteren Oberschenkelrückseite.\n"
+        "TOLERANZEN: Knie leicht gebeugt ist NORMAL und korrekt — kein Fehler. "
+        "Tiefe variiert mit Hamstring-Mobilität — nicht jeder erreicht den Boden. "
+        "Leichter thorakaler Rundrücken bei schwer akzeptabel — nur lumbaler Rundrücken ist gefährlich.\n"
+        "NICHT BEURTEILBAR: Lumbale Rundung unter weitem Shirt/Gürtel. "
+        "Hamstring-Dehnung — nicht sichtbar. Tempo."
+    ),
+    "Ausfallschritte": (
+        "Fokus-Kriterien: Knie folgt der Fußspitze (vorderes Bein), stabiler Oberkörper, "
+        "hinteres Knie sinkt kontrolliert Richtung Boden, Schrittlänge ausreichend.\n"
+        "TOLERANZEN: Knie DARF über die Zehenspitzen gehen — biomechanisch korrekt. "
+        "Leichtes Vorneigen des Oberkörpers bei Glute-Fokus ist korrekte Technik. "
+        "Leichtes Wackeln bei schweren Gewichten normal — nur starkes seitliches Ausweichen ist Fehler. "
+        "Schrittlänge variiert je nach Körpergröße und Zielmuskel.\n"
+        "NICHT BEURTEILBAR: Knie-Einknicken unter weiter Hose — nur bei klarem sichtbarem Valgus ansprechen. "
+        "Tempo. Bodenkontakt des hinteren Knies exakt."
+    ),
 }
 
 # Muskel-fokus-spezifische Kriterien — überschreiben EXERCISE_CRITERIA wenn Muskel-Fokus gesetzt ist
@@ -243,6 +272,24 @@ EXERCISE_CRITERIA_BY_FOCUS: dict[str, dict[str, str]] = {
             "✓ Volle Kniestreckung oben (Lockout).\n"
             "✓ Arbeitendes Bein trägt das Gewicht (kein Abstoßen vom Standbein).\n"
             "✓ Kontrolliertes Absenken, Knie folgt der Fußspitze."
+        ),
+    },
+    "Ausfallschritte": {
+        "Gesäß / Glutes": (
+            "FOKUS GESÄSS — angepasste Kriterien:\n"
+            "✓ Oberkörper-Vorbeuge (ca. 15-30°) ist KORREKTE TECHNIK für Glute-Aktivierung — NICHT als Fehler werten.\n"
+            "✓ Längerer Schritt nach vorne fördert mehr Hüft-Dominanz — korrekt.\n"
+            "✓ Vorderes Knie bleibt hinter oder auf Höhe der Zehenspitze bei langem Schritt — normal.\n"
+            "✓ Hinteres Knie sinkt tief Richtung Boden für maximale Hüft-Flexion.\n"
+            "NICHT als Fehler: Vorneigen, langes Schritt, tiefes hinteres Knie.\n"
+            "Kritisiere NUR bei eindeutigem Katzenbuckel oder starkem seitlichem Ausweichen."
+        ),
+        "Quadrizeps": (
+            "FOKUS QUADRIZEPS — angepasste Kriterien:\n"
+            "✓ Aufrechter Oberkörper erwünscht — fördert Knie-dominante Bewegung.\n"
+            "✓ Kürzerer Schritt erlaubt mehr Knie-Dominanz.\n"
+            "✓ Knie darf und soll aktiv nach vorne über die Zehenspitzen wandern.\n"
+            "✓ Volle Kniestreckung beim Hochkommen."
         ),
     },
     "Bulgarian Split Squat": {

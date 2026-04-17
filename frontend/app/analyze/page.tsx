@@ -23,6 +23,9 @@ const EXERCISES = [
   { id: "Face Pulls Kabelturm", label: "Face Pulls", emoji: "🎯" },
   { id: "Step Up Kabelzug", label: "Step Up Kabel", emoji: "🪜" },
   { id: "Bulgarian Split Squat", label: "Bulgarian SS", emoji: "🦿" },
+  { id: "Rudern Kabelzug", label: "Rudern Kabel", emoji: "🚣" },
+  { id: "Rumänisches Kreuzheben", label: "RDL", emoji: "🏋️‍♀️" },
+  { id: "Ausfallschritte", label: "Ausfallschritte", emoji: "🚶" },
 ];
 
 const MUSCLE_FOCUS: Record<string, string[]> = {
@@ -39,6 +42,9 @@ const MUSCLE_FOCUS: Record<string, string[]> = {
   "Face Pulls Kabelturm":     ["Hintere Schulter"],
   "Step Up Kabelzug":         ["Quadrizeps", "Gesäß / Glutes", "Gesamt (Beine + Core)"],
   "Bulgarian Split Squat":    ["Quadrizeps", "Gesäß / Glutes", "Hamstrings"],
+  "Rudern Kabelzug":          ["Latissimus / Rücken", "Hintere Schulter / Rhomboids"],
+  "Rumänisches Kreuzheben":   ["Gesäß / Glutes", "Hamstrings"],
+  "Ausfallschritte":          ["Quadrizeps", "Gesäß / Glutes"],
 };
 
 export default function AnalyzePage() {
