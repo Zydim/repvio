@@ -198,7 +198,10 @@ EXERCISE_CRITERIA_BY_FOCUS: dict[str, dict[str, str]] = {
             "Zeh drückt sich aktiv vom Boden ab UND Körpergewicht verlagert sich sichtbar zum Standbein. "
             "Das natürliche Abheben des Standbeins beim Hochsteigen ist KEIN Abstoßen. "
             "Bei weiter Kleidung und normaler Kameraposition: im Zweifel NICHT erwähnen.\n"
-            "✓ Kontrolliertes Absenken, Knie folgt der Fußspitze.\n"
+            "✓ Absenk-Tempo: Das Tempo der exzentrischen Phase kann aus statischen Frames NICHT beurteilt werden — "
+            "schreibe NIEMALS eine Correction über 'zu schnelles Absenken' oder 'unkontrolliertes Kippen beim Absenken'. "
+            "Das Vorlehnen beim Absenken ist bei Glute-Fokus IMMER korrekte Technik — kein Kippen.\n"
+            "✓ Knie folgt der Fußspitze.\n"
             "UNTERSCHIED: Vorlehnen (Technik) = bewusstes Neigen mit geradem Rücken. Vorkippen (Fehler) = unkontrolliert, runder Rücken."
         ),
         "Quadrizeps": (
