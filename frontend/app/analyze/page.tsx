@@ -26,18 +26,17 @@ const EXERCISES = [
 ];
 
 const MUSCLE_FOCUS: Record<string, string[]> = {
-  "Bankdrücken":              ["Brust", "Trizeps", "Vordere Schulter"],
-  "Schrägbankdrücken":        ["Obere Brust", "Brust allgemein", "Trizeps"],
+  "Schrägbankdrücken":        ["Obere Brust", "Brust allgemein"],
   "Dips":                     ["Brust", "Trizeps"],
-  "Klimmzüge":                ["Latissimus / Rücken", "Bizeps"],
-  "Muscle-Ups":               ["Rücken / Lats", "Trizeps", "Gesamtkette"],
-  "Chin-Ups":                 ["Bizeps", "Latissimus / Rücken"],
-  "Seitheben Kabelturm":      ["Mittlerer Deltamuskel", "Hintere Schulter"],
-  "Schulterpress Langhantel": ["Vordere / Mittlere Schulter", "Trizeps"],
+  "Klimmzüge":                ["Latissimus / Rücken"],
+  "Muscle-Ups":               ["Gesamtkette"],
+  "Chin-Ups":                 ["Latissimus / Rücken", "Bizeps"],
+  "Seitheben Kabelturm":      ["Mittlerer Deltamuskel"],
+  "Schulterpress Langhantel": ["Vordere / Mittlere Schulter"],
   "Kniebeuge":                ["Quadrizeps", "Gesäß / Glutes", "Gesamt (Beine + Core)"],
-  "Kreuzheben":               ["Rücken / Erector Spinae", "Gesäß / Hamstrings", "Gesamt"],
+  "Kreuzheben":               ["Gesäß / Hamstrings", "Gesamt"],
   "Hip Thrust":               ["Gesäß / Glutes", "Hamstrings"],
-  "Face Pulls Kabelturm":     ["Hintere Schulter", "Rotatorenmanschette"],
+  "Face Pulls Kabelturm":     ["Hintere Schulter"],
   "Step Up Kabelzug":         ["Quadrizeps", "Gesäß / Glutes", "Gesamt (Beine + Core)"],
   "Bulgarian Split Squat":    ["Quadrizeps", "Gesäß / Glutes", "Hamstrings"],
 };
