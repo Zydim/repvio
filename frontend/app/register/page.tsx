@@ -5,10 +5,33 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+// Beta-Phase: Registrierung deaktiviert
+const REGISTRATION_OPEN = false;
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function RegisterPage() {
   const router = useRouter();
+
+  if (!REGISTRATION_OPEN) {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-4">
+        <div className="text-center max-w-sm">
+          <p className="text-2xl mb-4">🔒</p>
+          <h1 className="text-xl font-bold text-zinc-100 mb-2">Beta-Phase</h1>
+          <p className="text-zinc-400 text-sm mb-6">
+            Repvio befindet sich aktuell in der geschlossenen Beta-Phase. Die Registrierung ist noch nicht öffentlich.
+          </p>
+          <Link
+            href="/login"
+            className="inline-block bg-white text-zinc-950 px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-zinc-200 transition-colors"
+          >
+            Zum Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);

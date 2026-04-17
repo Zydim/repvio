@@ -31,16 +31,10 @@ export default function Home() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
           <Link
-            href={isLoggedIn ? "/analyze" : "/register"}
+            href={isLoggedIn ? "/analyze" : "/login"}
             className="bg-white text-zinc-950 px-8 py-3 rounded-full text-base font-semibold hover:bg-zinc-200 transition-colors text-center"
           >
-            {isLoggedIn ? "Jetzt analysieren" : "Kostenlos starten"}
-          </Link>
-          <Link
-            href="/pricing"
-            className="border border-zinc-700 text-zinc-300 px-8 py-3 rounded-full text-base font-semibold hover:bg-zinc-900 transition-colors text-center"
-          >
-            Pläne ansehen
+            {isLoggedIn ? "Jetzt analysieren" : "Anmelden"}
           </Link>
         </div>
       </section>
@@ -138,10 +132,10 @@ export default function Home() {
           Starte kostenlos mit 3 Video-Analysen pro Monat. Kein Abo nötig.
         </p>
         <Link
-          href={isLoggedIn ? "/analyze" : "/register"}
+          href={isLoggedIn ? "/analyze" : "/login"}
           className="bg-white text-zinc-950 px-8 py-3 rounded-full text-base font-semibold hover:bg-zinc-200 transition-colors"
         >
-          {isLoggedIn ? "Jetzt analysieren" : "Kostenlos starten"}
+          {isLoggedIn ? "Jetzt analysieren" : "Anmelden"}
         </Link>
       </section>
       </main>

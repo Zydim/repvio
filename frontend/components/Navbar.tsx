@@ -21,9 +21,6 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-4">
           {isLoggedIn && <PlanBadge />}
-          <Link href="/pricing" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">
-            Pricing
-          </Link>
           {isLoggedIn && (
             <Link href="/dashboard" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">
               Dashboard
@@ -74,13 +71,6 @@ export default function Navbar() {
               <PlanBadge />
             </div>
           )}
-          <Link
-            href="/pricing"
-            onClick={() => setOpen(false)}
-            className="block text-sm text-zinc-400 hover:text-zinc-100 py-2"
-          >
-            Pricing
-          </Link>
           {isLoggedIn && (
             <Link
               href="/dashboard"

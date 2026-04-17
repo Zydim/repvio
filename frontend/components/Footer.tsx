@@ -18,9 +18,6 @@ export default function Footer() {
           <Link href="/agb" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
             AGB
           </Link>
-          <Link href="/pricing" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
-            Pricing
-          </Link>
         </div>
       </div>
     </footer>
