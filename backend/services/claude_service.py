@@ -10,7 +10,8 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-NUM_FRAMES = 5
+NUM_FRAMES = 10
+MAX_VIDEO_DURATION = 15.0  # Sekunden
 MODEL = "claude-sonnet-4-6"
 
 # Cached system prompt — stays constant across all analyses
@@ -350,7 +351,7 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
             frame_path = os.path.join(tmp_dir, f"frame_{rank:02d}.jpg")
             subprocess.run(
                 ["ffmpeg", "-ss", str(timestamp), "-i", video_path,
-                 "-vframes", "1", "-q:v", "2", "-vf", "scale=640:-1", frame_path, "-y"],
+                 "-vframes", "1", "-q:v", "2", "-vf", "scale=320:-1", frame_path, "-y"],
                 capture_output=True, timeout=60,
             )
             if os.path.exists(frame_path):
@@ -361,7 +362,15 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
 
 
 async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: str | None = None) -> dict:
-    """Extract frames from video, analyze with Claude Opus using extended thinking."""
+    """Extract frames from video, analyze with Claude."""
+    # Validate video duration
+    duration = _get_duration(video_path)
+    if duration > MAX_VIDEO_DURATION:
+        raise ValueError(
+            f"Video zu lang ({duration:.0f}s). Maximum: {MAX_VIDEO_DURATION:.0f} Sekunden. "
+            "Bitte filme einen kurzen Clip mit 2-3 Wiederholungen."
+        )
+
     client = get_client()
     frames = _extract_frames(video_path)
 

@@ -25,7 +25,21 @@ export default function VideoUploader({
   onResult,
 }: VideoUploaderProps) {
   const [file, setFile] = useState<File | null>(null);
+  const [videoDuration, setVideoDuration] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const MAX_DURATION = 15; // Sekunden
+
+  function checkDuration(f: File) {
+    const url = URL.createObjectURL(f);
+    const vid = document.createElement("video");
+    vid.preload = "metadata";
+    vid.onloadedmetadata = () => {
+      setVideoDuration(vid.duration);
+      URL.revokeObjectURL(url);
+    };
+    vid.src = url;
+  }
   const [progress, setProgress] = useState(0);
   const [progressLabel, setProgressLabel] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +48,9 @@ export default function VideoUploader({
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles[0]) {
       setFile(acceptedFiles[0]);
+      setVideoDuration(null);
       setError(null);
+      checkDuration(acceptedFiles[0]);
     }
   }, []);
 
@@ -113,7 +129,7 @@ export default function VideoUploader({
           <div>
             <p className="text-zinc-300 mb-1">Video hierher ziehen</p>
             <p className="text-xs text-zinc-500">oder klicken zum Auswählen</p>
-            <p className="text-xs text-zinc-600 mt-2">.mp4 oder .mov, max. 100 MB</p>
+            <p className="text-xs text-zinc-600 mt-2">.mp4 oder .mov · max. 15 Sekunden · 2–3 Wiederholungen</p>
           </div>
         )}
       </div>
@@ -127,7 +143,14 @@ export default function VideoUploader({
               <p className="text-sm text-zinc-200 font-medium truncate max-w-xs">
                 {file.name}
               </p>
-              <p className="text-xs text-zinc-500">{formatBytes(file.size)}</p>
+              <p className="text-xs text-zinc-500">
+                {formatBytes(file.size)}
+                {videoDuration !== null && (
+                  <span className={videoDuration > MAX_DURATION ? "text-red-400 ml-2 font-medium" : "text-zinc-500 ml-2"}>
+                    · {videoDuration.toFixed(1)}s{videoDuration > MAX_DURATION ? " ⚠ zu lang (max. 15s)" : ""}
+                  </span>
+                )}
+              </p>
             </div>
           </div>
           <button
@@ -195,7 +218,7 @@ export default function VideoUploader({
       {/* Analyze button */}
       <button
         onClick={handleAnalyze}
-        disabled={!file || loading || !exerciseType}
+        disabled={!file || loading || !exerciseType || (videoDuration !== null && videoDuration > MAX_DURATION)}
         className="w-full py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed bg-white text-zinc-950 hover:bg-zinc-200"
       >
         {loading ? "Analysiere..." : "Analysieren"}

@@ -94,7 +94,10 @@ async def analyze_video(
             f.write(contents)
 
         # Analyze with Claude
-        feedback = await analyze_exercise(str(tmp_path), exercise_type, muscle_focus or None)
+        try:
+            feedback = await analyze_exercise(str(tmp_path), exercise_type, muscle_focus or None)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
 
         score = float(feedback.get("score", 0))
 
