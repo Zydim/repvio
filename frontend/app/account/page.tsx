@@ -10,7 +10,7 @@ import { getUserPlan, cancelSubscription, deleteAccount } from "@/lib/api";
 
 const PLAN_INFO: Record<string, { label: string; color: string; limit: string }> = {
   free: { label: "Free", color: "text-zinc-400 bg-zinc-800 border-zinc-700", limit: "3 Analysen / Monat" },
-  pro: { label: "Pro", color: "text-blue-300 bg-blue-950 border-blue-800", limit: "50 Analysen / Monat" },
+  pro: { label: "Pro", color: "text-blue-300 bg-blue-950 border-blue-800", limit: "30 Analysen / Monat" },
   elite: { label: "Elite", color: "text-amber-300 bg-amber-950 border-amber-800", limit: "Unbegrenzte Analysen" },
 };
 

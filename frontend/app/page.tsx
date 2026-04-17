@@ -31,7 +31,7 @@ export default function Home() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
           <Link
-            href={isLoggedIn ? "/analyze" : "/login"}
+            href={isLoggedIn ? "/analyze" : "/register"}
             className="bg-white text-zinc-950 px-8 py-3 rounded-full text-base font-semibold hover:bg-zinc-200 transition-colors text-center"
           >
             {isLoggedIn ? "Jetzt analysieren" : "Kostenlos starten"}
@@ -138,7 +138,7 @@ export default function Home() {
           Starte kostenlos mit 3 Video-Analysen pro Monat. Kein Abo nötig.
         </p>
         <Link
-          href={isLoggedIn ? "/analyze" : "/login"}
+          href={isLoggedIn ? "/analyze" : "/register"}
           className="bg-white text-zinc-950 px-8 py-3 rounded-full text-base font-semibold hover:bg-zinc-200 transition-colors"
         >
           {isLoggedIn ? "Jetzt analysieren" : "Kostenlos starten"}
