@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-NUM_FRAMES = 10
+NUM_FRAMES = 6
 MAX_VIDEO_DURATION = 15.0  # Sekunden
 MODEL = "claude-sonnet-4-6"
 
@@ -359,7 +359,7 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
             frame_path = os.path.join(tmp_dir, f"frame_{rank:02d}.jpg")
             subprocess.run(
                 ["ffmpeg", "-ss", str(timestamp), "-i", video_path,
-                 "-vframes", "1", "-q:v", "2", "-vf", "scale=320:-1", frame_path, "-y"],
+                 "-vframes", "1", "-q:v", "2", "-vf", "scale=480:-1", frame_path, "-y"],
                 capture_output=True, timeout=60,
             )
             if os.path.exists(frame_path):
