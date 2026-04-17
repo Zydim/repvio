@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-NUM_FRAMES = 3
+NUM_FRAMES = 5
 MODEL = "claude-sonnet-4-6"
 
 # Cached system prompt — stays constant across all analyses
@@ -35,6 +35,12 @@ SYSTEM_PROMPT = [
             "eingeschränkte ROM sind bei hoher Last NORMAL — maximal 1-2 Punkte Abzug pro Kategorie.\n"
             "- Bewerte das Gesamtbild der Bewegung über alle Frames, nicht einzelne Frames isoliert.\n"
             "- KEINE medizinischen Diagnosen. Beschreibe Risiken als biomechanische Belastung.\n\n"
+
+            "STUDIO-UMGEBUNG:\n"
+            "- Ignoriere Spiegel und Spiegelbilder — analysiere nur die direkte Person, nicht das Spiegelbild.\n"
+            "- Ignoriere andere Personen im Hintergrund — fokussiere auf den Athleten im Vordergrund.\n"
+            "- Bei einseitigen Übungen (Step Up, Bulgarian Split Squat, Ausfallschritte): "
+            "erkenne welche Seite trainiert wird (links/rechts) und erwähne es kurz.\n\n"
 
             "KLEIDUNG & SICHTBARKEIT:\n"
             "- Weite Kleidung (Hoodies, weite Hosen) kann die Wirbelsäulenposition verdecken.\n"
@@ -252,7 +258,7 @@ def _extract_frames(video_path: str, num_frames: int = NUM_FRAMES) -> list[str]:
                     "-i", video_path,
                     "-vframes", "1",
                     "-q:v", "2",
-                    "-vf", "scale=1024:-1",
+                    "-vf", "scale=768:-1",
                     frame_path,
                     "-y",
                 ],
@@ -275,7 +281,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
     for i, frame_b64 in enumerate(frames):
         content.append({
             "type": "text",
-            "text": f"Frame {i + 1} von {len(frames)} — {'Start' if i == 0 else 'Ende' if i == len(frames) - 1 else f'Mitte (Phase {i})'}:",
+            "text": f"Frame {i + 1} von {len(frames)} — {['Start (0%)', '25% der Bewegung', '50% — Mitte', '75% der Bewegung', 'Ende (100%)'][i] if len(frames) == 5 else ('Start' if i == 0 else 'Ende' if i == len(frames) - 1 else f'{round(100 * i / (len(frames)-1))}% der Bewegung')}:",
         })
         content.append({
             "type": "image",
@@ -359,15 +365,15 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
             '    "bewegungsfluss": <0-20>,\n'
             '    "gesamteindruck": <0-20>\n'
             '  },\n'
-            '  "overall": "<3-4 Sätze: beginne mit Anerkennung, dann die wichtigsten Beobachtungen>",\n'
-            '  "positives": ["<konkreter Punkt mit Körperteil>", "<konkreter Punkt>", "<konkreter Punkt>"],\n'
+            '  "overall": "<3-4 Sätze: beginne mit Anerkennung, dann wichtigste Beobachtungen. Bei einseitigen Übungen: erwähne welche Seite (links/rechts)>",\n'
+            '  "positives": ["<1-4 konkrete Stärken — NUR was tatsächlich gut ist, keine Füllpunkte>"],\n'
             '  "corrections": [\n'
-            '    {"fehler": "<was genau falsch ist + in welcher Phase>", "korrektur": "<konkrete Anweisung wie es besser geht>"},\n'
-            '    {"fehler": "<was genau falsch ist>", "korrektur": "<konkrete Anweisung>"}\n'
+            '    // NUR echte Technikfehler! 0-3 Einträge. KEINE erfundenen Korrekturen wenn die Technik gut ist.\n'
+            '    {"fehler": "<was genau falsch ist + in welcher Phase>", "korrektur": "<konkrete Anweisung>"}\n'
             '  ],\n'
-            '  "verletzungsrisiko": "<niedrig|mittel|erhöht> — kurze Beschreibung der biomechanischen Belastung",\n'
-            '  "cue": "<1 einprägsamer Coaching-Cue der den wichtigsten Fehler behebt>",\n'
-            '  "naechste_schritte": ["<konkrete Übung oder Drill zur Verbesserung>", "<weiterer Schritt>"]\n'
+            '  "verletzungsrisiko": "<niedrig|mittel|erhöht> — kurze Beschreibung",\n'
+            '  "cue": "<1 einprägsamer Coaching-Cue — nur wenn es einen echten Hauptfehler gibt, sonst Bestätigungs-Cue>",\n'
+            '  "naechste_schritte": ["<konkreter nächster Schritt zur Verbesserung>", "<optionaler zweiter Schritt>"]\n'
             "}"
         ),
     })
