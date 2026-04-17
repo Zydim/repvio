@@ -530,12 +530,17 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
         ),
     })
 
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=1800,
-        temperature=0.5,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": content}],
+    import asyncio
+    loop = asyncio.get_event_loop()
+    response = await loop.run_in_executor(
+        None,
+        lambda: client.messages.create(
+            model=MODEL,
+            max_tokens=1800,
+            temperature=0.5,
+            system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": content}],
+        ),
     )
 
     raw = response.content[0].text.strip()
@@ -544,7 +549,12 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
         raw = raw.split("\n", 1)[-1]
         raw = raw.rsplit("```", 1)[0].strip()
 
-    result = json.loads(raw)
+    try:
+        result = json.loads(raw)
+    except json.JSONDecodeError:
+        raise ValueError(
+            "Die KI-Analyse konnte nicht verarbeitet werden. Bitte versuche es erneut."
+        )
 
     # Validate & recalculate score from teilscores if present
     if "teilscores" in result:
