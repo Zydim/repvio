@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, EmailStr
 from sqlalchemy.orm import Session
 
-from models.database import User, PasswordReset, get_db
+from models.database import User, PasswordReset, BetaFeedback, get_db
 from services.email_service import send_verification_email, send_password_reset_email
 
 DISPOSABLE_DOMAINS = {
@@ -35,8 +35,16 @@ class LoginRequest(BaseModel):
     password: str
 
 
+REGISTRATION_OPEN = os.getenv("REGISTRATION_OPEN", "false").lower() == "true"
+
+
 @router.post("/register")
 def register(body: RegisterRequest, db: Session = Depends(get_db)):
+    if not REGISTRATION_OPEN:
+        raise HTTPException(
+            status_code=403,
+            detail="Die Registrierung ist derzeit geschlossen. Repvio befindet sich in der Beta-Phase.",
+        )
     if len(body.password) < 6:
         raise HTTPException(status_code=400, detail="Passwort muss mindestens 6 Zeichen haben.")
     domain = body.email.split("@")[-1].lower()
@@ -233,3 +241,23 @@ def reset_password(body: ResetPasswordRequest, db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": "Passwort wurde erfolgreich zurückgesetzt."}
+
+
+class BetaFeedbackRequest(BaseModel):
+    email: EmailStr
+    message: str
+
+
+@router.post("/beta-feedback")
+def submit_beta_feedback(body: BetaFeedbackRequest, db: Session = Depends(get_db)):
+    if not body.message.strip():
+        raise HTTPException(status_code=400, detail="Feedback darf nicht leer sein.")
+    if len(body.message) > 2000:
+        raise HTTPException(status_code=400, detail="Feedback zu lang (max. 2000 Zeichen).")
+    user = db.query(User).filter(User.email == body.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Benutzer nicht gefunden.")
+    feedback = BetaFeedback(user_email=body.email, message=body.message.strip())
+    db.add(feedback)
+    db.commit()
+    return {"message": "Danke für dein Feedback!"}

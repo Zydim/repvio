@@ -26,6 +26,7 @@ Base = declarative_base()
 
 PLAN_LIMITS = {
     "free": 3,
+    "beta": 10,
     "pro": 30,
     "elite": 100,
 }
@@ -68,6 +69,15 @@ class AnalysisSession(Base):
     video_filename = Column(String, nullable=True)
     feedback_json = Column(Text, nullable=False)
     score = Column(Float, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class BetaFeedback(Base):
+    __tablename__ = "beta_feedback"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String, index=True, nullable=False)
+    message = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
