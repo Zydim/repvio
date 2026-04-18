@@ -29,7 +29,7 @@ export default function LoginPage() {
         setError("E-Mail oder Passwort falsch.");
       }
     } else {
-      router.push("/analyze");
+      window.location.href = "/analyze";
     }
   }
 
