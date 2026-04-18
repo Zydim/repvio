@@ -80,7 +80,10 @@ function PricingContent() {
   useEffect(() => {
     if (userEmail) {
       getUserPlan(userEmail)
-        .then((data) => setCurrentPlan(data.plan))
+        .then((data) => {
+          setCurrentPlan(data.plan);
+          if (data.plan === "beta") router.replace("/analyze");
+        })
         .catch(() => setCurrentPlan("free"));
     }
   }, [userEmail]);
