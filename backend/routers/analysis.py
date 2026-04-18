@@ -27,6 +27,11 @@ def _check_and_increment_limit(user: User, db: Session):
 
     limit = PLAN_LIMITS.get(user.plan)
     if limit is not None and user.analyses_this_month >= limit:
+        if user.plan == "beta":
+            raise HTTPException(
+                status_code=403,
+                detail=f"Du hast dein Beta-Limit von {limit} Analysen erreicht.",
+            )
         plan_label = "Free" if user.plan == "free" else user.plan.capitalize()
         raise HTTPException(
             status_code=403,

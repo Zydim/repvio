@@ -10,6 +10,10 @@ const PLAN_STYLES: Record<string, { label: string; classes: string }> = {
     label: "Free",
     classes: "bg-zinc-800 text-zinc-400 border-zinc-700",
   },
+  beta: {
+    label: "Beta",
+    classes: "bg-purple-950 text-purple-300 border-purple-800",
+  },
   pro: {
     label: "Pro",
     classes: "bg-blue-950 text-blue-300 border-blue-800",
