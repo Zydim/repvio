@@ -39,6 +39,14 @@ export default function PlanBadge() {
 
   const style = PLAN_STYLES[plan] || PLAN_STYLES.free;
 
+  if (plan === "beta") {
+    return (
+      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${style.classes}`}>
+        {style.label}
+      </span>
+    );
+  }
+
   return (
     <Link
       href="/pricing"
