@@ -96,7 +96,7 @@ def login(body: LoginRequest, db: Session = Depends(get_db)):
         remaining = MAX_LOGIN_ATTEMPTS - user.failed_login_attempts
         raise HTTPException(status_code=401, detail=f"E-Mail oder Passwort falsch. Noch {remaining} Versuche.")
 
-    if not user.email_verified:
+    if not user.email_verified and user.plan != "beta":
         raise HTTPException(status_code=403, detail="Bitte bestätige zuerst deine E-Mail-Adresse.")
 
     # Reset on successful login
