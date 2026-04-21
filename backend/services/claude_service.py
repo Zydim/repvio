@@ -35,7 +35,10 @@ SYSTEM_PROMPT = [
             "- Schweres Gewicht / Zusatzgewicht: Leichter Schwung, minimales Kipping oder leicht "
             "eingeschränkte ROM sind bei hoher Last NORMAL — maximal 1-2 Punkte Abzug pro Kategorie.\n"
             "- Bewerte das Gesamtbild der Bewegung über alle Frames, nicht einzelne Frames isoliert.\n"
-            "- KEINE medizinischen Diagnosen. Beschreibe Risiken als biomechanische Belastung.\n\n"
+            "- KEINE medizinischen Diagnosen. Beschreibe Risiken als biomechanische Belastung.\n"
+            "- FALSCHE ÜBUNG: Wenn das Video eindeutig eine andere Übung zeigt als angegeben "
+            "(z.B. Kreuzheben statt Kniebeuge), vergib maximal 20 Punkte gesamt. "
+            "Erkläre klar was gezeigt wird und was der Nutzer stattdessen tun soll.\n\n"
 
             "STUDIO-UMGEBUNG:\n"
             "- Ignoriere Spiegel und Spiegelbilder — analysiere nur die direkte Person, nicht das Spiegelbild.\n"
