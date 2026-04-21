@@ -162,7 +162,7 @@ export default function AnalyzePage() {
             {/* Camera Guide */}
             {exercise && (
               <div className="mb-6 bg-zinc-900 border border-zinc-700 rounded-2xl p-4">
-                <p className="text-xs text-zinc-400 uppercase tracking-wider mb-3 font-semibold">📷 Tipps für beste Ergebnisse</p>
+                <p className="text-xs text-zinc-400 uppercase tracking-wider mb-3 font-semibold">📷 So filmst du für den besten Score</p>
                 <div className="flex flex-col gap-2 text-xs text-zinc-300">
                   {CAMERA_TIPS[exercise] && (
                     <div className="flex items-start gap-2 bg-zinc-800 rounded-xl px-3 py-2">
