@@ -7,11 +7,14 @@ backend/**/__pycache__/
 *.pyo
 
 # Datenbank
-backend/repvio.db
+*.db
+*.db-shm
+*.db-wal
 
-# Secrets
+# Secrets & sensible Dateien
 backend/.env
 frontend/.env.local
+backend/beta_testers.csv
 
 # Node
 frontend/node_modules/
