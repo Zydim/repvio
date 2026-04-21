@@ -28,6 +28,26 @@ const EXERCISES = [
   { id: "Ausfallschritte", label: "Ausfallschritte", emoji: "🚶" },
 ];
 
+const CAMERA_TIPS: Record<string, string> = {
+  "Bankdrücken":              "Von der Seite — Ellbogenwinkel, Stangen-Pfad und Bogen sichtbar",
+  "Schrägbankdrücken":        "Von der Seite — Stangen-Pfad zur oberen Brust sichtbar",
+  "Dips":                     "Schräg von der Seite — Tiefe und Oberkörperneigung sichtbar",
+  "Klimmzüge":                "Von der Seite oder schräg vorne — Arm-Extension unten sichtbar",
+  "Muscle-Ups":               "Von der Seite — Transition über die Stange sichtbar",
+  "Chin-Ups":                 "Von der Seite — Arm-Extension und Kinn-Position sichtbar",
+  "Seitheben Kabelturm":      "Von vorne oder schräg — Armhöhe und Schulterposition sichtbar",
+  "Schulterpress Langhantel": "Von der Seite — Ellbogenwinkel und Lean-Back sichtbar",
+  "Kniebeuge":                "Von der Seite — Kniewinkel, Tiefe und Rückenposition sichtbar",
+  "Kreuzheben":               "Von der Seite — Rückenposition, Hüft-Hinge und Stangen-Pfad sichtbar",
+  "Hip Thrust":               "Von der Seite — Hüftstreckung oben klar sichtbar",
+  "Face Pulls Kabelturm":     "Von der Seite oder schräg hinten — Ellbogenhöhe sichtbar",
+  "Step Up Kabelzug":         "Von der Seite — Knieposition und Hüftstreckung oben sichtbar",
+  "Bulgarian Split Squat":    "Von der Seite — Tiefe, Knieposition und Oberkörperneigung sichtbar",
+  "Rudern Kabelzug":          "Von der Seite — Rückenposition und Ellbogenzug sichtbar",
+  "Rumänisches Kreuzheben":   "Von der Seite — Hüft-Hinge und neutrale Wirbelsäule sichtbar",
+  "Ausfallschritte":          "Von der Seite — Knieposition, Schrittlänge und Tiefe sichtbar",
+};
+
 const MUSCLE_FOCUS: Record<string, string[]> = {
   "Schrägbankdrücken":        ["Obere Brust", "Brust allgemein"],
   "Dips":                     ["Brust", "Trizeps"],
@@ -143,22 +163,30 @@ export default function AnalyzePage() {
             {exercise && (
               <div className="mb-6 bg-zinc-900 border border-zinc-700 rounded-2xl p-4">
                 <p className="text-xs text-zinc-400 uppercase tracking-wider mb-3 font-semibold">📷 Tipps für beste Ergebnisse</p>
-                <div className="grid grid-cols-2 gap-2 text-xs text-zinc-300">
-                  <div className="flex items-start gap-2">
-                    <span className="text-emerald-400 mt-0.5">✓</span>
-                    <span>Von der <strong>Seite</strong> filmen (nicht frontal)</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-emerald-400 mt-0.5">✓</span>
-                    <span><strong>Ganzer Körper</strong> im Bild sichtbar</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-emerald-400 mt-0.5">✓</span>
-                    <span><strong>Gutes Licht</strong> — kein Gegenlicht</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-emerald-400 mt-0.5">✓</span>
-                    <span>Mindestens <strong>2-3 Wiederholungen</strong> im Video</span>
+                <div className="flex flex-col gap-2 text-xs text-zinc-300">
+                  {CAMERA_TIPS[exercise] && (
+                    <div className="flex items-start gap-2 bg-zinc-800 rounded-xl px-3 py-2">
+                      <span className="text-yellow-400 mt-0.5">🎯</span>
+                      <span><strong>Bester Winkel:</strong> {CAMERA_TIPS[exercise]}</span>
+                    </div>
+                  )}
+                  <div className="grid grid-cols-2 gap-2 mt-1">
+                    <div className="flex items-start gap-2">
+                      <span className="text-emerald-400 mt-0.5">✓</span>
+                      <span><strong>Ganzer Körper</strong> im Bild</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-emerald-400 mt-0.5">✓</span>
+                      <span><strong>Gutes Licht</strong> — kein Gegenlicht</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-emerald-400 mt-0.5">✓</span>
+                      <span><strong>2-3 Wiederholungen</strong> im Video</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-emerald-400 mt-0.5">✓</span>
+                      <span><strong>Max. 15 Sekunden</strong></span>
+                    </div>
                   </div>
                 </div>
               </div>
