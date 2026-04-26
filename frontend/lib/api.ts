@@ -48,11 +48,24 @@ export interface HistorySession {
 
 export interface SessionDetail {
   session_id: number;
-  user_email: string;
   exercise_type: string;
   feedback: FeedbackResult;
   score: number;
   created_at: string;
+}
+
+// Token cache — tokens are valid for 5 min, we refresh after 4
+let _tokenCache: { email: string; token: string; expiresAt: number } | null = null;
+
+async function getBackendToken(): Promise<{ email: string; token: string }> {
+  if (_tokenCache && Date.now() < _tokenCache.expiresAt) {
+    return { email: _tokenCache.email, token: _tokenCache.token };
+  }
+  const res = await fetch("/api/auth-token");
+  if (!res.ok) throw new Error("Nicht angemeldet");
+  const data = await res.json();
+  _tokenCache = { ...data, expiresAt: Date.now() + 4 * 60 * 1000 };
+  return data;
 }
 
 export async function analyzeVideo(
@@ -61,10 +74,13 @@ export async function analyzeVideo(
   userEmail: string,
   muscleFocus?: string
 ): Promise<AnalysisResponse> {
+  const { email, token } = await getBackendToken();
+
   const formData = new FormData();
   formData.append("video", file);
   formData.append("exercise_type", exerciseType);
-  formData.append("user_email", userEmail);
+  formData.append("user_email", email);
+  formData.append("user_token", token);
   if (muscleFocus) formData.append("muscle_focus", muscleFocus);
 
   const response = await api.post<AnalysisResponse>("/analyze", formData, {
@@ -74,14 +90,18 @@ export async function analyzeVideo(
 }
 
 export async function getHistory(email: string): Promise<HistorySession[]> {
+  const { email: verifiedEmail, token } = await getBackendToken();
   const response = await api.get<HistorySession[]>("/history", {
-    params: { email },
+    params: { email: verifiedEmail, user_token: token },
   });
   return response.data;
 }
 
 export async function getSession(sessionId: number): Promise<SessionDetail> {
-  const response = await api.get<SessionDetail>(`/history/${sessionId}`);
+  const { email, token } = await getBackendToken();
+  const response = await api.get<SessionDetail>(`/history/${sessionId}`, {
+    params: { email, user_token: token },
+  });
   return response.data;
 }
 

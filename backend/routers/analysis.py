@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from models.database import AnalysisSession, IpAnalysisTracker, User, PLAN_LIMITS, get_db
 from services.claude_service import analyze_exercise
+from utils.auth import verify_user_token
 
 IP_FREE_LIMIT = 10  # max free analyses per IP per month
 
@@ -63,9 +64,13 @@ async def analyze_video(
     video: UploadFile = File(...),
     exercise_type: str = Form(...),
     user_email: str = Form(default="anonymous@repvio.app"),
+    user_token: str = Form(default=""),
     muscle_focus: str = Form(default=""),
     db: Session = Depends(get_db),
 ):
+    if not verify_user_token(user_email, user_token):
+        raise HTTPException(status_code=401, detail="Ungültige oder abgelaufene Sitzung.")
+
     # Validate file extension
     suffix = Path(video.filename or "").suffix.lower()
     if suffix not in ALLOWED_EXTENSIONS:
