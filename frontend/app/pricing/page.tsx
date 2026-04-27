@@ -182,12 +182,12 @@ function PricingContent() {
               key={plan.id}
               className={`relative rounded-2xl border p-6 md:p-8 flex flex-col ${
                 plan.popular
-                  ? "border-white bg-zinc-900"
+                  ? "border-violet-500/60 bg-zinc-900 shadow-[0_0_40px_rgba(139,92,246,0.1)]"
                   : "border-zinc-800 bg-zinc-900/50"
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-zinc-950 text-xs font-bold px-4 py-1 rounded-full">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-blue-500 text-white text-xs font-bold px-4 py-1 rounded-full shadow-[0_0_12px_rgba(139,92,246,0.5)]">
                   Beliebt
                 </div>
               )}
@@ -229,7 +229,7 @@ function PricingContent() {
                   disabled={loading !== null}
                   className={`w-full py-3 rounded-xl text-sm font-semibold transition-all disabled:opacity-40 ${
                     plan.popular
-                      ? "bg-white text-zinc-950 hover:bg-zinc-200"
+                      ? "bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 text-white shadow-[0_0_20px_rgba(139,92,246,0.35)]"
                       : "bg-zinc-800 text-zinc-100 hover:bg-zinc-700 border border-zinc-700"
                   }`}
                 >

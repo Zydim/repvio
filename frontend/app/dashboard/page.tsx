@@ -100,7 +100,7 @@ export default function DashboardPage() {
                 <button
                   type="submit"
                   disabled={!feedbackText.trim() || feedbackSending}
-                  className="px-5 py-2 bg-white text-zinc-950 rounded-xl text-sm font-semibold hover:bg-zinc-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="px-5 py-2 text-white text-sm font-semibold rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 transition-all shadow-[0_0_16px_rgba(139,92,246,0.3)] disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {feedbackSending ? "Wird gesendet..." : "Feedback senden"}
                 </button>

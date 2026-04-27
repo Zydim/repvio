@@ -115,10 +115,10 @@ export default function VideoUploader({
       {/* Dropzone */}
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-colors ${
+        className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all ${
           isDragActive
-            ? "border-zinc-400 bg-zinc-800"
-            : "border-zinc-700 hover:border-zinc-500 bg-zinc-900"
+            ? "border-violet-500 bg-violet-500/10"
+            : "border-zinc-700 hover:border-violet-500/50 bg-zinc-900"
         }`}
       >
         <input {...getInputProps()} />
@@ -219,7 +219,7 @@ export default function VideoUploader({
       <button
         onClick={handleAnalyze}
         disabled={!file || loading || !exerciseType || (videoDuration !== null && videoDuration > MAX_DURATION)}
-        className="w-full py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed bg-white text-zinc-950 hover:bg-zinc-200"
+        className="w-full py-3 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
       >
         {loading ? "Analysiere..." : "Analysieren"}
       </button>

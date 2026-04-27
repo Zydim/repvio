@@ -124,7 +124,7 @@ export default function AnalyzePage() {
                     }}
                     className={`flex flex-col items-center gap-1.5 md:gap-2 py-3 md:py-5 rounded-2xl border-2 transition-all text-xs md:text-sm font-medium ${
                       exercise === ex.id
-                        ? "border-white bg-zinc-800 text-white"
+                        ? "border-violet-500 bg-violet-500/10 text-white shadow-[0_0_16px_rgba(139,92,246,0.2)]"
                         : "border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200"
                     }`}
                   >
@@ -148,7 +148,7 @@ export default function AnalyzePage() {
                       onClick={() => setMuscleFocus(muscle)}
                       className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
                         muscleFocus === muscle
-                          ? "border-white bg-white text-zinc-950"
+                          ? "border-violet-500 bg-violet-500/15 text-white"
                           : "border-zinc-600 bg-zinc-900 text-zinc-400 hover:border-zinc-400 hover:text-zinc-200"
                       }`}
                     >

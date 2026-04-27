@@ -76,7 +76,7 @@ export default function AccountPage() {
             {plan === "free" && (
               <Link
                 href="/pricing"
-                className="text-sm bg-white text-zinc-950 px-4 py-2 rounded-xl font-semibold hover:bg-zinc-200 transition-colors"
+                className="text-sm text-white px-4 py-2 rounded-xl font-semibold bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 transition-all shadow-[0_0_16px_rgba(139,92,246,0.3)]"
               >
                 Upgraden
               </Link>
