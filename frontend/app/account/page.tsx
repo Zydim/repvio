@@ -100,7 +100,7 @@ export default function AccountPage() {
         )}
 
         {/* Abo kündigen */}
-        {plan !== "free" && (
+        {plan !== "free" && plan !== "beta" && (
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 mb-4">
             <h2 className="text-xs text-zinc-500 uppercase tracking-wider mb-4">Abonnement</h2>
             <p className="text-sm text-zinc-400 mb-4">
@@ -133,27 +133,33 @@ export default function AccountPage() {
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <div>
               <p className="text-sm font-medium text-white mb-1">Konto löschen</p>
-              <p className="text-xs text-zinc-500">Alle Daten und Analysen werden dauerhaft gelöscht.</p>
+              <p className="text-xs text-zinc-500">
+                {plan === "beta"
+                  ? "Beta-Accounts können nicht selbst gelöscht werden. Wende dich an support@repvio.app"
+                  : "Alle Daten und Analysen werden dauerhaft gelöscht."}
+              </p>
             </div>
-            <button
-              onClick={async () => {
-                const pw = prompt("Passwort zur Bestätigung eingeben:");
-                if (!pw) return;
-                if (!confirm("Konto wirklich dauerhaft löschen? Diese Aktion kann nicht rückgängig gemacht werden!")) return;
-                setDeleteLoading(true);
-                try {
-                  await deleteAccount(session?.user?.email ?? "", pw);
-                  signOut({ callbackUrl: "/" });
-                } catch {
-                  setMessage("Fehler beim Löschen. Falsches Passwort oder Serverfehler.");
-                  setDeleteLoading(false);
-                }
-              }}
-              disabled={deleteLoading}
-              className="text-sm text-red-400 hover:text-red-300 transition-colors border border-red-900/50 px-4 py-2 rounded-lg disabled:opacity-40 whitespace-nowrap"
-            >
-              {deleteLoading ? "Wird gelöscht..." : "Konto löschen"}
-            </button>
+            {plan !== "beta" && (
+              <button
+                onClick={async () => {
+                  const pw = prompt("Passwort zur Bestätigung eingeben:");
+                  if (!pw) return;
+                  if (!confirm("Konto wirklich dauerhaft löschen? Diese Aktion kann nicht rückgängig gemacht werden!")) return;
+                  setDeleteLoading(true);
+                  try {
+                    await deleteAccount(session?.user?.email ?? "", pw);
+                    signOut({ callbackUrl: "/" });
+                  } catch {
+                    setMessage("Fehler beim Löschen. Falsches Passwort oder Serverfehler.");
+                    setDeleteLoading(false);
+                  }
+                }}
+                disabled={deleteLoading}
+                className="text-sm text-red-400 hover:text-red-300 transition-colors border border-red-900/50 px-4 py-2 rounded-lg disabled:opacity-40 whitespace-nowrap"
+              >
+                {deleteLoading ? "Wird gelöscht..." : "Konto löschen"}
+              </button>
+            )}
           </div>
           <div className="border-t border-zinc-800 mt-4 pt-4">
             <button

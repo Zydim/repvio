@@ -62,7 +62,10 @@ async function getBackendToken(): Promise<{ email: string; token: string }> {
     return { email: _tokenCache.email, token: _tokenCache.token };
   }
   const res = await fetch("/api/auth-token");
-  if (!res.ok) throw new Error("Nicht angemeldet");
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body?.error ?? `Auth-Token fehlgeschlagen (${res.status})`);
+  }
   const data = await res.json();
   _tokenCache = { ...data, expiresAt: Date.now() + 4 * 60 * 1000 };
   return data;

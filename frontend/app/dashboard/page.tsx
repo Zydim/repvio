@@ -26,7 +26,10 @@ export default function DashboardPage() {
     setLoading(true);
     getHistory(session.user.email)
       .then(setSessions)
-      .catch(() => setError("Fehler beim Laden der History."))
+      .catch((err) => {
+        const msg = err?.response?.data?.detail ?? err?.message ?? "Unbekannter Fehler";
+        setError(`Fehler beim Laden der History: ${msg}`);
+      })
       .finally(() => setLoading(false));
   }, [session?.user?.email]);
 

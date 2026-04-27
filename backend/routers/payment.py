@@ -140,6 +140,8 @@ def cancel_subscription(body: CancelRequest, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == body.email).first()
     if not user:
         raise HTTPException(status_code=404, detail="Benutzer nicht gefunden.")
+    if user.plan == "beta":
+        raise HTTPException(status_code=403, detail="Beta-Accounts können nicht selbst gekündigt werden. Kontaktiere support@repvio.app")
     if not user.stripe_subscription_id:
         raise HTTPException(status_code=400, detail="Kein aktives Abo gefunden.")
     try:
