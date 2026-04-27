@@ -17,7 +17,7 @@ interface Props {
   sessions: HistorySession[];
 }
 
-const COLORS = ["#34d399", "#60a5fa", "#f59e0b", "#f87171", "#a78bfa", "#fb7185"];
+const COLORS = ["#8b5cf6", "#60a5fa", "#34d399", "#f59e0b", "#f87171", "#fb7185"];
 
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
@@ -81,12 +81,12 @@ export default function ProgressChart({ sessions }: Props) {
             <button
               key={ex}
               onClick={() => setSelected(ex)}
-              className={`text-xs px-3 py-1.5 rounded-full border transition-colors font-medium ${
+              className={`text-xs px-3 py-1.5 rounded-full border transition-all font-medium ${
                 selected === ex
-                  ? "border-transparent text-zinc-950"
-                  : "bg-zinc-800 border-zinc-700 text-zinc-400 hover:text-zinc-200"
+                  ? "border-transparent text-white"
+                  : "bg-zinc-800/60 border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:border-zinc-500"
               }`}
-              style={selected === ex ? { backgroundColor: COLORS[i % COLORS.length] } : {}}
+              style={selected === ex ? { backgroundColor: COLORS[i % COLORS.length], boxShadow: `0 0 12px ${COLORS[i % COLORS.length]}55` } : {}}
             >
               {ex}
             </button>

@@ -6,7 +6,7 @@ export default function AGBPage() {
   return (
     <div className="min-h-screen bg-zinc-950 flex flex-col">
       <Navbar />
-      <div className="max-w-3xl mx-auto px-4 md:px-6 py-10 flex-1 w-full prose prose-invert prose-sm max-w-none">
+      <div className="max-w-3xl mx-auto px-4 md:px-6 py-10 flex-1 w-full">
         <h1 className="text-2xl font-bold mb-6">Allgemeine Geschäftsbedingungen (AGB)</h1>
         <p className="text-zinc-500 text-sm mb-8">Stand: März 2026</p>
 
