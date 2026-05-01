@@ -151,13 +151,48 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "NICHT BEURTEILBAR: Trapez-Kompensation vs. Schulter-Aktivierung — nicht durch Frames beurteilbar. "
         "Handgelenk-Neutralität unter Handschuhen/weiten Ärmeln. Senktempo."
     ),
-    "Schulterpress Langhantel": (
-        "Fokus-Kriterien: Stange startet an der vorderen Schulter, volle Lockout-Extension, "
-        "Ellbogen unter der Stange.\n"
+    "Schulterpress Kurzhantel": (
+        "Fokus-Kriterien: Kurzhanteln starten auf Schulterhöhe (neutral oder pronierter Griff), "
+        "beide Arme gleichzeitig drücken, volle Lockout-Extension oben, "
+        "Ellbogen unter den Kurzhanteln beim Start, Oberkörper aufrecht und stabil.\n"
+        "BESONDERHEIT KURZHANTEL: Jede Hand bewegt sich unabhängig — leichte Rotationsbewegung "
+        "(von neutral zu proniert) während des Pressens ist NORMALE und korrekte Technik. "
+        "Kurzhanteln können oben leicht nach innen zusammenkommen.\n"
         "TOLERANZEN: Leichter Lean-Back bei schweren Gewichten NORMAL — nur extremes Hohlkreuz ist Fehler. "
-        "Kopf weicht natürlich zurück für Stangen-Pfad. Leichte Kniebeugung für Stabilität kein Fehler.\n"
+        "Leichte Asymmetrie zwischen links und rechts ist normal und kein schwerer Fehler. "
+        "Leichte Kniebeugung für Stabilität im Stehen kein Fehler.\n"
         "NICHT BEURTEILBAR: Core-Spannung — nicht sichtbar. Pressetempo. "
-        "Exakter Ellbogen-Winkel beim Start unter weiten Ärmeln."
+        "Exakter Griffwinkel unter weiten Ärmeln."
+    ),
+    "Front Squat": (
+        "Fokus-Kriterien: Stange liegt auf den vorderen Schultern (Clean-Rack-Position oder Cross-Grip), "
+        "Ellbogen HOCH halten während der gesamten Bewegung, aufrechter Oberkörper "
+        "(deutlich aufrechter als bei der normalen Kniebeuge), "
+        "Knie folgen der Fußspitzenrichtung, Fersen am Boden, Tiefe idealerweise unter parallel.\n"
+        "BESONDERHEIT: Aufrechter Oberkörper ist das wichtigste Merkmal des Front Squats. "
+        "Wenn die Ellbogen sinken, fällt die Stange automatisch — hohe Ellbogen sind Pflicht.\n"
+        "TOLERANZEN: Leichte Fersenerhöhung (Platten oder Keilschuhe) ist für Front Squats NORMAL und akzeptabel. "
+        "Knie DÜRFEN über die Zehenspitzen gehen — beim Front Squat sogar erwünscht. "
+        "Etwas mehr Oberkörper-Lean bei schlechter Mobilität akzeptabel — "
+        "aber mehr als 15-20° Vorneigen deutet auf Mobilitätsprobleme hin.\n"
+        "NICHT BEURTEILBAR: Exakte Ellbogen-Höhe wenn von vorne gefilmt. "
+        "Tiefe wenn nicht von der Seite gefilmt. Knie-Einknicken unter weiter Hose. Tempo."
+    ),
+    "Zercher Squat": (
+        "Fokus-Kriterien: Stange liegt im Ellbogen-Beugen (Armbeuge), "
+        "Arme vor dem Körper, Ellbogen auf Hüft- bis Bauchnabelhöhe, "
+        "aufrechter Oberkörper (ähnlich wie Front Squat), "
+        "Knie folgen der Fußspitzenrichtung, Tiefe: parallel oder tiefer.\n"
+        "BESONDERHEIT: Stangen-Position in der Armbeuge ist ungewohnt — "
+        "Unbehagen oder leichte Anpassungsbewegungen der Arme sind NORMAL. "
+        "Der Zercher Squat erfordert natürlicherweise dass die Ellbogen zwischen die Knie sinken "
+        "in der unteren Position — das ist KORREKTE Technik und kein Fehler.\n"
+        "TOLERANZEN: Leichte Fersenerhöhung ist akzeptabel. "
+        "Knie DÜRFEN über die Zehenspitzen gehen. "
+        "Leichtes Vorneigen des Oberkörpers (bis 20°) ist normal — "
+        "extremes Vorlehnen (Stange hängt stark nach vorne) deutet auf Stabilitätsprobleme.\n"
+        "NICHT BEURTEILBAR: Exaktes Unwohlsein/Schmerz bei der Stangen-Position — nicht sichtbar. "
+        "Tiefe wenn nicht von der Seite gefilmt. Tempo."
     ),
     "Kniebeuge": (
         "Fokus-Kriterien: Knie folgen der Fußspitzenrichtung, stabile Wirbelsäule, "
