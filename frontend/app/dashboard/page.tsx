@@ -17,6 +17,7 @@ export default function DashboardPage() {
 
   // Beta Feedback
   const [feedbackText, setFeedbackText] = useState("");
+  const [feedbackAnonymous, setFeedbackAnonymous] = useState(false);
   const [feedbackSending, setFeedbackSending] = useState(false);
   const [feedbackSuccess, setFeedbackSuccess] = useState(false);
   const [feedbackError, setFeedbackError] = useState<string | null>(null);
@@ -35,12 +36,12 @@ export default function DashboardPage() {
 
   async function handleFeedbackSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!feedbackText.trim() || !session?.user?.email) return;
+    if (!feedbackText.trim()) return;
     setFeedbackSending(true);
     setFeedbackError(null);
     try {
       await api.post("/auth/beta-feedback", {
-        email: session.user.email,
+        ...(feedbackAnonymous ? {} : { email: session?.user?.email }),
         message: feedbackText.trim(),
       });
       setFeedbackSuccess(true);
@@ -95,6 +96,20 @@ export default function DashboardPage() {
                 maxLength={2000}
                 className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-sm text-zinc-200 placeholder-zinc-600 resize-none focus:outline-none focus:border-zinc-500 transition-colors"
               />
+              {/* Anonymous toggle */}
+              <label className="flex items-center gap-2.5 cursor-pointer select-none w-fit">
+                <div
+                  onClick={() => setFeedbackAnonymous(!feedbackAnonymous)}
+                  className={`relative w-9 h-5 rounded-full transition-colors ${feedbackAnonymous ? "bg-violet-600" : "bg-zinc-700"}`}
+                >
+                  <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${feedbackAnonymous ? "translate-x-4" : "translate-x-0.5"}`} />
+                </div>
+                <span className="text-xs text-zinc-400">
+                  Anonym senden
+                  {feedbackAnonymous && <span className="ml-1.5 text-violet-400">(deine E-Mail wird nicht übermittelt)</span>}
+                </span>
+              </label>
+
               <div className="flex items-center justify-between">
                 <span className="text-xs text-zinc-600">{feedbackText.length}/2000</span>
                 <button

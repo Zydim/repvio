@@ -4,6 +4,7 @@ import os
 from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 from sqlalchemy.orm import Session
 
 from models.database import User, PasswordReset, BetaFeedback, get_db
@@ -246,7 +247,7 @@ def reset_password(body: ResetPasswordRequest, db: Session = Depends(get_db)):
 
 
 class BetaFeedbackRequest(BaseModel):
-    email: EmailStr
+    email: Optional[EmailStr] = None
     message: str
 
 
@@ -256,10 +257,16 @@ def submit_beta_feedback(body: BetaFeedbackRequest, db: Session = Depends(get_db
         raise HTTPException(status_code=400, detail="Feedback darf nicht leer sein.")
     if len(body.message) > 2000:
         raise HTTPException(status_code=400, detail="Feedback zu lang (max. 2000 Zeichen).")
-    user = db.query(User).filter(User.email == body.email).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="Benutzer nicht gefunden.")
-    feedback = BetaFeedback(user_email=body.email, message=body.message.strip())
+
+    if body.email:
+        user = db.query(User).filter(User.email == body.email).first()
+        if not user:
+            raise HTTPException(status_code=404, detail="Benutzer nicht gefunden.")
+        stored_email = body.email
+    else:
+        stored_email = "anonym"
+
+    feedback = BetaFeedback(user_email=stored_email, message=body.message.strip())
     db.add(feedback)
     db.commit()
     return {"message": "Danke für dein Feedback!"}
