@@ -114,43 +114,29 @@ export default function AnalyzePage() {
                 Neue Analyse
               </button>
             </div>
-            <FeedbackCard {...result.feedback} />
-
-            {/* Analysis Feedback Widget */}
-            <div className="mt-4 bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-4">
+            {/* Analysis Feedback Widget — direkt sichtbar ohne scrollen */}
+            <div className="mb-4 bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-4">
               {analysisFeedbackSent ? (
                 <p className="text-sm text-emerald-400 text-center py-1">✓ Danke für dein Feedback!</p>
               ) : (
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                  <p className="text-xs text-zinc-400 shrink-0">War diese Analyse hilfreich?</p>
+                  <p className="text-xs text-zinc-400 shrink-0">War der Score fair?</p>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <button
-                      onClick={() => submitAnalysisFeedback(true)}
-                      className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-emerald-500/20 hover:border-emerald-500/50 border border-zinc-700 text-sm transition-all"
-                    >
-                      👍 Ja
-                    </button>
-                    <button
-                      onClick={() => submitAnalysisFeedback(false)}
-                      className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-red-500/20 hover:border-red-500/50 border border-zinc-700 text-sm transition-all"
-                    >
-                      👎 Nein
-                    </button>
-                    <div className="w-px h-5 bg-zinc-700 hidden sm:block" />
-                    <p className="text-xs text-zinc-500 shrink-0">Score war:</p>
                     {(["zu_streng", "passt", "zu_grosszuegig"] as const).map((rating) => (
                       <button
                         key={rating}
                         onClick={() => submitAnalysisFeedback(rating === "passt", rating)}
                         className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-violet-500/20 hover:border-violet-500/50 border border-zinc-700 text-xs text-zinc-300 transition-all"
                       >
-                        {rating === "zu_streng" ? "Zu streng" : rating === "passt" ? "Passt" : "Zu großzügig"}
+                        {rating === "zu_streng" ? "😤 Zu streng" : rating === "passt" ? "✅ Passt" : "😅 Zu großzügig"}
                       </button>
                     ))}
                   </div>
                 </div>
               )}
             </div>
+
+            <FeedbackCard {...result.feedback} />
           </div>
         )}
 
