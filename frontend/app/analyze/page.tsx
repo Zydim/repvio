@@ -6,7 +6,7 @@ import VideoUploader from "@/components/VideoUploader";
 import FeedbackCard from "@/components/FeedbackCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { AnalysisResponse } from "@/lib/api";
+import { AnalysisResponse, api } from "@/lib/api";
 
 const EXERCISES = [
   { id: "Bankdrücken", label: "Bankdrücken", emoji: "🏋️" },
