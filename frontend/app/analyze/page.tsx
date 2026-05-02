@@ -30,26 +30,14 @@ const EXERCISES = [
   { id: "Ausfallschritte", label: "Ausfallschritte", emoji: "🚶" },
 ];
 
+const DEFAULT_CAMERA_TIP = "Von der Seite · Handy auf Hüfthöhe anlehnen (auf einer Bank, Tasche oder Hantelablage)";
+
+// Nur Ausnahmen vom Standard
 const CAMERA_TIPS: Record<string, string> = {
-  "Bankdrücken":              "Von der Seite · Höhe: auf Bankniveau (ca. 50 cm) — Bogen, Ellbogenwinkel und Stangen-Pfad sichtbar",
-  "Schrägbankdrücken":        "Von der Seite · Höhe: auf Bankniveau — Stangen-Pfad zur oberen Brust sichtbar",
-  "Dips":                     "Schräg von der Seite · Höhe: Hüfthöhe des hängenden Körpers — Tiefe und Oberkörperneigung sichtbar",
-  "Klimmzüge":                "Von der Seite · Höhe: Hüfthöhe in der hängenden Position — Arm-Extension unten und Schulterposition sichtbar",
-  "Muscle-Ups":               "Von der Seite · Höhe: Stangenposition (Kamera auf Höhe der Stange) — Transition vollständig sichtbar",
-  "Chin-Ups":                 "Von der Seite · Höhe: Hüfthöhe in der hängenden Position — Arm-Extension und Kinn-Position sichtbar",
-  "Seitheben Kabelturm":      "45° schräg von vorne · Höhe: Schulterhöhe — ob der Arm wirklich seitlich (nicht nach vorne) geht sichtbar",
-  "Schulterpress Kurzhantel": "Von der Seite · Höhe: Schulterhöhe — Ellbogenwinkel, Lean-Back und Lockout sichtbar",
-  "Kniebeuge":                "Von der Seite · Höhe: Hüfthöhe — Kniewinkel, Tiefe und Rückenposition sichtbar",
-  "Front Squat":              "45° schräg von vorne · Höhe: Hüfthöhe — Ellbogenhöhe, Aufrichtung und Tiefe sichtbar",
-  "Zercher Squat":            "Von der Seite · Höhe: Hüfthöhe — Stangen-Position in Armbeuge, Oberkörper und Tiefe sichtbar",
-  "Kreuzheben":               "Von der Seite · Höhe: Kniehöhe — Rückenposition, Hüft-Hinge und Stangen-Pfad vollständig sichtbar",
-  "Hip Thrust":               "Von der Seite · Höhe: Bodenniveau (ca. 30 cm) — Hüftstreckung oben klar sichtbar",
-  "Face Pulls Kabelturm":     "Schräg von hinten · Höhe: Schulterhöhe — Ellbogenhöhe und externe Rotation sichtbar",
-  "Step Up Kabelzug":         "Von der Seite · Höhe: Hüfthöhe — Knieposition, Hüftstreckung oben und Oberkörper sichtbar",
-  "Bulgarian Split Squat":    "Von der Seite · Höhe: Hüfthöhe — Tiefe, Knieposition und Oberkörperneigung sichtbar",
-  "Rudern Kabelzug":          "Von der Seite · Höhe: Hüfthöhe — Rückenposition, Oberkörper-Winkel und Ellbogenzug sichtbar",
-  "Rumänisches Kreuzheben":   "Von der Seite · Höhe: Hüfthöhe — Hüft-Hinge, Stangen-Abstand und Wirbelsäule sichtbar",
-  "Ausfallschritte":          "Von der Seite · Höhe: Knie- bis Hüfthöhe — Knieposition, Schrittlänge und Tiefe sichtbar",
+  "Front Squat":          "Schräg von vorne (45°) · Hüfthöhe — nur so sind die Ellbogen sichtbar",
+  "Seitheben Kabelturm":  "Schräg von vorne (45°) · Schulterhöhe — zeigt ob die Arme wirklich seitlich gehen",
+  "Face Pulls Kabelturm": "Schräg von hinten · Schulterhöhe — zeigt Ellbogenhöhe und Rotation",
+  "Hip Thrust":           "Von der Seite · Handy auf den Boden legen (ca. 20–30 cm) — Hüftstreckung oben sichtbar",
 };
 
 const MUSCLE_FOCUS: Record<string, string[]> = {
@@ -170,12 +158,10 @@ export default function AnalyzePage() {
               <div className="mb-6 bg-zinc-900 border border-zinc-700 rounded-2xl p-4">
                 <p className="text-xs text-zinc-400 uppercase tracking-wider mb-3 font-semibold">📷 So filmst du für den besten Score</p>
                 <div className="flex flex-col gap-2 text-xs text-zinc-300">
-                  {CAMERA_TIPS[exercise] && (
-                    <div className="flex items-start gap-2 bg-zinc-800 rounded-xl px-3 py-2">
-                      <span className="text-yellow-400 mt-0.5">🎯</span>
-                      <span><strong>Bester Winkel:</strong> {CAMERA_TIPS[exercise]}</span>
-                    </div>
-                  )}
+                  <div className="flex items-start gap-2 bg-zinc-800 rounded-xl px-3 py-2">
+                    <span className="text-yellow-400 mt-0.5">🎯</span>
+                    <span>{CAMERA_TIPS[exercise] ?? DEFAULT_CAMERA_TIP}</span>
+                  </div>
                   <div className="grid grid-cols-2 gap-2 mt-1">
                     <div className="flex items-start gap-2">
                       <span className="text-emerald-400 mt-0.5">✓</span>
