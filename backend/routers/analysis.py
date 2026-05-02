@@ -5,7 +5,9 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
 from sqlalchemy.orm import Session
 
-from models.database import AnalysisSession, IpAnalysisTracker, User, PLAN_LIMITS, get_db
+from models.database import AnalysisSession, AnalysisFeedback, IpAnalysisTracker, User, PLAN_LIMITS, get_db
+from pydantic import BaseModel
+from typing import Optional
 from services.claude_service import analyze_exercise
 from utils.auth import verify_user_token
 
@@ -134,3 +136,25 @@ async def analyze_video(
     finally:
         if tmp_path.exists():
             tmp_path.unlink()
+
+
+class AnalysisFeedbackRequest(BaseModel):
+    session_id: int
+    exercise_type: str
+    score: float
+    helpful: bool
+    score_rating: Optional[str] = None  # "zu_streng" | "passt" | "zu_grosszuegig"
+
+
+@router.post("/feedback")
+def submit_analysis_feedback(body: AnalysisFeedbackRequest, db: Session = Depends(get_db)):
+    feedback = AnalysisFeedback(
+        session_id=body.session_id,
+        exercise_type=body.exercise_type,
+        score=body.score,
+        helpful=body.helpful,
+        score_rating=body.score_rating,
+    )
+    db.add(feedback)
+    db.commit()
+    return {"message": "Feedback gespeichert."}

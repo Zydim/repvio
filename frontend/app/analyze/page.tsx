@@ -68,10 +68,28 @@ export default function AnalyzePage() {
   const [result, setResult] = useState<AnalysisResponse | null>(null);
 
   const userEmail = session?.user?.email ?? "";
+  const [analysisFeedbackSent, setAnalysisFeedbackSent] = useState(false);
 
   function handleResult(res: AnalysisResponse) {
     setResult(res);
+    setAnalysisFeedbackSent(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function submitAnalysisFeedback(helpful: boolean, scoreRating?: string) {
+    if (!result) return;
+    setAnalysisFeedbackSent(true);
+    try {
+      await api.post("/analyze/feedback", {
+        session_id: result.session_id,
+        exercise_type: result.exercise_type,
+        score: result.score,
+        helpful,
+        score_rating: scoreRating ?? null,
+      });
+    } catch {
+      // silent fail — feedback verloren ist ok
+    }
   }
 
   return (
@@ -97,6 +115,42 @@ export default function AnalyzePage() {
               </button>
             </div>
             <FeedbackCard {...result.feedback} />
+
+            {/* Analysis Feedback Widget */}
+            <div className="mt-4 bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-4">
+              {analysisFeedbackSent ? (
+                <p className="text-sm text-emerald-400 text-center py-1">✓ Danke für dein Feedback!</p>
+              ) : (
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <p className="text-xs text-zinc-400 shrink-0">War diese Analyse hilfreich?</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <button
+                      onClick={() => submitAnalysisFeedback(true)}
+                      className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-emerald-500/20 hover:border-emerald-500/50 border border-zinc-700 text-sm transition-all"
+                    >
+                      👍 Ja
+                    </button>
+                    <button
+                      onClick={() => submitAnalysisFeedback(false)}
+                      className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-red-500/20 hover:border-red-500/50 border border-zinc-700 text-sm transition-all"
+                    >
+                      👎 Nein
+                    </button>
+                    <div className="w-px h-5 bg-zinc-700 hidden sm:block" />
+                    <p className="text-xs text-zinc-500 shrink-0">Score war:</p>
+                    {(["zu_streng", "passt", "zu_grosszuegig"] as const).map((rating) => (
+                      <button
+                        key={rating}
+                        onClick={() => submitAnalysisFeedback(rating === "passt", rating)}
+                        className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-violet-500/20 hover:border-violet-500/50 border border-zinc-700 text-xs text-zinc-300 transition-all"
+                      >
+                        {rating === "zu_streng" ? "Zu streng" : rating === "passt" ? "Passt" : "Zu großzügig"}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
 

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, event, Column, Integer, String, Float, DateTime, Text
+from sqlalchemy import create_engine, event, Column, Integer, String, Float, DateTime, Text, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
@@ -69,6 +69,18 @@ class AnalysisSession(Base):
     video_filename = Column(String, nullable=True)
     feedback_json = Column(Text, nullable=False)
     score = Column(Float, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class AnalysisFeedback(Base):
+    __tablename__ = "analysis_feedback"
+
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(Integer, index=True, nullable=False)
+    exercise_type = Column(String, nullable=False)
+    score = Column(Float, nullable=False)
+    helpful = Column(Boolean, nullable=False)          # True = 👍, False = 👎
+    score_rating = Column(String, nullable=True)       # "zu_streng" | "passt" | "zu_grosszuegig"
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
