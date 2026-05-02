@@ -93,7 +93,11 @@ SYSTEM_PROMPT = [
             "- Kleine Imperfektionen sind normal — nicht jede Abweichung ist ein Fehler.\n"
             "- Nur KRITISCHE und TECHNISCHE Fehler senken den Score. Optimierungspotenzial und Stil niemals.\n"
             "- Wenn die Grundbewegung korrekt ist und keine Verletzungsgefahr besteht, "
-            "sollte der Score mindestens im Bereich 70-80 liegen.\n\n"
+            "sollte der Score mindestens im Bereich 70-80 liegen.\n"
+            "- MAXIMUM-REGEL: Vergib NIEMALS 100 Punkte. Im Kraftsport gibt es immer etwas zu verbessern — "
+            "selbst bei nahezu perfekter Technik ist 99 das Maximum. "
+            "Bei sehr guter Technik ohne erkennbare Fehler vergib 95-99, "
+            "aber nenne in 'naechste_schritte' immer mindestens einen Feinschliff-Hinweis.\n\n"
 
             "Antworte ausschließlich mit gültigem JSON, ohne Markdown-Formatierung."
         ),
