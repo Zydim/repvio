@@ -2,7 +2,7 @@
 
 import { Fragment, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { HistorySession, SessionDetail, getSession } from "@/lib/api";
+import { HistorySession, SessionDetail, getSession, api } from "@/lib/api";
 import FeedbackCard from "@/components/FeedbackCard";
 
 interface HistoryTableProps {
@@ -37,6 +37,20 @@ export default function HistoryTable({ sessions }: HistoryTableProps) {
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [details, setDetails] = useState<Record<number, SessionDetail>>({});
   const [loadingId, setLoadingId] = useState<number | null>(null);
+  const [ratedIds, setRatedIds] = useState<Set<number>>(new Set());
+
+  async function submitRating(sessionId: number, exerciseType: string, score: number, rating: string) {
+    setRatedIds((prev) => new Set(prev).add(sessionId));
+    try {
+      await api.post("/analyze/feedback", {
+        session_id: sessionId,
+        exercise_type: exerciseType,
+        score,
+        helpful: rating === "passt",
+        score_rating: rating,
+      });
+    } catch { /* silent fail */ }
+  }
 
   async function toggleRow(sessionId: number) {
     if (expandedId === sessionId) {
@@ -108,7 +122,30 @@ export default function HistoryTable({ sessions }: HistoryTableProps) {
                     {loadingId === s.session_id ? (
                       <p className="text-zinc-500 text-sm py-4 text-center">Lade Details...</p>
                     ) : details[s.session_id] ? (
-                      <FeedbackCard {...details[s.session_id].feedback} />
+                      <>
+                        {/* Score Rating Widget */}
+                        <div className="mb-4 bg-zinc-800/60 border border-zinc-700 rounded-2xl px-5 py-3">
+                          {ratedIds.has(s.session_id) ? (
+                            <p className="text-sm text-emerald-400 text-center py-0.5">✓ Danke für dein Feedback!</p>
+                          ) : (
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                              <p className="text-xs text-zinc-400 shrink-0">War der Score fair?</p>
+                              <div className="flex gap-2 flex-wrap">
+                                {(["zu_streng", "passt", "zu_grosszuegig"] as const).map((rating) => (
+                                  <button
+                                    key={rating}
+                                    onClick={(e) => { e.stopPropagation(); submitRating(s.session_id, s.exercise_type, s.score, rating); }}
+                                    className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-violet-500/20 hover:border-violet-500/50 border border-zinc-700 text-xs text-zinc-300 transition-all"
+                                  >
+                                    {rating === "zu_streng" ? "😤 Zu streng" : rating === "passt" ? "✅ Passt" : "😅 Zu großzügig"}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        <FeedbackCard {...details[s.session_id].feedback} />
+                      </>
                     ) : null}
                   </td>
                 </tr>
