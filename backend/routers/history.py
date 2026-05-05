@@ -22,7 +22,7 @@ def get_history(
         db.query(AnalysisSession)
         .filter(AnalysisSession.user_email == email)
         .order_by(AnalysisSession.created_at.desc())
-        .limit(20)
+        .limit(100)
         .all()
     )
 
