@@ -19,6 +19,11 @@ export interface Teilscores {
   gesamteindruck: number;
 }
 
+export interface NaechsterSchritt {
+  tipp: string;
+  score_potenzial: string;
+}
+
 export interface FeedbackResult {
   score: number;
   teilscores?: Teilscores;
@@ -27,7 +32,7 @@ export interface FeedbackResult {
   corrections: Correction[];
   verletzungsrisiko: string;
   cue: string;
-  naechste_schritte: string[];
+  naechste_schritte: (NaechsterSchritt | string)[];
 }
 
 export interface AnalysisResponse {

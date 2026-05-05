@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, AlertTriangle, Zap, ShieldAlert, ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
-import { FeedbackResult, Teilscores } from "@/lib/api";
+import { CheckCircle, AlertTriangle, Zap, ShieldAlert, TrendingUp, ChevronDown, ChevronUp } from "lucide-react";
+import { FeedbackResult, NaechsterSchritt, Teilscores } from "@/lib/api";
 
 function ScoreCircle({ score }: { score: number }) {
   const color =
@@ -185,19 +185,34 @@ export default function FeedbackCard({
         </div>
       )}
 
-      {/* Nächste Schritte */}
+      {/* Nächste Schritte — Score verbessern */}
       {naechste_schritte?.length > 0 && (
         <div>
-          <h3 className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-3">
-            Nächste Schritte
-          </h3>
+          <div className="flex items-center gap-2 mb-3">
+            <TrendingUp className="w-4 h-4 text-violet-400" />
+            <h3 className="text-sm font-medium text-zinc-400 uppercase tracking-wider">
+              So holst du mehr Punkte
+            </h3>
+          </div>
           <ul className="space-y-2">
-            {naechste_schritte.map((s, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                <ArrowRight className="w-4 h-4 text-zinc-500 mt-0.5 shrink-0" />
-                {s}
-              </li>
-            ))}
+            {naechste_schritte.map((s, i) => {
+              const isObj = typeof s === "object" && s !== null && "tipp" in s;
+              const item = isObj ? (s as NaechsterSchritt) : null;
+              return (
+                <li key={i} className="bg-zinc-800/60 border border-zinc-700/60 rounded-xl px-4 py-3">
+                  {item ? (
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="text-sm text-zinc-200 leading-relaxed flex-1">{item.tipp}</p>
+                      <span className="shrink-0 text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2.5 py-1 whitespace-nowrap">
+                        {item.score_potenzial}
+                      </span>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-zinc-200 leading-relaxed">{s as string}</p>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

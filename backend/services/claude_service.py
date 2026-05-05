@@ -708,7 +708,12 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
             '  ],\n'
             '  "verletzungsrisiko": "<niedrig|mittel|erhöht> — max 1 Satz",\n'
             '  "cue": "<1 kurzer prägnanter Cue, max 10 Wörter>",\n'
-            '  "naechste_schritte": ["<1 konkreter nächster Schritt>"]\n'
+            '  "naechste_schritte": [\n'
+            '    // 1-3 Einträge. Schaue welche Teilscores am niedrigsten sind und erkläre\n'
+            '    // was der Athlet beim nächsten Training konkret ändern muss um dort Punkte zu holen.\n'
+            '    // score_potenzial = realistische Punktverbesserung wenn der Tipp umgesetzt wird.\n'
+            '    {"tipp": "<Was du beim nächsten Mal konkret anders machst — 1-2 Sätze>", "score_potenzial": "<z.B. +3-5 Punkte>"}\n'
+            '  ]\n'
             "}"
         ),
     })
@@ -719,7 +724,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
         None,
         lambda: client.messages.create(
             model=MODEL,
-            max_tokens=1800,
+            max_tokens=2000,
             temperature=0.5,
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": content}],
