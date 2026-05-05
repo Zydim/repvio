@@ -19,13 +19,14 @@ interface Props {
 
 const COLORS = ["#8b5cf6", "#60a5fa", "#34d399", "#f59e0b", "#f87171", "#fb7185"];
 
-function CustomTooltip({ active, payload, label }: any) {
+function CustomTooltip({ active, payload }: any) {
   if (!active || !payload?.length) return null;
+  const d = payload[0].payload;
   return (
     <div className="bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-xs shadow-xl">
-      <p className="text-zinc-400 mb-1">{label}</p>
+      <p className="text-zinc-400 mb-1">{d.date} · #{d.index}</p>
       <p className="text-white font-semibold text-sm">{payload[0].value}/100</p>
-      <p className="text-zinc-500 mt-0.5">{payload[0].payload.exercise}</p>
+      <p className="text-zinc-500 mt-0.5">{d.exercise}</p>
     </div>
   );
 }
@@ -55,7 +56,9 @@ export default function ProgressChart({ sessions }: Props) {
 
   const avg = useMemo(() => {
     if (!filtered.length) return 0;
-    return Math.round(filtered.reduce((sum, s) => sum + s.score, 0) / filtered.length);
+    // Ø der letzten 5 Sessions — zeigt aktuelles Niveau, nicht historischen Schnitt
+    const recent = filtered.slice(-5);
+    return Math.round(recent.reduce((sum, s) => sum + s.score, 0) / recent.length);
   }, [filtered]);
 
   const color = COLORS[exercises.indexOf(selected) % COLORS.length];
@@ -70,7 +73,7 @@ export default function ProgressChart({ sessions }: Props) {
           <h2 className="text-sm font-semibold text-zinc-300">Fortschritt</h2>
           {filtered.length > 0 && (
             <p className="text-xs text-zinc-500 mt-0.5">
-              Ø Score: <span className="text-zinc-300 font-medium">{avg}/100</span>
+              Ø letzte 5: <span className="text-zinc-300 font-medium">{avg}/100</span>
             </p>
           )}
         </div>
@@ -104,7 +107,11 @@ export default function ProgressChart({ sessions }: Props) {
             <LineChart data={filtered}>
               <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
               <XAxis
-                dataKey="date"
+                dataKey="index"
+                tickFormatter={(v) => {
+                  const point = filtered[v - 1];
+                  return point ? point.date : "";
+                }}
                 tick={{ fill: "#71717a", fontSize: 11 }}
                 axisLine={{ stroke: "#3f3f46" }}
                 tickLine={false}
