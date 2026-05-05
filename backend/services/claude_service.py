@@ -532,8 +532,12 @@ EXERCISE_CRITERIA_BY_FOCUS: dict[str, dict[str, str]] = {
             "Das sind alles nicht-beurteilbare Spekulationen. Bewerte NUR die sichtbare Bewegungsausführung.\n"
             "KABEL-SETUP: Kommentiere Kabel-Befestigung/Höhe maximal als Tipp in naechste_schritte — "
             "NIEMALS als Correction und KEIN Punktabzug.\n"
-            "SCORING-REGEL STEP UP GLUTE: Korrekte Vorbeuge + Tiefe + Knie folgt Fußspitze "
-            "= Gelenkstellungen und Gesamteindruck mindestens 16/20.\n"
+            "BOX-HÖHE — NIEMALS als ROM-Fehler werten: Die Boxhöhe ist eine Equipment-Entscheidung, kein Technikfehler. "
+            "Beurteile den Bewegungsumfang relativ zur verwendeten Box — volle Bewegung auf der Box = volle ROM. "
+            "NIEMALS 'Box zu niedrig', 'mehr Tiefe möglich' oder ROM-Abzug wegen Boxhöhe. "
+            "Box-Tipps gehören maximal in naechste_schritte.\n"
+            "SCORING-REGEL STEP UP GLUTE: Korrekte Vorbeuge + kontrollierte Bewegung + Knie folgt Fußspitze "
+            "= Gelenkstellungen, Bewegungsumfang und Gesamteindruck mindestens 16/20.\n"
             "UNTERSCHIED: Vorlehnen (Technik) = bewusstes Neigen mit geradem Rücken. Vorkippen (Fehler) = unkontrolliert, runder Rücken."
         ),
         "Quadrizeps": (
