@@ -133,6 +133,10 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Stangen-Pfad minimal nicht ideal, "
         "Lockout-Extension minimal unvollständig, Ellbogen 5-10° zu weit/eng, "
         "Arch etwas mehr oder weniger als optimal.\n"
+        "NIEMALS als Correction: 'Arch zu groß' oder 'Hohlkreuz' wenn kein extremes Gesäß-Abheben sichtbar — "
+        "Arch ist legitime Powerlifting-Technik. 'Stange berührt Brust nicht' wenn nicht eindeutig sichtbar.\n"
+        "SCORING-REGEL BANKDRÜCKEN: Schulterblatt-Retraktion + korrekter Ellbogen-Winkel + Lockout "
+        "= Gelenkstellungen mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Handgelenk-Kippen unter Bandagen. Stangen-Berührung von der Seite. Pressetempo."
     ),
     "Schrägbankdrücken": (
@@ -147,6 +151,10 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Ellbogen 5-10° zu weit/eng, "
         "Stangen-Pfad minimal nicht ideal, Lockout minimal unvollständig, "
         "Arch etwas mehr oder weniger als optimal, Kopf minimal nach hinten gedrückt.\n"
+        "NIEMALS als Correction: 'Rücken nicht flach auf der Bank' — leichter Arch ist normal. "
+        "'Stangen-Pfad nicht zur oberen Brust' wenn Winkel/Proportionen es erklären.\n"
+        "SCORING-REGEL SCHRÄGBANKDRÜCKEN: Schulterblatt-Retraktion + Bewegung kontrolliert "
+        "= Gelenkstellungen und Haltung mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Stangen-Berührung wenn von vorne gefilmt. Pressetempo. "
         "Schulterblatt-Retraktion unter dicker Kleidung."
     ),
@@ -183,6 +191,10 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "minimales Vorschwingen, Kopfposition nicht ideal, Ellbogen nicht 100% parallel.\n"
         "EXTENSION-REGEL: SCHREIBE NIEMALS 'Ellbogen nicht vollständig gestreckt' — "
         "nur bei KLAREM sichtbarem Winkel über 30° erwähnen.\n"
+        "NIEMALS als Correction: 'Kinn nicht über die Stange' — kein Muss. "
+        "'Schultern ziehen hoch' wenn nicht eindeutig sichtbar.\n"
+        "SCORING-REGEL KLIMMZÜGE: Saubere Scapula-Aktivierung + kontrollierte Bewegung ohne Schulter-Hochziehen "
+        "= Haltung und Gelenkstellungen mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Scapula-Aktivierung unter Shirt. Senktempo."
     ),
     "Muscle-Ups": (
@@ -194,6 +206,10 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Transition nicht 100% sauber, "
         "Kipping etwas mehr als nötig, Lockout oben minimal unvollständig, "
         "Dip-Phase leicht asymmetrisch, Ellbogen am Ende minimal zu weit außen.\n"
+        "NIEMALS als Correction: 'Kipping zu stark' wenn Bewegung kontrolliert ist — Kipping ist Teil der Technik. "
+        "'Transition unsauber' allein ohne spezifisches echtes Problem.\n"
+        "SCORING-REGEL MUSCLE-UPS: Erfolgreicher Pull über die Stange + Dip-Phase mit Kontrolle "
+        "= Bewegungsumfang und Gesamteindruck mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Transition-Sauberkeit wenn von unten gefilmt. Einzelne Frames in Bewegung "
         "zeigen immer 'unsaubere' Positionen — nur Gesamtbewegung bewerten. Tempo."
     ),
@@ -205,6 +221,10 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Kinn knapp unter Stange, minimale Schwungbewegung, "
         "leicht unvollständige Extension unten, Ellbogen-Winkel minimal abweichend.\n"
         "EXTENSION-REGEL: NIEMALS 'Ellbogen nicht vollständig gestreckt' — nur bei KLAREM Winkel über 30°.\n"
+        "NIEMALS als Correction: 'Kinn nicht über die Stange' — kein Muss. "
+        "'Schultern instabil' wenn nicht eindeutig sichtbar.\n"
+        "SCORING-REGEL CHIN-UPS: Supinierter Griff + kontrollierte Wiederholungen + keine Schulter-Fehler "
+        "= Gelenkstellungen mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Bizeps-Aktivierung. Kinn-über-Stange von der Seite. Senktempo."
     ),
     "Seitheben Kabelturm": (
@@ -219,6 +239,10 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Arm minimal zu stark oder zu wenig gebeugt, "
         "Endposition leicht über oder unter Schulterhöhe, minimales Oberkörper-Schwingen, "
         "Handgelenk minimal nicht neutral, leichtes Hochziehen der Schulter.\n"
+        "NIEMALS als Correction: 'Trapez kompensiert' oder 'Trapez übernimmt' — nicht aus Frames beurteilbar. "
+        "'Arm zu stark gebeugt' wenn Winkel im Toleranzbereich 15-30°.\n"
+        "SCORING-REGEL SEITHEBEN: Seitliche Armbewegung aus der Schulter bis Schulterhöhe "
+        "= Bewegungsumfang und Gelenkstellungen mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Trapez-Kompensation vs. Schulter-Aktivierung — nicht durch Frames beurteilbar. "
         "Handgelenk-Neutralität unter Handschuhen/weiten Ärmeln. Senktempo."
     ),
@@ -239,6 +263,10 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Kurzhanteln kommen oben nicht ganz zusammen, "
         "Rotation während des Pressens minimal nicht ideal, Ellbogen minimal zu weit vor/hinter Handgelenk, "
         "Lockout minimal unvollständig, Kopf minimal nach hinten.\n"
+        "NIEMALS als Correction: 'Asymmetrie zwischen links und rechts' wenn minimal — normale Kurzhantel-Varianz. "
+        "'Kurzhanteln kommen oben nicht zusammen' — kein Muss.\n"
+        "SCORING-REGEL SCHULTERPRESS KH: Kurzhanteln starten auf Schulterhöhe + Lockout oben + aufrechter Oberkörper "
+        "= Gelenkstellungen und Bewegungsumfang mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Core-Spannung — nicht sichtbar. Pressetempo. "
         "Exakter Griffwinkel unter weiten Ärmeln."
     ),
@@ -259,6 +287,10 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Ellbogen minimal gesunken aber Stange noch stabil, "
         "Tiefe knapp über parallel, Oberkörper minimal mehr vorgelehnt als optimal, "
         "Knie minimal nach innen aber kein klarer Valgus, Fersen minimal angehoben.\n"
+        "NIEMALS als Correction: 'Knie geht über Zehenspitzen' — beim Front Squat ERWÜNSCHT. "
+        "'Oberkörper zu aufrecht' — das ist das Ziel. 'Fersenerhöhung' — normal und akzeptabel.\n"
+        "SCORING-REGEL FRONT SQUAT: Aufrechter Oberkörper + Ellbogen oben + kontrollierte Tiefe "
+        "= Haltung und Gelenkstellungen mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Exakte Ellbogen-Höhe wenn von vorne gefilmt. "
         "Tiefe wenn nicht von der Seite gefilmt. Knie-Einknicken unter weiter Hose. Tempo."
     ),
@@ -281,6 +313,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Ellbogen-Position in der Armbeuge minimal nicht ideal, "
         "Tiefe knapp über parallel, leichtes Vorneigen etwas mehr als nötig, "
         "Knie minimal nach innen ohne klaren Valgus, Fersen minimal angehoben.\n"
+        "NIEMALS als Correction: 'Stangen-Position schmerzt/ist unbequem' — nicht beurteilbar. "
+        "'Knie geht über Zehenspitzen' — beim Zercher Squat normal. "
+        "'Ellbogen zwischen die Knie' — das ist KORREKTE Technik in der Tiefposition.\n"
+        "SCORING-REGEL ZERCHER SQUAT: Stange sicher in der Armbeuge + kontrollierte Tiefe + stabile Bewegung "
+        "= Gelenkstellungen und Haltung mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Exaktes Unwohlsein/Schmerz bei der Stangen-Position — nicht sichtbar. "
         "Tiefe wenn nicht von der Seite gefilmt. Tempo."
     ),
@@ -295,6 +332,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Tiefe knapp über parallel, leicht ungleiche Knieführung, "
         "minimaler Butt-Wink, Oberkörper 5-10° mehr als optimal vorgelehnt, "
         "Kopfposition nicht neutral, Fußstellung minimal abweichend.\n"
+        "NIEMALS als Correction: 'Knie geht über Zehenspitzen' — biomechanisch korrekt. "
+        "'Oberkörper zu weit vorgelehnt' bei langen Femuren — Physik, kein Fehler. "
+        "'Tiefe nicht ausreichend' wenn über parallel und kein offensichtliches Mobilitätsproblem.\n"
+        "SCORING-REGEL KNIEBEUGE: Knie folgt Fußspitze + Wirbelsäule neutral + Fersen am Boden "
+        "= Haltung und Gelenkstellungen mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Knie-Einknicken unter weiter Hose — nur bei klarem Valgus ansprechen. "
         "Tiefe wenn nicht von der Seite. Tempo. Fersen-Druck."
     ),
@@ -308,6 +350,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Stange minimal vom Körper weg, "
         "Lockout nicht 100% durchgestreckt, Schulterposition minimal vor der Stange, "
         "leichte thorakale Rundung, Kopf minimal nach oben/unten.\n"
+        "NIEMALS als Correction: 'Lumbaler Rundrücken' wenn unter weitem Shirt nicht eindeutig sichtbar. "
+        "'Stange zu weit vom Körper' wenn nicht von der Seite gefilmt. "
+        "'Hüfte steigt schneller als Schultern' wenn nur minimal.\n"
+        "SCORING-REGEL KREUZHEBEN: Hüft-Hinge erkennbar + Lockout mit Hüftstreckung + kein eindeutiger lumbaler Rundrücken "
+        "= Haltung mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Stangen-Abstand wenn nicht von der Seite. Lumbale Rundung unter Shirt. Tempo."
     ),
     "Hip Thrust": (
@@ -319,6 +366,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "Leichtes Hohlkreuz oben bei schwer normal.\n"
         "OPTIMIERUNG (kein Score-Abzug): Kinn minimal nicht zur Brust, Hüftstreckung knapp nicht maximal, "
         "Füße minimal zu weit/eng, leichtes seitliches Ausweichen der Knie.\n"
+        "NIEMALS als Correction: 'Hüfte nicht vollständig gestreckt' bei weiter Kleidung — nicht beurteilbar. "
+        "'Glute nicht kontrahiert' — Muskelaktivierung nicht sichtbar. "
+        "'Kinn nicht zur Brust' wenn minimal abweichend.\n"
+        "SCORING-REGEL HIP THRUST: Schulterblätter stabil + Hüftstreckung sichtbar + kein seitliches Ausweichen "
+        "= Bewegungsumfang und Gelenkstellungen mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Hüftstreckung bei weiter Kleidung — im Zweifel als vollständig werten. "
         "Glute-Kontraktion. Tempo."
     ),
@@ -333,6 +385,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Ellbogen minimal unter Schulterniveau, "
         "externe Rotation am Ende nicht 100% ausgeprägt, Schulterblätter kommen minimal nicht ganz zusammen, "
         "leichter Rumpf-Schwung, Handgelenk-Neutralität minimal abweichend.\n"
+        "NIEMALS als Correction: 'Externe Rotation nicht vollständig' wenn von vorne oder der Seite gefilmt — nicht beurteilbar. "
+        "'Kabelansatz falsch' — Setup-Variante, kein Technikfehler. "
+        "'Schulterblätter kommen nicht zusammen' unter weitem Shirt.\n"
+        "SCORING-REGEL FACE PULLS: Ellbogen hoch + Zug bis zum Gesicht + kein übermäßiger Rumpf-Schwung "
+        "= Gelenkstellungen und Bewegungsumfang mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Externe Rotation vollständig wenn von vorne gefilmt. "
         "Schulterblatt-Zusammenzug unter weitem Shirt. Tempo."
     ),
@@ -365,6 +422,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Hinteres Knie kommt minimal nicht ganz zum Boden, "
         "leichtes Wackeln bei der Balance, Oberkörper minimal zu aufrecht oder zu vorgelehnt für gewählten Fokus, "
         "Knie minimal nach innen ohne klaren Valgus, hinterer Fuß-Position minimal abweichend.\n"
+        "NIEMALS als Correction: 'Knie geht über Zehenspitzen' — biomechanisch korrekt bei BSS. "
+        "'Fußabstand falsch' — variiert stark je nach Beinlänge, kein Standard. "
+        "'Oberkörper zu weit vorgelehnt' bei langen Femuren — anatomisch bedingt.\n"
+        "SCORING-REGEL BULGARIAN SPLIT SQUAT: Knie folgt Fußspitze + gute Tiefe + kein starkes seitliches Ausweichen "
+        "= Gelenkstellungen und Gesamteindruck mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Knie-Einknicken unter weiter Hose — nur bei klarem Valgus ansprechen. Tempo."
     ),
     "Rudern Kabelzug": (
@@ -377,6 +439,10 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "OPTIMIERUNG (kein Score-Abzug): Ellbogen knapp nicht hinter Körper, "
         "leichter Oberkörper-Schwung, minimale Schulterblatt-Retraktion fehlt, "
         "Kabelzug trifft leicht andere Region.\n"
+        "NIEMALS als Correction: 'Ellbogen kommen nicht hinter den Körper' — kein Muss laut Toleranzen. "
+        "'Oberkörper schwingt zu stark' wenn nur minimal.\n"
+        "SCORING-REGEL RUDERN KABELZUG: Neutrale Wirbelsäule + Schulterblatt-Retraktion sichtbar + stabile Hüfte "
+        "= Haltung und Gelenkstellungen mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Retraktion unter Shirt. Griffkraft. Tempo."
     ),
     "Rumänisches Kreuzheben": (
@@ -396,6 +462,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "Tiefe minimal eingeschränkt durch Hamstring-Mobilität, "
         "leichte thorakale Rundung bei tiefer Position, "
         "Knie-Beugewinkel minimal mehr als optimal, Kopf minimal nach oben/unten.\n"
+        "NIEMALS als Correction: 'Knie zu stark gebeugt' — leichte Kniebeugung ist KORREKTE RDL-Technik. "
+        "'Nicht tief genug' wenn Hamstring-Mobilität es limitiert — anatomisch bedingt, kein Fehler. "
+        "'Lumbaler Rundrücken' unter weitem Shirt wenn nicht eindeutig sichtbar.\n"
+        "SCORING-REGEL RDL: Hüft-Hinge klar erkennbar + Wirbelsäule neutral + Stange/Hanteln nah am Körper "
+        "= Haltung und Bewegungsumfang mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Lumbale Rundung unter weitem Shirt/Gürtel. "
         "Hamstring-Dehnung — nicht sichtbar. Tempo."
     ),
@@ -414,6 +485,11 @@ EXERCISE_CRITERIA: dict[str, str] = {
         "hinteres Knie kommt minimal nicht ganz zum Boden, "
         "leichtes Wackeln bei der Balance, Oberkörper minimal mehr vorgelehnt als optimal, "
         "Knie minimal nach innen ohne klaren Valgus.\n"
+        "NIEMALS als Correction: 'Knie geht über Zehenspitzen' — biomechanisch korrekt. "
+        "'Oberkörper zu weit vorgelehnt' bei langen Femuren oder Glute-Fokus — normal und korrekt. "
+        "'Schrittlänge falsch' — variiert je nach Körpergröße und Zielmuskel.\n"
+        "SCORING-REGEL AUSFALLSCHRITTE: Knie folgt Fußspitze + stabiler Oberkörper + gute Tiefe "
+        "= Gelenkstellungen und Gesamteindruck mindestens 16/20.\n"
         "NICHT BEURTEILBAR: Knie-Einknicken unter weiter Hose — nur bei klarem sichtbarem Valgus ansprechen. "
         "Tempo. Bodenkontakt des hinteren Knies exakt."
     ),
