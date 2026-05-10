@@ -28,6 +28,7 @@ const EXERCISES = [
   { id: "Rudern Kabelzug", label: "Rudern Kabel", emoji: "🚣" },
   { id: "Rumänisches Kreuzheben", label: "RDL", emoji: "🏋️‍♀️" },
   { id: "Ausfallschritte", label: "Ausfallschritte", emoji: "🚶" },
+  { id: "Hammer Curls", label: "Hammer Curls", emoji: "🔨" },
 ];
 
 const DEFAULT_CAMERA_TIP = "Von der Seite · Handy auf Hüfthöhe anlehnen (auf einer Bank, Tasche oder Hantelablage)";
