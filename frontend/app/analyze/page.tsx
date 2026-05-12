@@ -6,6 +6,7 @@ import VideoUploader from "@/components/VideoUploader";
 import FeedbackCard from "@/components/FeedbackCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import OnboardingModal from "@/components/OnboardingModal";
 import { AnalysisResponse, api } from "@/lib/api";
 
 const EXERCISES = [
@@ -95,6 +96,7 @@ export default function AnalyzePage() {
 
   return (
     <div className="min-h-screen bg-zinc-950 flex flex-col">
+      <OnboardingModal />
       <Navbar />
 
       <main className="max-w-2xl mx-auto px-4 md:px-6 py-8 md:py-12 flex-1">

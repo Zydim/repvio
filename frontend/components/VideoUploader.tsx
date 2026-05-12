@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload, FileVideo, X, ArrowUpRight } from "lucide-react";
+import { Upload, FileVideo, X, ArrowUpRight, Camera } from "lucide-react";
 import Link from "next/link";
 import { analyzeVideo, AnalysisResponse } from "@/lib/api";
 
@@ -27,6 +27,7 @@ export default function VideoUploader({
   const [file, setFile] = useState<File | null>(null);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
   const MAX_DURATION = 15; // Sekunden
 
@@ -60,10 +61,25 @@ export default function VideoUploader({
     maxSize: 100 * 1024 * 1024,
     multiple: false,
     onDropRejected: (rejections) => {
-      const msg = rejections[0]?.errors[0]?.message || "Ungültige Datei";
-      setError(msg);
+      const err = rejections[0]?.errors[0];
+      if (err?.code === "file-too-large") {
+        setError("Video ist zu groß (max. 100 MB). Bitte kürze das Video oder wähle eine kleinere Datei.");
+      } else if (err?.code === "file-invalid-type") {
+        setError("Ungültiges Dateiformat. Bitte lade eine .mp4 oder .mov Datei hoch.");
+      } else {
+        setError(err?.message || "Ungültige Datei. Bitte .mp4 oder .mov · max. 100 MB.");
+      }
     },
   });
+
+  function handleCameraFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    setFile(f);
+    setVideoDuration(null);
+    setError(null);
+    checkDuration(f);
+  }
 
   async function handleAnalyze() {
     if (!file || !exerciseType) return;
@@ -133,6 +149,24 @@ export default function VideoUploader({
           </div>
         )}
       </div>
+
+      {/* Mobile: direkt aus Kamera */}
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="video/*"
+        capture="environment"
+        className="hidden"
+        onChange={handleCameraFile}
+      />
+      <button
+        type="button"
+        onClick={() => cameraInputRef.current?.click()}
+        className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200 text-sm transition-all"
+      >
+        <Camera className="w-4 h-4" />
+        Direkt mit Kamera aufnehmen
+      </button>
 
       {/* Selected file */}
       {file && (
