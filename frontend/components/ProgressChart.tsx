@@ -60,17 +60,6 @@ export default function ProgressChart({ sessions }: Props) {
     return Math.round(recent.reduce((sum, s) => sum + s.score, 0) / recent.length);
   }, [filtered]);
 
-  // Trend: Ø letzte 3 vs. Ø davor (wenn genug Daten)
-  const trend = useMemo(() => {
-    if (filtered.length < 6) return null;
-    const recent = filtered.slice(-3);
-    const prev = filtered.slice(-6, -3);
-    const recentAvg = recent.reduce((s, x) => s + x.score, 0) / 3;
-    const prevAvg = prev.reduce((s, x) => s + x.score, 0) / 3;
-    const diff = Math.round(recentAvg - prevAvg);
-    if (Math.abs(diff) < 2) return null; // zu klein um zu zeigen
-    return diff;
-  }, [filtered]);
 
   const color = COLORS[exercises.indexOf(selected) % COLORS.length];
 
@@ -83,20 +72,9 @@ export default function ProgressChart({ sessions }: Props) {
         <div>
           <h2 className="text-sm font-semibold text-zinc-300">Fortschritt</h2>
           {filtered.length > 0 && (
-            <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-            <p className="text-xs text-zinc-500">
-              Ø letzte 5: <span className="text-zinc-300 font-medium">{avg}/100</span>
-            </p>
-            {trend !== null && (
-              <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                trend > 0
-                  ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/25"
-                  : "bg-red-500/15 text-red-400 border border-red-500/25"
-              }`}>
-                {trend > 0 ? `↑ +${trend} Punkte Trend` : `↓ ${trend} Punkte Trend`}
-              </span>
-            )}
-          </div>
+            <p className="text-xs text-zinc-500 mt-0.5">
+            Ø letzte 5: <span className="text-zinc-300 font-medium">{avg}/100</span>
+          </p>
           )}
         </div>
 
