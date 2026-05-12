@@ -139,7 +139,7 @@ export default function AnalyzePage() {
               )}
             </div>
 
-            <FeedbackCard {...result.feedback} />
+            <FeedbackCard {...result.feedback} selectedExercise={result.exercise_type} />
           </div>
         )}
 

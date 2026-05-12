@@ -84,6 +84,7 @@ const SCORE_LABELS = [
 ];
 
 export default function FeedbackCard({
+  exercise_detected,
   score,
   teilscores,
   overall,
@@ -92,7 +93,8 @@ export default function FeedbackCard({
   verletzungsrisiko,
   cue,
   naechste_schritte,
-}: FeedbackResult) {
+  selectedExercise,
+}: FeedbackResult & { selectedExercise?: string }) {
   const [correctionsOpen, setCorrectionsOpen] = useState(false);
   const [scoreInfoOpen, setScoreInfoOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -115,6 +117,16 @@ export default function FeedbackCard({
 
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-6">
+      {/* Falsche Übung Banner */}
+      {exercise_detected && selectedExercise && exercise_detected !== selectedExercise && (
+        <div className="bg-yellow-500/10 border border-yellow-500/40 rounded-xl px-4 py-3 text-sm">
+          <p className="text-yellow-300 font-semibold mb-0.5">⚠️ Andere Übung erkannt</p>
+          <p className="text-yellow-200/80 text-xs">
+            Du hast <span className="font-semibold">{selectedExercise}</span> ausgewählt, aber das Video zeigt{" "}
+            <span className="font-semibold">{exercise_detected}</span>. Der Score ist daher limitiert.
+          </p>
+        </div>
+      )}
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
         <div className="flex flex-col items-center gap-1">

@@ -839,6 +839,7 @@ async def analyze_exercise(video_path: str, exercise_type: str, muscle_focus: st
 
             "Antworte NUR als JSON (kein Markdown, kein Codeblock):\n"
             "{\n"
+            f'  "exercise_detected": "<Name der Übung die du im Video siehst — exakt \'{exercise_type}\' wenn korrekt, sonst echter Name>",\n'
             '  "score": <Summe der 5 Teilscores>,\n'
             '  "teilscores": {\n'
             '    "haltung": <0-20>,\n'

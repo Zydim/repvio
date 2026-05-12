@@ -25,6 +25,7 @@ export interface NaechsterSchritt {
 }
 
 export interface FeedbackResult {
+  exercise_detected?: string;
   score: number;
   teilscores?: Teilscores;
   overall: string;

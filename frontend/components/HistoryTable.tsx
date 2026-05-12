@@ -144,7 +144,7 @@ export default function HistoryTable({ sessions }: HistoryTableProps) {
                             </div>
                           )}
                         </div>
-                        <FeedbackCard {...details[s.session_id].feedback} />
+                        <FeedbackCard {...details[s.session_id].feedback} selectedExercise={s.exercise_type} />
                       </>
                     ) : null}
                   </td>
