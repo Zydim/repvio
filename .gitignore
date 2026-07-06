@@ -17,6 +17,7 @@ backend/.env.*
 frontend/.env.local
 backend/beta_testers.csv
 *.csv
+backend/create_beta_testers.py
 
 # IDE / AI-Tool Konfiguration
 .claude/
