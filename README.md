@@ -163,9 +163,4 @@ npm run dev
 ## Beta-Betrieb
 
 Registrierung ist standardmäßig deaktiviert (`REGISTRATION_OPEN=false`).  
-Beta-Tester-Accounts werden manuell angelegt:
-
-```bash
-cd backend
-python create_beta_testers.py
-```
+Beta-Tester-Accounts werden manuell angelegt
