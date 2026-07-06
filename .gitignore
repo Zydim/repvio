@@ -13,8 +13,15 @@ backend/**/__pycache__/
 
 # Secrets & sensible Dateien
 backend/.env
+backend/.env.*
 frontend/.env.local
 backend/beta_testers.csv
+*.csv
+
+# IDE / AI-Tool Konfiguration
+.claude/
+**/.claude/
+.gemini/
 
 # Node
 frontend/node_modules/
