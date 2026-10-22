@@ -17,7 +17,7 @@ const PLANS = [
     period: "für immer",
     features: [
       "3 Video-Analysen / Monat",
-      "KI-Technik-Feedback",
+      "Technik-Feedback mit Score",
       "Trainingshistorie",
     ],
     cta: "Kostenlos",
@@ -30,7 +30,7 @@ const PLANS = [
     period: "/ Monat",
     features: [
       "30 Video-Analysen / Monat",
-      "KI-Technik-Feedback",
+      "Technik-Feedback mit Score",
       "Trainingshistorie",
       "Prioritäts-Analyse",
     ],
@@ -45,7 +45,7 @@ const PLANS = [
     period: "/ Monat",
     features: [
       "100 Video-Analysen / Monat",
-      "KI-Technik-Feedback",
+      "Technik-Feedback mit Score",
       "Trainingshistorie",
       "Prioritäts-Analyse",
       "Früher Zugang zu neuen Features",
@@ -182,12 +182,12 @@ function PricingContent() {
               key={plan.id}
               className={`relative rounded-2xl border p-6 md:p-8 flex flex-col ${
                 plan.popular
-                  ? "border-violet-500/60 bg-zinc-900 shadow-[0_0_40px_rgba(139,92,246,0.1)]"
-                  : "border-zinc-800 bg-zinc-900/50"
+                  ? "border-[#0066ff]/60 bg-white/4"
+                  : "border-white/8 bg-white/2"
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-600 to-blue-500 text-white text-xs font-bold px-4 py-1 rounded-full shadow-[0_0_12px_rgba(139,92,246,0.5)]">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0066ff] text-white text-xs font-bold px-4 py-1 rounded-full">
                   Beliebt
                 </div>
               )}
@@ -229,8 +229,8 @@ function PricingContent() {
                   disabled={loading !== null}
                   className={`w-full py-3 rounded-xl text-sm font-semibold transition-all disabled:opacity-40 ${
                     plan.popular
-                      ? "bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 text-white shadow-[0_0_20px_rgba(139,92,246,0.35)]"
-                      : "bg-zinc-800 text-zinc-100 hover:bg-zinc-700 border border-zinc-700"
+                      ? "bg-[#0066ff] hover:bg-[#0052cc] text-white"
+                      : "bg-white/5 text-zinc-100 hover:bg-white/10 border border-white/10"
                   }`}
                 >
                   {loading === plan.id ? "Weiterleitung..." : plan.cta}

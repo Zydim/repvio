@@ -77,7 +77,7 @@ export default function DatenschutzPage() {
             </p>
             <p className="mt-2">
               Stripe Datenschutzrichtlinie:{" "}
-              <a href="https://stripe.com/de/privacy" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:text-violet-300 transition-colors">
+              <a href="https://stripe.com/de/privacy" target="_blank" rel="noopener noreferrer" className="text-[#4d94ff] hover:text-white transition-colors">
                 stripe.com/de/privacy
               </a>
             </p>

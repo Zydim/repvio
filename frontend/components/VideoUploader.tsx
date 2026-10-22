@@ -90,7 +90,7 @@ export default function VideoUploader({
     const steps = [
       { pct: 15, label: "Video wird hochgeladen..." },
       { pct: 35, label: "Frames werden extrahiert..." },
-      { pct: 60, label: "KI analysiert deine Technik..." },
+      { pct: 60, label: "Technik wird bewertet..." },
       { pct: 85, label: "Feedback wird generiert..." },
       { pct: 95, label: "Fast fertig..." },
     ];
@@ -133,8 +133,8 @@ export default function VideoUploader({
         {...getRootProps()}
         className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all ${
           isDragActive
-            ? "border-violet-500 bg-violet-500/10"
-            : "border-zinc-700 hover:border-violet-500/50 bg-zinc-900"
+            ? "border-[#0066ff] bg-[#0066ff]/10"
+            : "border-white/10 hover:border-[#0066ff]/50 bg-white/3"
         }`}
       >
         <input {...getInputProps()} />
@@ -162,7 +162,7 @@ export default function VideoUploader({
       <button
         type="button"
         onClick={() => cameraInputRef.current?.click()}
-        className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200 text-sm transition-all"
+        className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/10 bg-white/3 text-zinc-400 hover:border-white/25 hover:text-zinc-200 text-sm transition-all"
       >
         <Camera className="w-4 h-4" />
         Direkt mit Kamera aufnehmen
@@ -170,7 +170,7 @@ export default function VideoUploader({
 
       {/* Selected file */}
       {file && (
-        <div className="flex items-center justify-between bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3">
+        <div className="flex items-center justify-between bg-white/4 border border-white/10 rounded-xl px-4 py-3">
           <div className="flex items-center gap-3">
             <FileVideo className="w-5 h-5 text-zinc-400 shrink-0" />
             <div>
@@ -229,7 +229,7 @@ export default function VideoUploader({
             <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-emerald-400 rounded-br" />
             {/* Content */}
             <div className="text-center">
-              <p className="text-emerald-400 text-xs font-mono tracking-widest uppercase mb-1">KI analysiert</p>
+              <p className="text-[#4d94ff] text-xs font-mono tracking-widest uppercase mb-1">Wird analysiert</p>
               <p className="text-zinc-200 text-sm font-medium">{progressLabel}</p>
             </div>
           </div>
@@ -253,7 +253,7 @@ export default function VideoUploader({
       <button
         onClick={handleAnalyze}
         disabled={!file || loading || !exerciseType || (videoDuration !== null && videoDuration > MAX_DURATION)}
-        className="w-full py-3 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
+        className="w-full py-3 rounded-xl font-bold text-sm text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed bg-[#0066ff] hover:bg-[#0052cc]"
       >
         {loading ? "Analysiere..." : "Analysieren"}
       </button>

@@ -10,24 +10,21 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 export default function RegisterPage() {
   if (!REGISTRATION_OPEN) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center px-4 relative overflow-hidden">
-        <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[500px] h-[500px] rounded-full bg-violet-600/6 blur-[120px]" />
-        </div>
-        <div className="relative text-center max-w-sm">
-          <Link href="/" className="text-xl font-extrabold tracking-tight mb-8 block bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+      <div className="min-h-screen bg-[#08080f] flex items-center justify-center px-4">
+        <div className="text-center max-w-sm">
+          <Link href="/" className="text-xl font-extrabold tracking-tight mb-8 block text-white">
             Repvio
           </Link>
-          <div className="w-14 h-14 bg-zinc-900 border border-zinc-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <span className="text-2xl">🔒</span>
           </div>
-          <h1 className="text-xl font-bold text-zinc-100 mb-2">Beta-Phase</h1>
-          <p className="text-zinc-400 text-sm mb-8">
+          <h1 className="text-xl font-bold text-white mb-2">Beta-Phase</h1>
+          <p className="text-zinc-500 text-sm mb-8">
             Repvio befindet sich aktuell in der geschlossenen Beta-Phase. Die Registrierung ist noch nicht öffentlich.
           </p>
           <Link
             href="/login"
-            className="inline-block w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)]"
+            className="inline-block w-full py-3 rounded-xl text-sm font-bold text-white bg-[#0066ff] hover:bg-[#0052cc] transition-colors"
           >
             Zum Login
           </Link>
@@ -73,22 +70,19 @@ function RegisterForm() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-6 relative overflow-hidden">
-        <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[500px] h-[500px] rounded-full bg-violet-600/6 blur-[120px]" />
-        </div>
-        <Link href="/" className="relative text-xl font-extrabold tracking-tight mb-10 bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+      <div className="min-h-screen bg-[#08080f] flex flex-col items-center justify-center px-6">
+        <Link href="/" className="text-xl font-extrabold tracking-tight mb-10 text-white">
           Repvio
         </Link>
-        <div className="relative w-full max-w-sm text-center">
+        <div className="w-full max-w-sm text-center">
           <div className="text-4xl mb-4">📧</div>
           <h1 className="text-2xl font-bold mb-2">E-Mail bestätigen</h1>
-          <p className="text-zinc-400 text-sm mb-8">
+          <p className="text-zinc-500 text-sm mb-8">
             Wir haben eine Bestätigungs-E-Mail an <strong className="text-white">{email}</strong> gesendet.
           </p>
           <Link
             href="/login"
-            className="inline-block w-full py-3 rounded-xl font-semibold text-sm bg-zinc-900 border border-zinc-700 text-zinc-200 hover:bg-zinc-800 transition-colors text-center"
+            className="inline-block w-full py-3 rounded-xl font-semibold text-sm bg-white/5 border border-white/10 text-zinc-200 hover:bg-white/8 transition-colors text-center"
           >
             Zurück zum Login
           </Link>
@@ -98,40 +92,37 @@ function RegisterForm() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-6 relative overflow-hidden">
-      <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[500px] h-[500px] rounded-full bg-violet-600/6 blur-[120px]" />
-      </div>
-      <Link href="/" className="relative text-xl font-extrabold tracking-tight mb-10 bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
+    <div className="min-h-screen bg-[#08080f] flex flex-col items-center justify-center px-6">
+      <Link href="/" className="text-xl font-extrabold tracking-tight mb-10 text-white">
         Repvio
       </Link>
-      <div className="relative w-full max-w-sm">
+      <div className="w-full max-w-sm">
         <h1 className="text-2xl font-bold mb-2">Konto erstellen</h1>
-        <p className="text-zinc-400 text-sm mb-8">
+        <p className="text-zinc-500 text-sm mb-8">
           Bereits registriert?{" "}
-          <Link href="/login" className="text-violet-400 hover:text-violet-300 transition-colors">Anmelden</Link>
+          <Link href="/login" className="text-[#4d94ff] hover:text-white transition-colors">Anmelden</Link>
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs text-zinc-400 uppercase tracking-wider mb-2">E-Mail</label>
+            <label className="block text-xs text-zinc-500 uppercase tracking-wider mb-2">E-Mail</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-violet-500 transition-colors"
+              className="w-full bg-white/4 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#0066ff] transition-colors"
               placeholder="deine@email.de"
             />
           </div>
           <div>
-            <label className="block text-xs text-zinc-400 uppercase tracking-wider mb-2">Passwort</label>
+            <label className="block text-xs text-zinc-500 uppercase tracking-wider mb-2">Passwort</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-violet-500 transition-colors"
+              className="w-full bg-white/4 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#0066ff] transition-colors"
               placeholder="Mindestens 6 Zeichen"
             />
           </div>
@@ -141,22 +132,22 @@ function RegisterForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)] disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full py-3 rounded-xl font-bold text-sm text-white bg-[#0066ff] hover:bg-[#0052cc] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {loading ? "Konto wird erstellt..." : "Kostenlos registrieren"}
           </button>
         </form>
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-zinc-800" />
+            <div className="w-full border-t border-white/8" />
           </div>
           <div className="relative flex justify-center text-xs">
-            <span className="bg-zinc-950 px-3 text-zinc-500">oder</span>
+            <span className="bg-[#08080f] px-3 text-zinc-600">oder</span>
           </div>
         </div>
         <button
           onClick={() => signIn("google", { callbackUrl: "/analyze" })}
-          className="w-full py-3 rounded-xl font-semibold text-sm bg-zinc-900 border border-zinc-700 text-zinc-200 hover:bg-zinc-800 hover:border-zinc-600 transition-all flex items-center justify-center gap-3"
+          className="w-full py-3 rounded-xl font-semibold text-sm bg-white/4 border border-white/10 text-zinc-200 hover:bg-white/8 hover:border-white/20 transition-all flex items-center justify-center gap-3"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />

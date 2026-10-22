@@ -12,7 +12,7 @@ const PLAN_STYLES: Record<string, { label: string; classes: string }> = {
   },
   beta: {
     label: "Beta",
-    classes: "bg-purple-950 text-purple-300 border-purple-800",
+    classes: "bg-[#0066ff]/10 text-[#4d94ff] border-[#0066ff]/30",
   },
   pro: {
     label: "Pro",

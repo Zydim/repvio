@@ -9,8 +9,8 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Repvio — KI Fitness Coach",
-  description: "Video-Analyse für deine Übungstechnik mit KI-Feedback",
+  title: "Repvio — Technik-Analyse für Athleten",
+  description: "Lade dein Trainings-Video hoch und bekomme sofortiges Feedback zu deiner Technik.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#09090b",
+  themeColor: "#08080f",
 };
 
 export default function RootLayout({

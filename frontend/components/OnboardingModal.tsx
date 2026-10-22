@@ -20,7 +20,7 @@ export default function OnboardingModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-      <div className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div className="bg-[#0f0f18] border border-white/10 rounded-2xl max-w-md w-full p-6 shadow-2xl">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-lg font-bold">Willkommen bei Repvio 👋</h2>
           <button onClick={close} className="text-zinc-500 hover:text-zinc-300 transition-colors">
@@ -30,7 +30,7 @@ export default function OnboardingModal() {
 
         <div className="space-y-4 mb-5">
           <div className="flex gap-3">
-            <Camera className="w-5 h-5 text-violet-400 shrink-0 mt-0.5" />
+            <Camera className="w-5 h-5 text-[#4d94ff] shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-medium text-zinc-200">Übung wählen & Video hochladen</p>
               <p className="text-xs text-zinc-500">Film 2–3 Wiederholungen von der Seite · max. 15 Sekunden · Handy auf Hüfthöhe</p>
@@ -39,7 +39,7 @@ export default function OnboardingModal() {
           <div className="flex gap-3">
             <Trophy className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-zinc-200">KI analysiert deine Technik</p>
+              <p className="text-sm font-medium text-zinc-200">Deine Technik wird bewertet</p>
               <p className="text-xs text-zinc-500">Du bekommst einen Score + konkrete Hinweise was du verbessern kannst</p>
             </div>
           </div>
@@ -53,8 +53,8 @@ export default function OnboardingModal() {
         </div>
 
         {/* Score-Skala */}
-        <div className="bg-zinc-800 rounded-xl p-4 mb-5">
-          <p className="text-xs text-zinc-400 uppercase tracking-wider mb-3 font-semibold">Was bedeutet dein Score?</p>
+        <div className="bg-white/4 border border-white/8 rounded-xl p-4 mb-5">
+          <p className="text-xs text-zinc-500 uppercase tracking-wider mb-3 font-semibold">Was bedeutet dein Score?</p>
           <div className="space-y-1.5 text-xs">
             <div className="flex justify-between items-center">
               <span className="font-bold text-green-400">90 – 99</span>
@@ -81,9 +81,9 @@ export default function OnboardingModal() {
 
         <button
           onClick={close}
-          className="w-full py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 transition-all shadow-[0_0_16px_rgba(139,92,246,0.3)]"
+          className="w-full py-3 rounded-xl font-bold text-sm text-white bg-[#0066ff] hover:bg-[#0052cc] transition-colors"
         >
-          Los geht's!
+          Los geht&apos;s!
         </button>
       </div>
     </div>

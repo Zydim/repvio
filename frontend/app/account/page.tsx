@@ -10,7 +10,7 @@ import { getUserPlan, cancelSubscription, deleteAccount } from "@/lib/api";
 
 const PLAN_INFO: Record<string, { label: string; color: string; limit: string }> = {
   free: { label: "Free", color: "text-zinc-400 bg-zinc-800 border-zinc-700", limit: "3 Analysen / Monat" },
-  beta: { label: "Beta", color: "text-purple-300 bg-purple-950 border-purple-800", limit: "10 Analysen / Monat" },
+  beta: { label: "Beta", color: "text-[#4d94ff] bg-[#0066ff]/10 border-[#0066ff]/30", limit: "10 Analysen / Monat" },
   pro: { label: "Pro", color: "text-blue-300 bg-blue-950 border-blue-800", limit: "30 Analysen / Monat" },
   elite: { label: "Elite", color: "text-amber-300 bg-amber-950 border-amber-800", limit: "Unbegrenzte Analysen" },
 };
@@ -50,7 +50,7 @@ export default function AccountPage() {
         <h1 className="text-2xl md:text-3xl font-bold mb-8">Mein Account</h1>
 
         {/* Profile */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 mb-4">
+        <div className="bg-white/3 border border-white/8 rounded-2xl p-6 mb-4">
           <h2 className="text-xs text-zinc-500 uppercase tracking-wider mb-4">Profil</h2>
           <div className="flex items-center justify-between">
             <div>
@@ -61,7 +61,7 @@ export default function AccountPage() {
         </div>
 
         {/* Plan */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 mb-4">
+        <div className="bg-white/3 border border-white/8 rounded-2xl p-6 mb-4">
           <h2 className="text-xs text-zinc-500 uppercase tracking-wider mb-4">Aktueller Plan</h2>
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -76,7 +76,7 @@ export default function AccountPage() {
             {plan === "free" && (
               <Link
                 href="/pricing"
-                className="text-sm text-white px-4 py-2 rounded-xl font-semibold bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 transition-all shadow-[0_0_16px_rgba(139,92,246,0.3)]"
+                className="text-sm text-white px-4 py-2 rounded-xl font-bold bg-[#0066ff] hover:bg-[#0052cc] transition-colors"
               >
                 Upgraden
               </Link>
