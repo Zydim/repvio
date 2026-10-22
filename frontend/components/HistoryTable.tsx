@@ -80,10 +80,10 @@ export default function HistoryTable({ sessions }: HistoryTableProps) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-zinc-800">
+    <div className="overflow-x-auto rounded-2xl border border-white/8">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-zinc-800 text-zinc-400 text-xs uppercase tracking-wider">
+          <tr className="border-b border-white/8 text-zinc-500 text-xs uppercase tracking-wider">
             <th className="text-left px-4 py-3">Datum</th>
             <th className="text-left px-4 py-3">Übung</th>
             <th className="text-left px-4 py-3">Score</th>
@@ -96,7 +96,7 @@ export default function HistoryTable({ sessions }: HistoryTableProps) {
             <Fragment key={s.session_id}>
               <tr
                 onClick={() => toggleRow(s.session_id)}
-                className="border-b border-zinc-800/50 hover:bg-zinc-800/40 cursor-pointer transition-colors"
+                className="border-b border-white/6 hover:bg-white/4 cursor-pointer transition-colors"
               >
                 <td className="px-4 py-3 text-zinc-300 whitespace-nowrap">
                   {formatDate(s.created_at)}
@@ -118,13 +118,13 @@ export default function HistoryTable({ sessions }: HistoryTableProps) {
               </tr>
               {expandedId === s.session_id && (
                 <tr key={`${s.session_id}-detail`}>
-                  <td colSpan={5} className="px-4 py-4 bg-zinc-900">
+                  <td colSpan={5} className="px-4 py-4 bg-white/2">
                     {loadingId === s.session_id ? (
                       <p className="text-zinc-500 text-sm py-4 text-center">Lade Details...</p>
                     ) : details[s.session_id] ? (
                       <>
                         {/* Score Rating Widget */}
-                        <div className="mb-4 bg-zinc-800/60 border border-zinc-700 rounded-2xl px-5 py-3">
+                        <div className="mb-4 bg-white/3 border border-white/8 rounded-2xl px-5 py-3">
                           {ratedIds.has(s.session_id) ? (
                             <p className="text-sm text-emerald-400 text-center py-0.5">✓ Danke für dein Feedback!</p>
                           ) : (
@@ -135,7 +135,7 @@ export default function HistoryTable({ sessions }: HistoryTableProps) {
                                   <button
                                     key={rating}
                                     onClick={(e) => { e.stopPropagation(); submitRating(s.session_id, s.exercise_type, s.score, rating); }}
-                                    className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-violet-500/20 hover:border-violet-500/50 border border-zinc-700 text-xs text-zinc-300 transition-all"
+                                    className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#0066ff]/20 hover:border-[#0066ff]/50 border border-white/10 text-xs text-zinc-300 transition-all"
                                   >
                                     {rating === "zu_streng" ? "😤 Zu streng" : rating === "passt" ? "✅ Passt" : "😅 Zu großzügig"}
                                   </button>

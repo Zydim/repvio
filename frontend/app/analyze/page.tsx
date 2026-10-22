@@ -101,7 +101,7 @@ export default function AnalyzePage() {
 
       <main className="max-w-2xl mx-auto px-4 md:px-6 py-8 md:py-12 flex-1">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">Technik analysieren</h1>
-        <p className="text-zinc-400 mb-8 md:mb-10 text-sm md:text-base">
+        <p className="text-zinc-500 mb-8 md:mb-10 text-sm md:text-base">
           Wähle deine Übung und lade ein Video hoch.
         </p>
 
@@ -118,7 +118,7 @@ export default function AnalyzePage() {
               </button>
             </div>
             {/* Analysis Feedback Widget — direkt sichtbar ohne scrollen */}
-            <div className="mb-4 bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-4">
+            <div className="mb-4 bg-white/3 border border-white/8 rounded-2xl px-5 py-4">
               {analysisFeedbackSent ? (
                 <p className="text-sm text-emerald-400 text-center py-1">✓ Danke für dein Feedback!</p>
               ) : (
@@ -129,7 +129,7 @@ export default function AnalyzePage() {
                       <button
                         key={rating}
                         onClick={() => submitAnalysisFeedback(rating === "passt", rating)}
-                        className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-violet-500/20 hover:border-violet-500/50 border border-zinc-700 text-xs text-zinc-300 transition-all"
+                        className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-[#0066ff]/20 hover:border-[#0066ff]/50 border border-white/10 text-xs text-zinc-300 transition-all"
                       >
                         {rating === "zu_streng" ? "😤 Zu streng" : rating === "passt" ? "✅ Passt" : "😅 Zu großzügig"}
                       </button>
@@ -161,8 +161,8 @@ export default function AnalyzePage() {
                     }}
                     className={`flex flex-col items-center gap-1.5 md:gap-2 py-3 md:py-5 rounded-2xl border-2 transition-all text-xs md:text-sm font-medium ${
                       exercise === ex.id
-                        ? "border-violet-500 bg-violet-500/10 text-white shadow-[0_0_16px_rgba(139,92,246,0.2)]"
-                        : "border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200"
+                        ? "border-[#0066ff] bg-[#0066ff]/10 text-white"
+                        : "border-white/8 bg-white/3 text-zinc-400 hover:border-white/20 hover:text-white"
                     }`}
                   >
                     <span className="text-xl md:text-2xl">{ex.emoji}</span>
@@ -185,8 +185,8 @@ export default function AnalyzePage() {
                       onClick={() => setMuscleFocus(muscle)}
                       className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${
                         muscleFocus === muscle
-                          ? "border-violet-500 bg-violet-500/15 text-white"
-                          : "border-zinc-600 bg-zinc-900 text-zinc-400 hover:border-zinc-400 hover:text-zinc-200"
+                          ? "border-[#0066ff] bg-[#0066ff]/15 text-white"
+                          : "border-white/10 bg-white/3 text-zinc-400 hover:border-white/25 hover:text-white"
                       }`}
                     >
                       {muscle}
@@ -198,7 +198,7 @@ export default function AnalyzePage() {
 
             {/* Camera Guide */}
             {exercise && (
-              <div className="mb-6 bg-zinc-900 border border-zinc-700 rounded-2xl p-4">
+              <div className="mb-6 bg-white/3 border border-white/8 rounded-2xl p-4">
                 <p className="text-xs text-zinc-400 uppercase tracking-wider mb-3 font-semibold">📷 So filmst du für den besten Score</p>
                 <div className="flex flex-col gap-2 text-xs text-zinc-300">
                   <div className="flex items-start gap-2 bg-zinc-800 rounded-xl px-3 py-2">

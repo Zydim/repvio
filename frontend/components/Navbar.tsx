@@ -12,9 +12,9 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50">
+    <nav className="border-b border-white/8 bg-[#08080f]/90 backdrop-blur-md sticky top-0 z-50">
       <div className="flex items-center justify-between px-4 md:px-8 py-4">
-        <Link href="/" className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white to-zinc-300 bg-clip-text text-transparent">
+        <Link href="/" className="text-xl font-extrabold tracking-tight text-white">
           Repvio
         </Link>
 
@@ -22,18 +22,18 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           {isLoggedIn && <PlanBadge />}
           {isLoggedIn && (
-            <Link href="/dashboard" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">
+            <Link href="/dashboard" className="text-sm text-zinc-400 hover:text-white transition-colors">
               Dashboard
             </Link>
           )}
           {isLoggedIn && (
-            <Link href="/account" className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors">
+            <Link href="/account" className="text-sm text-zinc-400 hover:text-white transition-colors">
               Account
             </Link>
           )}
           <Link
             href="/analyze"
-            className="text-sm bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 text-white px-4 py-1.5 rounded-full font-semibold transition-all duration-200 shadow-[0_0_16px_rgba(139,92,246,0.35)] hover:shadow-[0_0_22px_rgba(139,92,246,0.5)]"
+            className="text-sm bg-[#0066ff] hover:bg-[#0052cc] text-white px-4 py-1.5 rounded-full font-semibold transition-colors duration-200"
           >
             Analysieren
           </Link>
@@ -65,7 +65,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {open && (
-        <div id="mobile-menu" className="md:hidden border-t border-zinc-800/60 px-4 py-4 space-y-3 bg-zinc-950/95 backdrop-blur-md">
+        <div id="mobile-menu" className="md:hidden border-t border-white/8 px-4 py-4 space-y-3 bg-[#08080f]/95 backdrop-blur-md">
           {isLoggedIn && (
             <div className="pb-2">
               <PlanBadge />

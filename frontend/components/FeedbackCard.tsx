@@ -116,7 +116,7 @@ export default function FeedbackCard({
   }
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-6">
+    <div className="bg-white/3 border border-white/8 rounded-2xl p-6 space-y-6">
       {/* Falsche Übung Banner */}
       {exercise_detected && selectedExercise && exercise_detected !== selectedExercise && (
         <div className="bg-yellow-500/10 border border-yellow-500/40 rounded-xl px-4 py-3 text-sm">
@@ -160,7 +160,7 @@ export default function FeedbackCard({
             </div>
           </div>
           {scoreInfoOpen && (
-            <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-3 mb-2 text-xs space-y-1">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-3 mb-2 text-xs space-y-1">
               {SCORE_LABELS.map((l) => (
                 <div key={l.min} className="flex justify-between">
                   <span className={`font-semibold ${l.color}`}>
@@ -177,7 +177,7 @@ export default function FeedbackCard({
 
       {/* Teilscores Breakdown */}
       {teilscores && (
-        <div className="bg-zinc-800/50 border border-zinc-700/50 rounded-xl p-4 space-y-2.5">
+        <div className="bg-white/3 border border-white/8 rounded-xl p-4 space-y-2.5">
           <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3">Bewertung im Detail</h3>
           {(Object.keys(TEILSCORE_LABELS) as (keyof Teilscores)[]).map((key) => (
             <TeilscoreBar key={key} label={TEILSCORE_LABELS[key]} value={teilscores[key]} />
@@ -201,10 +201,10 @@ export default function FeedbackCard({
       {verletzungsrisiko && <RisikoBadge risiko={verletzungsrisiko} />}
 
       {/* Coaching Cue */}
-      <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-4">
+      <div className="bg-[#0066ff]/8 border border-[#0066ff]/20 rounded-xl p-4">
         <div className="flex items-center gap-2 mb-2">
-          <Zap className="w-4 h-4 text-yellow-400" />
-          <span className="text-xs font-semibold uppercase tracking-wider text-yellow-400">
+          <Zap className="w-4 h-4 text-[#4d94ff]" />
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#4d94ff]">
             Dein Coaching-Cue
           </span>
         </div>
@@ -246,7 +246,7 @@ export default function FeedbackCard({
           {correctionsOpen && (
             <ul className="space-y-3 mt-3">
               {corrections.map((c, i) => (
-                <li key={i} className="bg-zinc-800/50 rounded-xl p-3 text-sm">
+                <li key={i} className="bg-white/3 border border-white/8 rounded-xl p-3 text-sm">
                   <div className="flex items-start gap-2 text-yellow-300 font-medium mb-1">
                     <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
                     {c.fehler}
@@ -263,7 +263,7 @@ export default function FeedbackCard({
       {naechste_schritte?.length > 0 && (
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <TrendingUp className="w-4 h-4 text-violet-400" />
+            <TrendingUp className="w-4 h-4 text-[#0066ff]" />
             <h3 className="text-sm font-medium text-zinc-400 uppercase tracking-wider">
               So holst du mehr Punkte
             </h3>
@@ -273,7 +273,7 @@ export default function FeedbackCard({
               const isObj = typeof s === "object" && s !== null && "tipp" in s;
               const item = isObj ? (s as NaechsterSchritt) : null;
               return (
-                <li key={i} className="bg-zinc-800/60 border border-zinc-700/60 rounded-xl px-4 py-3">
+                <li key={i} className="bg-white/3 border border-white/8 rounded-xl px-4 py-3">
                   {item ? (
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-sm text-zinc-200 leading-relaxed flex-1">{item.tipp}</p>

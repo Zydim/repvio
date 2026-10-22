@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { Video, Brain, TrendingUp, Star, Shield, Zap } from "lucide-react";
+import { Video, BarChart2, TrendingUp, Star, Shield, Zap } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -11,120 +11,116 @@ export default function Home() {
   const isLoggedIn = !!session?.user;
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 overflow-x-hidden">
+    <div className="min-h-screen bg-[#08080f] text-white overflow-x-hidden">
       <Navbar />
 
       <main>
         {/* Hero */}
-        <section className="relative flex flex-col items-center justify-center text-center px-4 md:px-6 py-20 md:py-36">
-          {/* Background glow */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-[600px] h-[600px] rounded-full bg-violet-600/10 blur-[120px]" />
-          </div>
-
+        <section className="flex flex-col items-center justify-center text-center px-4 md:px-6 py-24 md:py-40">
           {/* Badge */}
-          <div className="relative inline-flex items-center gap-2 border border-violet-500/30 bg-violet-500/10 rounded-full px-4 py-1.5 mb-8">
-            <Zap className="w-3.5 h-3.5 text-violet-400" />
-            <span className="text-xs text-violet-300 font-medium">KI-Technik-Analyse in Sekunden</span>
+          <div className="inline-flex items-center gap-2 border border-[#0066ff]/40 bg-[#0066ff]/10 rounded-full px-4 py-1.5 mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0066ff]" />
+            <span className="text-xs text-[#4d94ff] font-semibold uppercase tracking-wider">Video-Analyse für Athleten</span>
           </div>
 
           {/* Headline */}
-          <h1 className="relative text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 leading-[1.05]">
-            Werde stärker.
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 leading-[1.05]">
+            Bessere Technik.
             <br />
-            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-              Trainiere smarter.
-            </span>
+            <span className="text-[#0066ff]">Schnellere Ergebnisse.</span>
           </h1>
 
-          <p className="relative text-base md:text-lg text-zinc-400 max-w-md mb-10 leading-relaxed">
-            Lade dein Training-Video hoch und erhalte sofortiges KI-Feedback zu deiner Technik — in Sekunden.
+          <p className="text-base md:text-lg text-zinc-400 max-w-md mb-10 leading-relaxed">
+            Lade dein Trainings-Video hoch — und bekomme in Sekunden detailliertes Feedback zu deiner Technik.
           </p>
 
           {/* CTA */}
-          <div className="relative flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             <Link
               href={isLoggedIn ? "/analyze" : "/login"}
-              className="relative group px-8 py-3.5 rounded-full text-base font-semibold text-white bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 transition-all duration-200 shadow-[0_0_30px_rgba(139,92,246,0.4)] hover:shadow-[0_0_40px_rgba(139,92,246,0.6)] text-center"
+              className="px-8 py-3.5 rounded-full text-base font-bold text-white bg-[#0066ff] hover:bg-[#0052cc] transition-colors duration-200 text-center"
             >
               {isLoggedIn ? "Jetzt analysieren" : "Kostenlos starten"}
+            </Link>
+            <Link
+              href="/pricing"
+              className="px-8 py-3.5 rounded-full text-base font-semibold text-zinc-300 border border-white/10 hover:border-white/30 hover:text-white transition-colors duration-200 text-center"
+            >
+              Preise ansehen
             </Link>
           </div>
         </section>
 
         {/* How it works */}
-        <section className="max-w-4xl mx-auto px-4 md:px-6 pb-16 md:pb-24">
-          <p className="text-xs uppercase tracking-widest text-violet-400 font-semibold text-center mb-3">So funktioniert&apos;s</p>
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-10 md:mb-12">In 3 Schritten zur perfekten Technik</h2>
+        <section className="max-w-4xl mx-auto px-4 md:px-6 pb-20 md:pb-28">
+          <p className="text-xs uppercase tracking-widest text-[#0066ff] font-bold text-center mb-3">So funktioniert&apos;s</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">In 3 Schritten zur besseren Technik</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-            {/* Card 1 */}
-            <div className="group bg-zinc-900/60 border border-zinc-800 hover:border-violet-500/40 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.08)]">
-              <div className="w-11 h-11 bg-gradient-to-br from-violet-600 to-violet-400 rounded-xl flex items-center justify-center mb-5 shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+            <div className="bg-white/4 border border-white/8 hover:border-[#0066ff]/50 rounded-2xl p-6 transition-colors duration-300">
+              <div className="w-10 h-10 bg-[#0066ff] rounded-xl flex items-center justify-center mb-5">
                 <Video className="w-5 h-5 text-white" />
               </div>
-              <h3 className="font-bold mb-2 text-zinc-100">1. Video hochladen</h3>
+              <h3 className="font-bold mb-2 text-white">1. Video hochladen</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                Lade .mp4 oder .mov hoch. Kniebeuge, Bankdrücken, Kreuzheben und mehr werden unterstützt.
+                Filme dein Set von der Seite — Kniebeuge, Bankdrücken, Kreuzheben und 17 weitere Übungen.
               </p>
             </div>
-            {/* Card 2 */}
-            <div className="group bg-zinc-900/60 border border-zinc-800 hover:border-blue-500/40 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.08)]">
-              <div className="w-11 h-11 bg-gradient-to-br from-blue-600 to-blue-400 rounded-xl flex items-center justify-center mb-5 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-                <Brain className="w-5 h-5 text-white" />
+            <div className="bg-white/4 border border-white/8 hover:border-[#0066ff]/50 rounded-2xl p-6 transition-colors duration-300">
+              <div className="w-10 h-10 bg-[#0066ff] rounded-xl flex items-center justify-center mb-5">
+                <BarChart2 className="w-5 h-5 text-white" />
               </div>
-              <h3 className="font-bold mb-2 text-zinc-100">2. KI analysiert</h3>
+              <h3 className="font-bold mb-2 text-white">2. Technik wird analysiert</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                Unsere KI analysiert deine Bewegung Frame für Frame und gibt dir detailliertes Technik-Feedback mit Score.
+                Jede Bewegung wird Frame für Frame bewertet — Haltung, Gelenke, Bewegungsumfang, Fluss.
               </p>
             </div>
-            {/* Card 3 */}
-            <div className="group bg-zinc-900/60 border border-zinc-800 hover:border-emerald-500/40 rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.08)]">
-              <div className="w-11 h-11 bg-gradient-to-br from-emerald-600 to-emerald-400 rounded-xl flex items-center justify-center mb-5 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+            <div className="bg-white/4 border border-white/8 hover:border-[#0066ff]/50 rounded-2xl p-6 transition-colors duration-300">
+              <div className="w-10 h-10 bg-[#0066ff] rounded-xl flex items-center justify-center mb-5">
                 <TrendingUp className="w-5 h-5 text-white" />
               </div>
-              <h3 className="font-bold mb-2 text-zinc-100">3. Fortschritt tracken</h3>
+              <h3 className="font-bold mb-2 text-white">3. Fortschritt verfolgen</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                Deine Trainingshistorie wird gespeichert. Verfolge deinen Fortschritt über Zeit.
+                Deine Sessions werden gespeichert — sieh wie deine Technik über Wochen besser wird.
               </p>
             </div>
           </div>
         </section>
 
         {/* Stats */}
-        <section className="border-y border-zinc-800/60 py-12 md:py-16 bg-zinc-900/20">
+        <section className="border-y border-white/6 py-12 md:py-16 bg-white/2">
           <div className="max-w-4xl mx-auto px-4 md:px-6 grid grid-cols-3 gap-4 md:gap-8 text-center">
             <div>
-              <p className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">6 Frames</p>
-              <p className="text-xs md:text-sm text-zinc-500 mt-2">pro Video analysiert</p>
+              <p className="text-2xl md:text-4xl font-extrabold text-[#0066ff]">20</p>
+              <p className="text-xs md:text-sm text-zinc-500 mt-2">Übungen unterstützt</p>
             </div>
             <div>
-              <p className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">&lt; 30 Sek</p>
-              <p className="text-xs md:text-sm text-zinc-500 mt-2">für detailliertes Feedback</p>
+              <p className="text-2xl md:text-4xl font-extrabold text-[#0066ff]">&lt; 30s</p>
+              <p className="text-xs md:text-sm text-zinc-500 mt-2">bis zum Feedback</p>
             </div>
             <div>
-              <p className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-400 to-blue-400 bg-clip-text text-transparent">0–100</p>
-              <p className="text-xs md:text-sm text-zinc-500 mt-2">Technik-Score pro Analyse</p>
+              <p className="text-2xl md:text-4xl font-extrabold text-[#0066ff]">0–100</p>
+              <p className="text-xs md:text-sm text-zinc-500 mt-2">Technik-Score</p>
             </div>
           </div>
         </section>
 
         {/* Why Repvio */}
         <section className="max-w-4xl mx-auto px-4 md:px-6 py-16 md:py-24">
-          <p className="text-xs uppercase tracking-widest text-violet-400 font-semibold text-center mb-3">Warum Repvio?</p>
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">Dein KI-Trainer. Immer dabei.</h2>
+          <p className="text-xs uppercase tracking-widest text-[#0066ff] font-bold text-center mb-3">Warum Repvio?</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">Trainiere wie ein Profi. Ohne Trainer.</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-400 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-[0_0_24px_rgba(245,158,11,0.3)]">
-                <Star className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-white/6 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                <Star className="w-5 h-5 text-[#0066ff]" />
               </div>
               <h3 className="font-bold mb-2">Präzises Feedback</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                KI erkennt Fehler, die du selbst nicht siehst — Kniestellung, Rückenposition, Tiefe.
+                Erkennt Fehler die du selbst nicht siehst — Kniestellung, Rückenposition, Tiefe.
               </p>
             </div>
             <div className="text-center">
-              <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-400 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-[0_0_24px_rgba(16,185,129,0.3)]">
-                <Shield className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-white/6 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                <Shield className="w-5 h-5 text-[#0066ff]" />
               </div>
               <h3 className="font-bold mb-2">Verletzungsprävention</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
@@ -132,8 +128,8 @@ export default function Home() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-violet-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-[0_0_24px_rgba(99,102,241,0.3)]">
-                <Zap className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-white/6 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                <Zap className="w-5 h-5 text-[#0066ff]" />
               </div>
               <h3 className="font-bold mb-2">Sofort-Ergebnisse</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
@@ -144,23 +140,17 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="relative py-16 md:py-24 text-center px-4 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-950/60 via-zinc-950 to-blue-950/40" />
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-[500px] h-[300px] rounded-full bg-violet-600/10 blur-[100px]" />
-          </div>
-          <div className="relative">
-            <h2 className="text-2xl md:text-4xl font-extrabold mb-4">Bereit für bessere Technik?</h2>
-            <p className="text-zinc-400 mb-10 max-w-sm mx-auto text-sm md:text-base leading-relaxed">
-              Starte kostenlos mit 3 Video-Analysen pro Monat. Kein Abo nötig.
-            </p>
-            <Link
-              href={isLoggedIn ? "/analyze" : "/login"}
-              className="inline-block px-10 py-4 rounded-full text-base font-semibold text-white bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-500 hover:to-blue-400 transition-all duration-200 shadow-[0_0_40px_rgba(139,92,246,0.4)] hover:shadow-[0_0_55px_rgba(139,92,246,0.6)]"
-            >
-              {isLoggedIn ? "Jetzt analysieren" : "Kostenlos starten"}
-            </Link>
-          </div>
+        <section className="py-16 md:py-24 text-center px-4 border-t border-white/6">
+          <h2 className="text-2xl md:text-4xl font-extrabold mb-4">Bereit für bessere Technik?</h2>
+          <p className="text-zinc-400 mb-10 max-w-sm mx-auto text-sm md:text-base leading-relaxed">
+            Starte kostenlos mit 3 Video-Analysen pro Monat. Kein Abo nötig.
+          </p>
+          <Link
+            href={isLoggedIn ? "/analyze" : "/login"}
+            className="inline-block px-10 py-4 rounded-full text-base font-bold text-white bg-[#0066ff] hover:bg-[#0052cc] transition-colors duration-200"
+          >
+            {isLoggedIn ? "Jetzt analysieren" : "Kostenlos starten"}
+          </Link>
         </section>
       </main>
 
